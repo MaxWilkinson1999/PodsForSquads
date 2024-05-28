@@ -1,1 +1,131 @@
-Main Activity / Home Page for project
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Podcast Streaming Service</title>
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            margin: 0;
+            background-color: #FFFFFF;
+            color: #000000;
+        }
+        header {
+            background-color: #FF9494;
+            padding: 1em;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        nav a {
+            color: #000000;
+            margin: 0 1em;
+            text-decoration: none;
+        }
+        .hero {
+            text-align: center;
+            padding: 2em 1em;
+        }
+        .carousel, .section {
+            margin: 2em 0;
+        }
+        .carousel img, .section img {
+            width: 100%;
+            max-width: 200px;
+            border-radius: 10px;
+        }
+        .carousel, .section {
+            display: flex;
+            overflow-x: auto;
+            gap: 1em;
+            padding: 0 1em;
+        }
+        .carousel::-webkit-scrollbar, .section::-webkit-scrollbar {
+            display: none;
+        }
+        footer {
+            background-color: #FF9494;
+            padding: 1em;
+            text-align: center;
+        }
+        .footer-links, .social-media {
+            display: flex;
+            justify-content: center;
+            gap: 1em;
+        }
+        .footer-links a, .social-media a {
+            color: #000000;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo">PodcastStream</div>
+        <nav>
+            <a href="#">Home</a>
+            <a href="#">Browse</a>
+            <a href="#">Categories</a>
+            <a href="#">My Podcasts</a>
+            <a href="#">Account</a>
+        </nav>
+        <div class="search-bar">
+            <input type="text" placeholder="Search podcasts">
+        </div>
+        <div class="profile-icon">
+            <img src="profile-icon.png" alt="User Profile">
+        </div>
+    </header>
+
+    <div class="hero">
+        <h1>Featured Podcasts</h1>
+        <div class="carousel">
+            <img src="podcast1.jpg" alt="Podcast 1">
+            <img src="podcast2.jpg" alt="Podcast 2">
+            <img src="podcast3.jpg" alt="Podcast 3">
+        </div>
+        <button>Listen Now</button>
+    </div>
+
+    <div class="section">
+        <h2>Trending Podcasts</h2>
+        <div class="carousel">
+            <img src="podcast4.jpg" alt="Podcast 4">
+            <img src="podcast5.jpg" alt="Podcast 5">
+            <img src="podcast6.jpg" alt="Podcast 6">
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>New Releases</h2>
+        <div class="carousel">
+            <img src="podcast7.jpg" alt="Podcast 7">
+            <img src="podcast8.jpg" alt="Podcast 8">
+            <img src="podcast9.jpg" alt="Podcast 9">
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>Categories</h2>
+        <div class="carousel">
+            <img src="tech.jpg" alt="Technology">
+            <img src="health.jpg" alt="Health">
+            <img src="comedy.jpg" alt="Comedy">
+        </div>
+    </div>
+
+    <footer>
+        <div class="footer-links">
+            <a href="#">About Us</a>
+            <a href="#">Contact</a>
+            <a href="#">Terms of Service</a>
+            <a href="#">Privacy Policy</a>
+        </div>
+        <div class="social-media">
+            <a href="#"><img src="twitter-icon.png" alt="Twitter"></a>
+            <a href="#"><img src="instagram-icon.png" alt="Instagram"></a>
+        </div>
+    </footer>
+</body>
+</html>
