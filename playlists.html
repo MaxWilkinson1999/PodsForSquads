@@ -142,7 +142,7 @@
     <div class="playlists-container">
         <div class="new-playlist-box" onclick="openNewPlaylistModal()">+ Create New Playlist</div>
         <div id="playlists">
-            <!-- Playlists will be dynamically loaded here -->
+            
         </div>
     </div>
 
@@ -160,7 +160,7 @@
         </div>
     </footer>
 
-    <!-- Modal for creating a new playlist -->
+    
     <div id="newPlaylistModal" class="modal">
         <div class="modal-content">
             <span class="close" onclick="closeNewPlaylistModal()">&times;</span>
@@ -172,7 +172,7 @@
             <div class="form-group">
                 <label for="podcasts">Select Podcasts:</label>
                 <select id="podcasts" multiple>
-                    <!-- Podcast options will be dynamically loaded here -->
+                    
                 </select>
             </div>
             <button onclick="createPlaylist()">Create Playlist</button>
@@ -203,16 +203,15 @@
                 <button>Delete Playlist</button>
             `;
 
-            // Insert new playlist to the right of the "Create New Playlist" box
+           
             const playlistsContainer = document.getElementById('playlists');
-            playlistsContainer.insertBefore(playlistElement, playlistsContainer.children[1]); // Insert at index 1
+            playlistsContainer.insertBefore(playlistElement, playlistsContainer.children[1]);
 
-            // Close the modal
+            
             closeNewPlaylistModal();
         }
 
-        // Fetch podcasts and populate the select dropdown
-        // Sample data, replace with actual data fetched from API
+        
         const podcasts = ['Podcast 1', 'Podcast 2', 'Podcast 3', 'Podcast 4', 'Podcast 5'];
 
         const podcastsSelect = document.getElementById('podcasts');

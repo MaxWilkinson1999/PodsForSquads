@@ -104,23 +104,23 @@
             display: block;
         }
         .social-media {
-    display: flex;
-    justify-content: center;
-    gap: 1em;
-}
+            display: flex;
+            justify-content: center;
+            gap: 1em;
+        }
 
-.social-media a {
-    display: block;
-    width: 32px; /* Adjust the width as needed */
-    height: 32px; /* Adjust the height as needed */
-}
+        .social-media a {
+            display: block;
+            width: 32px; 
+            height: 32px; 
+        }
 
-.social-media img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover; /* Ensures the image fills the container */
-    border-radius: 50%; /* Optional: Makes the image circular */
-}
+        .social-media img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover; 
+            border-radius: 50%; 
+        }
 
     </style>
 </head>
@@ -192,12 +192,10 @@
 
     <script>
         const apiKey = 'cb2038d4dbd841b39dec5309c31b2d6a';
-        let genreData = [];
-        let genresDisplayed = 0;
-        const genresToShowInitially = 5;
+        const podcastLimit = 5; 
 
         async function fetchPodcasts(endpoint, elementId) {
-            const response = await fetch(`https://listen-api.listennotes.com/api/v2/${endpoint}`, {
+            const response = await fetch(`https://listen-api.listennotes.com/api/v2/${endpoint}&limit=${podcastLimit}`, {
                 method: 'GET',
                 headers: {
                     'X-ListenAPI-Key': apiKey
@@ -266,13 +264,15 @@
                 }
             });
 
-            genreData = await response.json();
+            const genreData = await response.json();
             genresDisplayed = 0;
-            showMoreGenres();
+            showMoreGenres(genreData);
         }
 
-        function showMoreGenres() {
+        function showMoreGenres(genreData) {
             const container = document.getElementById('categoriesContainer');
+            const genresToShowInitially = 5;
+            let genresDisplayed = 0;
             const genresToShow = genresDisplayed + genresToShowInitially;
 
             for (; genresDisplayed < genresToShow && genresDisplayed < genreData.genres.length; genresDisplayed++) {
@@ -286,7 +286,7 @@
                     </div>
                 `;
                 container.appendChild(section);
-                fetchPodcasts(`best_podcasts?genre_id=${genre.id}`, `genre_${genre.id}`);
+                fetchPodcasts(`best_podcasts?genre_id=${genre.id}&limit=${podcastLimit}`, `genre_${genre.id}`);
             }
 
             if (genresDisplayed >= genreData.genres.length) {
@@ -294,9 +294,9 @@
             }
         }
 
-        fetchPodcasts('best_podcasts', 'featuredPodcasts');
-        fetchPodcasts('best_podcasts', 'trendingPodcasts');
-        fetchPodcasts('best_podcasts', 'newReleases');
+        fetchPodcasts('best_podcasts?limit=' + podcastLimit, 'featuredPodcasts');
+        fetchPodcasts('best_podcasts?limit=' + podcastLimit, 'trendingPodcasts');
+        fetchPodcasts('best_podcasts?limit=' + podcastLimit, 'newReleases');
         fetchGenres();
     </script>
 </body>
