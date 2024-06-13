@@ -40,28 +40,9 @@
             </div>
         </form>
     </div>
-    <script src="login.js"></script> <!-- Include the JavaScript file -->
+    <script src="LogInScreen.js"></script>
     <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
     <script src="https://accounts.google.com/gsi/client" async defer></script>
-    
-    <script src = "LogInScreen.js"></script>
-    <script>
-        function handleCredentialResponse(response) {
-            console.log("Encoded JWT ID token: " + response.credential);
-            // Handle the sign-in response and send the token to your server
-        }
-        window.onload = function () {
-            google.accounts.id.initialize({
-                client_id: "YOUR_CLIENT_ID",
-                callback: handleCredentialResponse
-            });
-            google.accounts.id.renderButton(
-                document.querySelector(".g_id_signin"),
-                { theme: "outline", size: "large" }  // customization attributes
-            );
-            google.accounts.id.prompt();  // also display the One Tap dialog
-        }
-    </script>
 </body>
 </html>
