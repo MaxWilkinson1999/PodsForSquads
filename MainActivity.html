@@ -141,7 +141,35 @@
             object-fit: cover;
             border-radius: 5px;
         }
-    </style>
+        .search-wrapper {
+    display: flex;
+    align-items: center;
+    background-color: #fff;
+    border-radius: 20px;
+    padding: 5px;
+}
+
+.search-wrapper input {
+    border: none;
+    outline: none;
+    flex: 1;
+    padding: 10px;
+    border-radius: 20px;
+}
+
+.search-wrapper button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 5px;
+}
+
+.search-wrapper button img {
+    width: 20px;
+    height: 20px;
+}
+
+</style>
 </head>
 <body>
     <header>
@@ -153,13 +181,18 @@
             <a href="#">Account</a>
         </nav>
         <div class="search-bar">
-            <input type="text" placeholder="Search podcasts" id="searchInput" onkeypress="handleKeyPress(event)">
-            <button onclick="searchPodcasts()">Search</button>
+            <div class="search-wrapper">
+                <input type="text" placeholder="Search podcasts" id="searchInput" onkeypress="handleKeyPress(event)">
+                <button onclick="searchPodcasts()">
+                    <img src="search (1).png" alt="Search">
+                </button>
+            </div>
         </div>
         <div class="profile-icon">
-            <img src="profile-icon.png" alt="User Profile">
+            <img src="pfp-icon2.png" alt="User Profile">
         </div>
     </header>
+    
 
     <div class="hero">
         <h1>Featured Podcasts</h1>
