@@ -26,34 +26,38 @@
             color: #000000;
             margin: 0 1em;
             text-decoration: none;
-            transition: margin 0.3s ease-in-out; /* Adding transition for smooth movement */
-        }
-        .logo {
-            flex: 1; /* Make logo take remaining space */
-            font-size: 1.5em;
-            font-weight: bold;
+            transition: margin 0.3s ease-in-out; 
         }
         .search-wrapper {
-            display: flex;
-            align-items: center;
-            margin-right: 1em; /* Adjust margin for search wrapper */
-        }
-        .search-wrapper input {
-            border: none;
-            outline: none;
-            padding: 10px;
-            border-radius: 20px;
-        }
-        .search-wrapper button {
-            background: none;
-            border: none;
-            cursor: pointer;
-            padding: 5px;
-        }
-        .search-wrapper button img {
-            width: 20px;
-            height: 20px;
-        }
+    position: relative;
+    display: inline-block;
+    margin-right: 1em;
+}
+
+.search-wrapper input {
+    border: none;
+    outline: none;
+    padding: 10px 30px 10px 10px;
+    border-radius: 20px;
+    width: 200px; 
+}
+
+.search-wrapper button {
+    position: absolute;
+    right: 5px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 5px;
+}
+
+.search-wrapper button img {
+    width: 20px;
+    height: 20px;
+}
+
         .favorites-container {
             padding: 2em;
         }
@@ -111,7 +115,7 @@
         <nav>
             <div class="search-wrapper">
                 <input type="text" placeholder="Search podcasts" id="searchInput" oninput="searchPodcasts()">
-                <button>
+                <button type="submit">
                     <img src="search (1).png" alt="Search">
                 </button>
             </div>
@@ -169,19 +173,21 @@
         }
 
         function openPodcastDetails(podcast) {
-            const modalContent = document.createElement('div');
-            modalContent.innerHTML = `
-                <h2>${podcast.title}</h2>
-                <img src="${podcast.thumbnail}" alt="${podcast.title}" style="width:200px;">
-                <p><strong>Publisher:</strong> ${podcast.publisher}</p>
-                <p>Description: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam non risus et turpis facilisis tristique vel nec lacus. Sed nec dui in lacus consectetur luctus.</p>
-                <button onclick="removeFromFavorites('${podcast.id}')">Remove from Favorites</button>
-            `;
+    const modalContent = document.createElement('div');
+    modalContent.innerHTML = `
+        <h2>${podcast.title}</h2>
+        <img src="${podcast.thumbnail}" alt="${podcast.title}" style="width:200px;">
+        <p><strong>Publisher:</strong> ${podcast.publisher}</p>
+        <p>Description: ${podcast.description}</p>
+        <button onclick="removeFromFavorites('${podcast.id}')">Remove from Favorites</button>
+    `;
+    
+    const modal = document.getElementById('podcastModal');
+    modal.style.display = 'block';
+    modal.querySelector('#modalContent').innerHTML = ''; 
+    modal.querySelector('#modalContent').appendChild(modalContent);
+}
 
-            const modal = document.getElementById('podcastModal');
-            modal.style.display = 'block';
-            modal.querySelector('#modalContent').innerHTML = modalContent.innerHTML;
-        }
 
         function closeModal() {
             document.getElementById('podcastModal').style.display = 'none';
@@ -205,7 +211,7 @@
             const container = document.getElementById('favoritesContainer');
             const favoritesList = document.getElementById('favoritesList');
 
-            favoritesList.innerHTML = ''; // Clear previous results
+            favoritesList.innerHTML = ''; 
 
             const filteredFavorites = favorites.filter(podcast =>
                 podcast.title.toLowerCase().includes(query) ||
