@@ -1,0 +1,167 @@
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-color: #f9f9f9;
+    color: #000;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.settings-container {
+    display: flex;
+    height: 100vh;
+}
+
+.sidebar {
+    width: 250px;
+    background-color: #FF9494;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.sidebar h2 {
+    color: #fff;
+    margin-bottom: 20px;
+}
+
+.sidebar a {
+    color: #fff;
+    display: block;
+    padding: 10px;
+    text-decoration: none;
+    margin-bottom: 10px;
+    border-radius: 4px;
+    transition: background-color 0.3s;
+}
+
+.sidebar a:hover,
+.sidebar a.active {
+    background-color: #FF9494;
+}
+
+.sidebar .logout {
+    color: #fff;
+}
+
+.content {
+    flex: 1;
+    padding: 20px;
+    background-color: #fff;
+    box-sizing: border-box;
+    color: #000;
+}
+
+.tab-content {
+    display: none;
+}
+
+.tab-content.active {
+    display: block;
+}
+
+.card {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+    color: #000;
+}
+
+.card h3 {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.card h3 button {
+    background: none;
+    border: none;
+    color: #FF9494;
+    cursor: pointer;
+}
+
+.card p {
+    margin: 5px 0;
+}
+
+.edit-section {
+    display: none;
+}
+
+.edit-section label {
+    display: block;
+    margin-top: 10px;
+}
+
+.edit-section input {
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+    box-sizing: border-box;
+    border-radius: 4px;
+    border: 1px solid #cccccc;
+    background-color: #f9f9f9;
+    color: #000;
+}
+
+.edit-section button {
+    margin-top: 10px;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    background-color: #FF9494;
+    color: #fff;
+}
+
+.profile-image-container {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.profile-image {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+.dark-mode {
+    background-color: #121212;
+    color: #e0e0e0;
+}
+
+.dark-mode .sidebar {
+    background-color: #1f1f1f;
+    color: #e0e0e0;
+}
+
+.dark-mode .sidebar a {
+    color: #e0e0e0;
+}
+
+.dark-mode .sidebar a:hover,
+.dark-mode .sidebar a.active {
+    background-color: #333333;
+}
+
+.dark-mode .content {
+    background-color: #1f1f1f;
+    color: #e0e0e0;
+}
+
+.dark-mode .card {
+    background-color: #2b2b2b;
+    color: #e0e0e0;
+}
+
+.dark-mode .edit-section input {
+    background-color: #2b2b2b;
+    border: 1px solid #333333;
+    color: #e0e0e0;
+}
+
+.dark-mode .card h3 button,
+.dark-mode .edit-section button {
+    color: #ff6b6b;
+}

@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" href="../Styles/LoginStyle.css">
+    <style>
+        /* Basic styles for better error messages */
+        .error {
+            color: red;
+            margin-top: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="login-section">
+            <div class="logo">
+                <img src="../Images+Videos/Website_Logo.png" alt="Logo">
+            </div>
+            <h2>Login to Your Account</h2>
+            <p>Login using</p>
+            <div class="social-login">
+                <button class="google">
+                    <img src="" alt="Google Sign-In" class="google-button">
+                </button>
+            </div>
+            <div class="or-divider">
+                <span>OR</span>
+            </div>
+            <form id="login-form" class="login-form">
+                <label for="email">Email or Username</label>
+                <input type="email" id="email" placeholder="Email" required>
+                <div id="email-error" class="error"></div>
+                <label for="password">Password</label>
+                <input type="password" id="password" placeholder="Password" required>
+                <div id="password-error" class="error"></div>
+                <button type="submit">Sign In</button>
+            </form>
+        </div>
+        <div class="signup-section">
+            <div class="animated-container">
+                <div class="tenor-gif-embed" data-postid="12388374554003720031" data-share-method="host" data-aspect-ratio="1.35326" data-width="100%">
+                    <a href="https://tenor.com/view/h3-h3-podcast-h3-fousey-h3-podcast-fousey-h3-podcast-fouseytube-gif-12388374554003720031">H3 H3 Podcast GIF</a> from 
+                    <a href="https://tenor.com/search/h3-gifs">H3 GIFs</a>
+                </div>
+                <script type="text/javascript" async src="https://tenor.com/embed.js"></script>
+            </div>
+            <div class="signup-content">
+                <h2>New Here?</h2>
+                <p>Endless Stories, One Click Away!</p>
+                <button id="signup-button">Sign Up</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Import Firebase -->
+    <script type="module">
+        // Import the Firebase functions
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+        import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+
+        // Your web app's Firebase configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyBVoIP81JWXonhwnvVrSdIEkaprBuLxvjQ",
+            authDomain: "podsforsquads.firebaseapp.com",
+            databaseURL: "https://podsforsquads-default-rtdb.firebaseio.com",
+            projectId: "podsforsquads",
+            storageBucket: "podsforsquads.appspot.com",
+            messagingSenderId: "369944495856",
+            appId: "1:369944495856:web:d2027932e60be6f17da435"
+        };
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+
+        // Redirect to sign-up page
+        document.getElementById('signup-button').addEventListener('click', function() {
+            window.location.href = 'SignUp.html'; // Replace 'test2.html' with the actual URL of your sign-up page
+        });
+
+        // Handle login form submission
+        document.getElementById('login-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+
+            // Clear previous error messages
+            document.getElementById('email-error').innerText = '';
+            document.getElementById('password-error').innerText = '';
+
+            try {
+                const userCredential = await signInWithEmailAndPassword(auth, email, password);
+                const user = userCredential.user;
+                console.log('User logged in:', user);
+                // Redirect to profile or homepage
+                window.location.href = '../Home.html';
+            } catch (error) {
+                const errorCode = error.code;
+                const errorMessage = error.message;
+                console.error('Error logging in:', errorCode, errorMessage);
+
+                // Display error messages
+                if (errorCode === 'auth/user-not-found') {
+                    document.getElementById('email-error').innerText = 'No user found with this email!';
+                } else if (errorCode === 'auth/wrong-password') {
+                    document.getElementById('password-error').innerText = 'Incorrect password!';
+                } else if (errorCode === 'auth/invalid-email') {
+                    document.getElementById('email-error').innerText = 'Invalid email address!';
+                } else {
+                    alert('Error logging in: ' + errorMessage);
+                }
+            }
+        });
+    </script>
+</body>
+</html>

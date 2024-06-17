@@ -1,0 +1,156 @@
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    width: 100vw;
+    overflow: hidden;
+}
+
+.container {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+
+.login-section, .signup-section {
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    position: relative;
+}
+
+.login-section {
+    background-color: white;
+    padding: 40px;
+}
+
+.signup-section {
+    background-color: #ff9494;
+    color: white;
+    overflow: hidden;
+    position: relative;
+}
+
+.logo img {
+    margin-bottom: 20px;
+    width: 300px; /* Adjusted logo width to make it much bigger */
+}
+
+h2 {
+    color: black;
+    margin-bottom: 10px;
+}
+
+.login-section h2, .login-section p, .login-form label {
+    color: black;
+}
+
+.signup-section h2, .signup-section p {
+    color: black; /* Updated text color to black on the right side */
+}
+
+p {
+    margin-bottom: 20px;
+}
+
+.login-form {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    max-width: 300px;
+}
+
+.login-form label {
+    margin: 10px 0 5px;
+}
+
+.login-form input {
+    margin: 5px 0 20px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.login-form button {
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    background-color: #ff9494;
+    color: white;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+.social-login {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.social-login button {
+    background-color: #fff3f3;
+    border: 1px solid #ff9494;
+    color: #ff9494;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    flex: 1;
+}
+
+.or-divider {
+    margin: 20px 0;
+    position: relative;
+    width: 100%;
+    text-align: center;
+}
+
+.or-divider span {
+    background-color: white;
+    padding: 0 10px;
+    position: relative;
+    z-index: 1;
+    color: black;
+}
+
+.or-divider::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background-color: #ccc;
+    z-index: 0;
+}
+
+.signup-section .animated-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: auto; /* Adjust the height as needed */
+    margin-bottom: 20px; /* Add some spacing below the GIF */
+}
+
+.signup-content {
+    position: relative;
+    z-index: 1;
+    padding: 40px;
+}
+
+.signup-content button {
+    background-color: white;
+    color: black;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 20px;
+}

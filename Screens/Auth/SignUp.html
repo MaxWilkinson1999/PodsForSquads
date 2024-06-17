@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up - Pods For Squads</title>
+    <link rel="stylesheet" href="../Styles/SignUpStyle.css">
+    <style>
+        /* Basic styles for better error messages */
+        .error {
+            color: red;
+            margin-top: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="logo">
+            <img src="../Images+Videos/Website_Logo.png" alt="Pods For Squads Logo">
+        </div>
+        <div class="form-container">
+            <h2>Create Your Account</h2>
+            <form id="signup-form">
+                <div class="input-group">
+                    <label for="username">Username</label>
+                    <input type="text" id="username" name="username" required>
+                    <div id="username-error" class="error"></div>
+                </div>
+                <div class="input-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" name="email" required>
+                    <div id="email-error" class="error"></div>
+                </div>
+                <div class="input-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" name="password" required minlength="6">
+                    <div id="password-error" class="error"></div>
+                </div>
+                <div class="input-group">
+                    <label for="confirm-password">Confirm Password</label>
+                    <input type="password" id="confirm-password" name="confirm-password" required>
+                    <div id="confirm-password-error" class="error"></div>
+                </div>
+                <button type="submit">Sign Up</button>
+            </form>
+            <p>Already have an account? <a href="Login.html">Login here</a></p>
+        </div>
+        <div class="promo">
+            <h3>Welcome!</h3>
+            <p>Podcasts that Spark Your Curiosity!</p>
+        </div>
+    </div>
+
+    <!-- Import Firebase -->
+    <script type="module">
+        // Import the Firebase functions
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+        import { getAuth, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+        import { getFirestore, doc, setDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+        // Your web app's Firebase configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyBVoIP81JWXonhwnvVrSdIEkaprBuLxvjQ",
+            authDomain: "podsforsquads.firebaseapp.com",
+            databaseURL: "https://podsforsquads-default-rtdb.firebaseio.com",
+            projectId: "podsforsquads",
+            storageBucket: "podsforsquads.appspot.com",
+            messagingSenderId: "369944495856",
+            appId: "1:369944495856:web:d2027932e60be6f17da435"
+        };
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+
+        // Handle sign-up form submission
+        document.getElementById('signup-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const username = document.getElementById('username').value;
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            const confirmPassword = document.getElementById('confirm-password').value;
+
+            // Clear previous error messages
+            document.getElementById('username-error').innerText = '';
+            document.getElementById('email-error').innerText = '';
+            document.getElementById('password-error').innerText = '';
+            document.getElementById('confirm-password-error').innerText = '';
+
+            if (password !== confirmPassword) {
+                document.getElementById('confirm-password-error').innerText = 'Passwords do not match!';
+                return;
+            }
+
+            try {
+                const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+                const user = userCredential.user;
+
+                // Save additional user information in Firestore
+                await setDoc(doc(db, "users", user.uid), {
+                    username: username,
+                    email: email
+                });
+
+                console.log('User signed up:', user);
+                window.location.href = 'Profile.html'; // Replace 'profile.html' with the actual URL
+            } catch (error) {
+                console.error('Error signing up:', error.code, error.message);
+
+                // Display error messages
+                if (error.code === 'auth/email-already-in-use') {
+                    document.getElementById('email-error').innerText = 'Email already in use!';
+                } else if (error.code === 'auth/invalid-email') {
+                    document.getElementById('email-error').innerText = 'Invalid email address!';
+                } else if (error.code === 'auth/weak-password') {
+                    document.getElementById('password-error').innerText = 'Password should be at least 6 characters!';
+                } else {
+                    alert('Error signing up: ' + error.message);
+                }
+            }
+        });
+    </script>
+</body>
+</html>

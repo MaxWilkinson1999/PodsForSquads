@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Settings - PodsForSquads</title>
+    <link rel="stylesheet" href="../Screens/Styles/SettingsStyle.css">
+</head>
+<body>
+    <div class="settings-container">
+        <div class="sidebar">
+            <h2>Account Settings</h2>
+            <a href="#profile" onclick="openTab('profile')" class="active">My Profile</a>
+            <a href="#notifications" onclick="openTab('notifications')">Notifications</a>
+            <a href="#appearance" onclick="openTab('appearance')">Appearance</a>
+            <a href="#logout" class="logout">Log out</a>
+        </div>
+        <div class="content">
+            <div id="profile" class="tab-content active">
+                <h2>My Profile</h2>
+                <div class="profile-image-container">
+                    <img src="default-profile.png" alt="Profile Image" id="profileImage" class="profile-image">
+                    <input type="file" id="profileImageInput" style="display: none;" onchange="changeProfileImage(event)">
+                </div>
+                <div class="card">
+                    <h3>Personal Information <button class="edit-btn" onclick="editPersonalInfo()">Edit</button></h3>
+                    <div id="personal-info-display">
+                        <p><strong>First Name:</strong> <span id="firstNameDisplay">Duncan</span></p>
+                        <p><strong>Last Name:</strong> <span id="lastNameDisplay">Hamra</span></p>
+                    </div>
+                    <div id="personal-info-edit" class="edit-section" style="display:none;">
+                        <label for="firstName">First Name:</label>
+                        <input type="text" id="firstName" value="Duncan">
+                        <label for="lastName">Last Name:</label>
+                        <input type="text" id="lastName" value="Hamra">
+                        <button onclick="savePersonalInfo()">Save</button>
+                        <button onclick="cancelEdit('personal-info')">Cancel</button>
+                    </div>
+                </div>
+                <div class="card">
+                    <h3>Email Address <button class="edit-btn" onclick="editEmail()">Edit</button></h3>
+                    <div id="email-display">
+                        <p><strong>Email Address:</strong> <span id="emailDisplay">duncan@memberstack.com</span></p>
+                    </div>
+                    <div id="email-edit" class="edit-section" style="display:none;">
+                        <label for="email">Email Address:</label>
+                        <input type="email" id="email" value="duncan@memberstack.com">
+                        <button onclick="saveEmail()">Save</button>
+                        <button onclick="cancelEdit('email')">Cancel</button>
+                    </div>
+                </div>
+            </div>
+            <div id="notifications" class="tab-content">
+                <h2>Notifications</h2>
+                <!-- Add notification settings content here -->
+            </div>
+            <div id="appearance" class="tab-content">
+                <h2>Appearance Settings</h2>
+                <div class="form-group">
+                    <label for="darkModeSwitch">Dark Mode</label>
+                    <input type="checkbox" id="darkModeSwitch" onclick="toggleDarkMode()">
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        function openTab(tabId) {
+            var i, tabcontent, tablinks;
+            tabcontent = document.getElementsByClassName("tab-content");
+            for (i = 0; i < tabcontent.length; i++) {
+                tabcontent[i].classList.remove("active");
+            }
+            document.getElementById(tabId).classList.add("active");
+
+            tablinks = document.querySelectorAll(".sidebar a");
+            for (i = 0; i < tablinks.length; i++) {
+                tablinks[i].classList.remove("active");
+            }
+            document.querySelector('.sidebar a[href="#' + tabId + '"]').classList.add("active");
+        }
+
+        function toggleDarkMode() {
+            document.body.classList.toggle('dark-mode');
+        }
+
+        function editPersonalInfo() {
+            document.getElementById('personal-info-display').style.display = 'none';
+            document.getElementById('personal-info-edit').style.display = 'block';
+        }
+
+        function savePersonalInfo() {
+            var firstName = document.getElementById('firstName').value;
+            var lastName = document.getElementById('lastName').value;
+            document.getElementById('firstNameDisplay').innerText = firstName;
+            document.getElementById('lastNameDisplay').innerText = lastName;
+            document.getElementById('personal-info-display').style.display = 'block';
+            document.getElementById('personal-info-edit').style.display = 'none';
+        }
+
+        function editEmail() {
+            document.getElementById('email-display').style.display = 'none';
+            document.getElementById('email-edit').style.display = 'block';
+        }
+
+        function saveEmail() {
+            var email = document.getElementById('email').value;
+            document.getElementById('emailDisplay').innerText = email;
+            document.getElementById('email-display').style.display = 'block';
+            document.getElementById('email-edit').style.display = 'none';
+        }
+
+        function cancelEdit(section) {
+            document.getElementById(section + '-display').style.display = 'block';
+            document.getElementById(section + '-edit').style.display = 'none';
+        }
+
+        function changeProfileImage(event) {
+            var reader = new FileReader();
+            reader.onload = function(){
+                var output = document.getElementById('profileImage');
+                output.src = reader.result;
+            };
+            reader.readAsDataURL(event.target.files[0]);
+        }
+
+        document.getElementById('profileImage').addEventListener('click', function() {
+            document.getElementById('profileImageInput').click();
+        });
+    </script>
+</body>
+</html>
