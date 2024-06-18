@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Favorite Podcasts</title>
+    <style>
+        body {
+            font-family: 'proxima-nova', sans-serif;
+            margin: 0;
+            background-color: #FFFFFF;
+            color: #000000;
+        }
+        header {
+            background-color: #FF9494;
+            padding: 1em;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        nav {
+            display: flex;
+            align-items: center;
+        }
+        nav a {
+            color: #000000;
+            margin: 0 1em;
+            text-decoration: none;
+            transition: margin 0.3s ease-in-out; 
+        }
+        .search-wrapper {
+    position: relative;
+    display: inline-block;
+    margin-right: 1em;
+}
+
+.search-wrapper input {
+    border: none;
+    outline: none;
+    padding: 10px 30px 10px 10px;
+    border-radius: 20px;
+    width: 200px; 
+}
+
+.search-wrapper button {
+    position: absolute;
+    right: 5px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 5px;
+}
+
+.search-wrapper button img {
+    width: 20px;
+    height: 20px;
+}
+
+        .favorites-container {
+            padding: 2em;
+        }
+        .podcast-item {
+            display: flex;
+            align-items: center;
+            gap: 1em;
+            margin-bottom: 1em;
+            cursor: pointer;
+        }
+        .podcast-item img {
+            width: 50px;
+            height: 50px;
+            object-fit: cover;
+            border-radius: 5px;
+        }
+        .modal {
+            display: none; 
+            position: fixed; 
+            z-index: 1; 
+            left: 0;
+            top: 0;
+            width: 100%; 
+            height: 100%; 
+            overflow: auto; 
+            background-color: rgba(0, 0, 0, 0.4); 
+        }
+        .modal-content {
+            background-color: #fefefe;
+            margin: 10% auto; 
+            padding: 20px;
+            border: 1px solid #888;
+            width: 50%;
+            max-width: 600px;
+            border-radius: 10px;
+            position: relative;
+        }
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo">PodsForSquads</div>
+        <nav>
+            <div class="search-wrapper">
+                <input type="text" placeholder="Search podcasts" id="searchInput" oninput="searchPodcasts()">
+                <button type="submit">
+                    <img src="search (1).png" alt="Search">
+                </button>
+            </div>
+            <a href="MainActivity.html">Home</a>
+            <a href="#">Following</a>
+            <a href="Favorites.html">Favorites</a>
+            <a href="playlists.html">Playlists</a>
+            <a href="#">Account</a>
+        </nav>
+    </header>
+    
+    <div class="favorites-container" id="favoritesContainer">
+        <h1>Your Favorite Podcasts</h1>
+    </div>
+
+    <div id="podcastModal" class="modal" onclick="closeModal(event)">
+        <div class="modal-content" onclick="event.stopPropagation()">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <div id="modalContent">
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            renderFavorites();
+        });
+
+        function renderFavorites() {
+            const favorites = JSON.parse(localStorage.getItem('favorites')) || [];
+            const container = document.getElementById('favoritesContainer');
+            
+            if (favorites.length === 0) {
+                container.innerHTML += '<p>You have no favorite podcasts.</p>';
+                return;
+            }
+
+            const favoritesList = document.createElement('div');
+            favoritesList.id = 'favoritesList';
+            container.appendChild(favoritesList);
+
+            favorites.forEach(podcast => {
+                const podcastElement = document.createElement('div');
+                podcastElement.classList.add('podcast-item');
+                podcastElement.innerHTML = `
+                    <img src="${podcast.thumbnail}" alt="${podcast.title}">
+                    <div>
+                        <h3>${podcast.title}</h3>
+                        <p>${podcast.publisher}</p>
+                    </div>
+                `;
+                podcastElement.addEventListener('click', () => openPodcastDetails(podcast));
+                favoritesList.appendChild(podcastElement);
+            });
+        }
+
+        function openPodcastDetails(podcast) {
+    const modalContent = document.createElement('div');
+    modalContent.innerHTML = `
+        <h2>${podcast.title}</h2>
+        <img src="${podcast.thumbnail}" alt="${podcast.title}" style="width:200px;">
+        <p><strong>Publisher:</strong> ${podcast.publisher}</p>
+        <p>Description: ${podcast.description}</p>
+        <button onclick="removeFromFavorites('${podcast.id}')">Remove from Favorites</button>
+    `;
+    
+    const modal = document.getElementById('podcastModal');
+    modal.style.display = 'block';
+    modal.querySelector('#modalContent').innerHTML = ''; 
+    modal.querySelector('#modalContent').appendChild(modalContent);
+}
+
+
+        function closeModal() {
+            document.getElementById('podcastModal').style.display = 'none';
+        }
+
+        function removeFromFavorites(podcastId) {
+            let favorites = JSON.parse(localStorage.getItem('favorites')) || [];
+            favorites = favorites.filter(podcast => podcast.id !== podcastId);
+            localStorage.setItem('favorites', JSON.stringify(favorites));
+
+            // Clear and re-render favorites container
+            const container = document.getElementById('favoritesContainer');
+            container.innerHTML = '<h1>Your Favorite Podcasts</h1>';
+            renderFavorites(); // Re-render favorites after removal
+            closeModal(); // Close modal after removing
+        }
+
+        function searchPodcasts() {
+            const query = document.getElementById('searchInput').value.toLowerCase();
+            const favorites = JSON.parse(localStorage.getItem('favorites')) || [];
+            const container = document.getElementById('favoritesContainer');
+            const favoritesList = document.getElementById('favoritesList');
+
+            favoritesList.innerHTML = ''; 
+
+            const filteredFavorites = favorites.filter(podcast =>
+                podcast.title.toLowerCase().includes(query) ||
+                podcast.publisher.toLowerCase().includes(query)
+            );
+
+            if (filteredFavorites.length === 0) {
+                container.innerHTML += '';
+                return;
+            }
+
+            filteredFavorites.forEach(podcast => {
+                const podcastElement = document.createElement('div');
+                podcastElement.classList.add('podcast-item');
+                podcastElement.innerHTML = `
+                    <img src="${podcast.thumbnail}" alt="${podcast.title}">
+                    <div>
+                        <h3>${podcast.title}</h3>
+                        <p>${podcast.publisher}</p>
+                    </div>
+                `;
+                podcastElement.addEventListener('click', () => openPodcastDetails(podcast));
+                favoritesList.appendChild(podcastElement);
+            });
+        }
+    </script>
+</body>
+</html>
