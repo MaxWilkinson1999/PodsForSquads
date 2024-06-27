@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -11,6 +12,7 @@
             background-color: #FFFFFF;
             color: #000000;
         }
+
         header {
             background-color: #FF9494;
             padding: 1em;
@@ -18,82 +20,104 @@
             justify-content: space-between;
             align-items: center;
         }
+
         nav a {
             color: #000000;
             margin: 0 1em;
             text-decoration: none;
         }
+
         .hero {
             text-align: center;
             padding: 2em 1em;
         }
-        .carousel, .section {
+
+        .carousel,
+        .section {
             margin: 2em 0;
         }
-        .carousel, .section {
+
+        .carousel {
             display: flex;
             overflow-x: auto;
             gap: 1em;
             padding: 0 1em;
+            max-width: 100%;
         }
-        .carousel::-webkit-scrollbar, .section::-webkit-scrollbar {
+
+        .carousel::-webkit-scrollbar,
+        .section::-webkit-scrollbar {
             display: none;
         }
+
         .podcast-item {
             min-width: 200px;
             cursor: pointer;
         }
+
         .podcast-item img {
             width: 100%;
             border-radius: 10px;
         }
+
         footer {
             background-color: #FF9494;
             padding: 1em;
             text-align: center;
         }
-        .footer-links, .social-media {
+
+        .footer-links,
+        .social-media {
             display: flex;
             justify-content: center;
             gap: 1em;
         }
-        .footer-links a, .social-media a {
+
+        .footer-links a,
+        .social-media a {
             color: #000000;
             text-decoration: none;
         }
+
         .modal {
-            display: none; 
-            position: fixed; 
-            z-index: 1; 
+            display: none;
+            position: fixed;
+            z-index: 1;
             left: 0;
             top: 0;
-            width: 100%; 
-            height: 100%; 
-            overflow: auto; 
-            background-color: rgba(0, 0, 0, 0.4); 
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.4);
         }
+
         .modal-content {
             background-color: #fefefe;
-            margin: 10% auto; 
+            margin: 10% auto;
             padding: 20px;
             border: 1px solid #888;
-            width: 50%;
+            width: 80%;
             max-width: 600px;
             border-radius: 10px;
             position: relative;
+            max-height: 70vh;
+            overflow-y: auto;
         }
+
         .close {
             color: #aaa;
             float: right;
             font-size: 28px;
             font-weight: bold;
         }
+
         .close:hover,
         .close:focus {
             color: black;
             text-decoration: none;
             cursor: pointer;
         }
+
         .show-more-btn {
             background-color: #FF9494;
             color: #000;
@@ -103,6 +127,7 @@
             margin: 20px auto;
             display: block;
         }
+
         .social-media {
             display: flex;
             justify-content: center;
@@ -111,15 +136,15 @@
 
         .social-media a {
             display: block;
-            width: 32px; 
-            height: 32px; 
+            width: 32px;
+            height: 32px;
         }
 
         .social-media img {
             width: 100%;
             height: 100%;
-            object-fit: cover; 
-            border-radius: 50%; 
+            object-fit: cover;
+            border-radius: 50%;
         }
 
         .search-results {
@@ -141,6 +166,7 @@
             object-fit: cover;
             border-radius: 5px;
         }
+
         .search-wrapper {
             display: flex;
             align-items: center;
@@ -176,11 +202,65 @@
             transition: color 0.3s;
             margin-left: 10px;
         }
+
         .heart-icon.filled {
             color: red;
         }
+
+        .profile-icon {
+            width: 75px;
+            height: 75px;
+        }
+
+        .profile-icon img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        .modal-header {
+            display: flex;
+            align-items: center;
+        }
+
+        .modal-header h2 {
+            margin: 0;
+        }
+
+
+        .audio-player {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background-color: #f0f0f0;
+            padding: 10px;
+            box-shadow: 0px -1px 10px rgba(0, 0, 0, 0.1);
+            display: none;
+        }
+
+        .audio-controls {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-top: 5px;
+        }
+
+        .audio-controls button {
+            background-color: #FF9494;
+            color: #fff;
+            border: none;
+            padding: 5px 10px;
+            cursor: pointer;
+        }
+
+        .audio-controls input[type="range"] {
+            width: 100px;
+            cursor: pointer;
+        }
     </style>
 </head>
+
 <body>
     <header>
         <div class="logo">PodsForSquads</div>
@@ -199,7 +279,7 @@
             </div>
         </div>
         <div class="profile-icon">
-            <img src="pfp-icon2.png" alt="User Profile">
+            <img src="podsforsquadslogo_noBackground.png" alt="User Profile">
         </div>
     </header>
 
@@ -213,7 +293,6 @@
         <div class="carousel" id="trendingPodcasts"></div>
     </div>
 
-    <!-- Podcast Details Modal -->
     <div id="podcastModal" class="modal" onclick="closeModal(event)">
         <div class="modal-content" onclick="event.stopPropagation()">
             <span class="close" onclick="closeModal()">&times;</span>
@@ -221,7 +300,6 @@
         </div>
     </div>
 
-    <!-- Search Results Modal -->
     <div id="searchModal" class="modal" onclick="closeSearchModal(event)">
         <div class="modal-content" onclick="event.stopPropagation()">
             <span class="close" onclick="closeSearchModal()">&times;</span>
@@ -237,24 +315,40 @@
             <a href="#">Privacy Policy</a>
         </div>
         <div class="social-media">
-            <a href="https://www.facebook.com/profile.php?id=61560365679571" target="_blank"><img src="Facebook_Logo_2023.png" alt="Facebook"></a>
-            <a href="https://x.com/PodsForSquads" target="_blank"><img src="twitter-new-2023-x-logo-white-background-vector_1017-45422.avif" alt="Twitter"></a>
-            <a href="https://www.instagram.com/podsforsquads/" target="_blank"><img src="Instagram_icon.png.webp" alt="Instagram"></a>
+            <a href="https://www.facebook.com/profile.php?id=61560365679571" target="_blank"><img
+                    src="Facebook_Logo_2023.png" alt="Facebook"></a>
+            <a href="https://x.com/PodsForSquads" target="_blank"><img
+                    src="twitter-new-2023-x-logo-white-background-vector_1017-45422.avif" alt="Twitter"></a>
+            <a href="https://www.instagram.com/podsforsquads/" target="_blank"><img src="Instagram_icon.png.webp"
+                    alt="Instagram"></a>
         </div>
     </footer>
+
+
+    <div id="audioPlayer" class="audio-player">
+        <audio id="audioElement" controls>
+            Your browser does not support the audio element.
+        </audio>
+        <div class="audio-controls">
+            <button id="playPauseBtn" onclick="togglePlayPause()">Play</button>
+            <button onclick="skipForward()">Skip</button>
+            <input type="range" id="volumeSlider" min="0" max="1" step="0.1" value="1" oninput="adjustVolume()">
+            <button onclick="closeAudioPlayer()">Close</button>
+        </div>
+    </div>
 
     <script>
         const apiKey = 'cb2038d4dbd841b39dec5309c31b2d6a';
         const podcastLimit = 5;
+        let activePodcastId = null;
 
         async function fetchPodcasts(endpoint, elementId) {
-            const response = await fetch(`https://listen-api.listennotes.com/api/v2/${endpoint}&limit=${podcastLimit}`, {
+            const response = await fetch(`https://listen-api.listennotes.com/api/v2/${endpoint}`, {
                 method: 'GET',
                 headers: {
                     'X-ListenAPI-Key': apiKey
                 }
             });
-
             const data = await response.json();
             const container = document.getElementById(elementId);
             container.innerHTML = '';
@@ -272,7 +366,6 @@
             });
         }
 
-       
         async function fetchPodcastDetails(podcastId) {
             const response = await fetch(`https://listen-api.listennotes.com/api/v2/podcasts/${podcastId}`, {
                 method: 'GET',
@@ -284,18 +377,23 @@
             const podcast = await response.json();
             const modalContent = document.getElementById('modalContent');
             modalContent.innerHTML = `
-                <h2>${podcast.title}</h2>
+                <div class="modal-header">
+                    <h2>${podcast.title}</h2>
+                    <span class="heart-icon" onclick="toggleFavorite(this, '${podcast.id}', '${podcast.title}', '${podcast.thumbnail}', '${podcast.publisher}')">&#9825;</span>
+                </div>
                 <img src="${podcast.thumbnail}" alt="${podcast.title}">
-                <p><strong>Publisher:</strong>
-                <p>${podcast.publisher} <span class="heart-icon" onclick="toggleFavorite(this, '${podcast.id}', '${podcast.title}', '${podcast.thumbnail}', '${podcast.publisher}')">&#9825;</span></p>
-                <p><strong>Description:</strong>
-                <p>${podcast.description}</p>
+                <p><strong>Publisher:</strong> ${podcast.publisher}</p>
+                <p><strong>Description:</strong> ${podcast.description}</p>
+                <iframe src="https://www.listennotes.com/c/${podcast.id}/embed/" height="200px" width="100%" style="width: 1px; min-width: 100%;" frameborder="0" scrolling="yes" loading="lazy"></iframe>
             `;
             document.getElementById('podcastModal').style.display = 'block';
+
+            activateAudioPlayer(podcast.id);
         }
 
         function closeModal() {
             document.getElementById('podcastModal').style.display = 'none';
+            deactivateAudioPlayer();
         }
 
         function closeSearchModal() {
@@ -303,43 +401,110 @@
         }
 
         function searchPodcasts() {
-            const query = document.getElementById('searchInput').value;
-            if (query) {
-                fetch(`https://listen-api.listennotes.com/api/v2/search?q=${query}&type=podcast`, {
-                    method: 'GET',
-                    headers: {
-                        'X-ListenAPI-Key': apiKey
-                    }
-                })
-                .then(response => response.json())
-                .then(data => {
-                    const searchResults = document.getElementById('searchResults');
-                    searchResults.innerHTML = '';
-
-                    data.results.forEach(podcast => {
-                        const podcastElement = document.createElement('div');
-                        podcastElement.classList.add('podcast-item');
-                        podcastElement.innerHTML = `
-                            <img src="${podcast.thumbnail}" alt="${podcast.title_original}">
-                            <div>
-                                <h3>${podcast.title_original}</h3>
-                                <p>${podcast.publisher_original}</p>
-                            </div>
-                        `;
-                        podcastElement.addEventListener('click', () => fetchPodcastDetails(podcast.id));
-                        searchResults.appendChild(podcastElement);
-                    });
-
-                    document.getElementById('searchModal').style.display = 'block';
-                });
+    const query = document.getElementById('searchInput').value;
+    if (query) {
+        fetch(`https://listen-api.listennotes.com/api/v2/search?q=${encodeURIComponent(query)}&type=podcast`, {
+            method: 'GET',
+            headers: {
+                'X-ListenAPI-Key': apiKey
             }
-        }
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        })
+        .then(data => {
+            const searchResults = document.getElementById('searchResults');
+            searchResults.innerHTML = '';
+
+            data.results.forEach(podcast => {
+                const podcastElement = document.createElement('div');
+                podcastElement.classList.add('podcast-item');
+                podcastElement.innerHTML = `
+                    <img src="${podcast.thumbnail}" alt="${podcast.title_original}">
+                    <div>
+                        <h3>${podcast.title_original}</h3>
+                        <p>${podcast.publisher_original}</p>
+                    </div>
+                `;
+                podcastElement.addEventListener('click', () => fetchPodcastDetails(podcast.id));
+                searchResults.appendChild(podcastElement);
+            });
+
+            document.getElementById('searchModal').style.display = 'block';
+        })
+        .catch(error => {
+            console.error('There has been a problem with your fetch operation:', error);
+        });
+    }
+}
+
+
 
         function handleKeyPress(event) {
             if (event.key === 'Enter') {
                 searchPodcasts();
             }
         }
+
+
+        function togglePlayPause() {
+            const audio = document.getElementById('audioElement');
+            const playPauseBtn = document.getElementById('playPauseBtn');
+
+            if (audio.paused || audio.ended) {
+                audio.play();
+                playPauseBtn.textContent = 'Pause';
+            } else {
+                audio.pause();
+                playPauseBtn.textContent = 'Play';
+            }
+        }
+
+
+        function skipForward() {
+            const audio = document.getElementById('audioElement');
+            audio.currentTime += 10;
+        }
+
+
+        function adjustVolume() {
+            const audio = document.getElementById('audioElement');
+            const volume = document.getElementById('volumeSlider').value;
+            audio.volume = volume;
+        }
+
+
+        function closeAudioPlayer() {
+            const audioPlayer = document.getElementById('audioPlayer');
+            audioPlayer.style.display = 'none';
+            const audio = document.getElementById('audioElement');
+            audio.pause();
+            audio.currentTime = 0;
+            audio.volume = 1;
+        }
+
+
+        function activateAudioPlayer(podcastId) {
+            activePodcastId = podcastId;
+            const audioPlayer = document.getElementById('audioPlayer');
+            const audioElement = document.getElementById('audioElement');
+            const playPauseBtn = document.getElementById('playPauseBtn');
+
+            audioPlayer.style.display = 'block';
+            audioElement.src = `https://www.listennotes.com/c/${podcastId}/embed/`;
+            playPauseBtn.textContent = 'Play';
+        }
+
+
+        function deactivateAudioPlayer() {
+            activePodcastId = null;
+            const audioPlayer = document.getElementById('audioPlayer');
+            audioPlayer.style.display = 'none';
+        }
+
 
         function toggleFavorite(element, podcastId, title, thumbnail, publisher) {
             element.classList.toggle('filled');
@@ -362,4 +527,5 @@
         });
     </script>
 </body>
+
 </html>

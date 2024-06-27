@@ -123,7 +123,6 @@
             <a href="#">Following</a>
             <a href="Favorites.html">Favorites</a>
             <a href="playlists.html">Playlists</a>
-            <a href="#">Account</a>
         </nav>
     </header>
     
@@ -198,11 +197,11 @@
             favorites = favorites.filter(podcast => podcast.id !== podcastId);
             localStorage.setItem('favorites', JSON.stringify(favorites));
 
-            // Clear and re-render favorites container
+           
             const container = document.getElementById('favoritesContainer');
             container.innerHTML = '<h1>Your Favorite Podcasts</h1>';
-            renderFavorites(); // Re-render favorites after removal
-            closeModal(); // Close modal after removing
+            renderFavorites(); 
+            closeModal(); 
         }
 
         function searchPodcasts() {
