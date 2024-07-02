@@ -128,11 +128,11 @@
     <header>
         <div class="logo">PodsForSquads</div>
         <nav>
-            <a href="HomeScreen.html">Home</a>
-            <a href="browse.html">Browse</a>
-            <a href="categories.html">Categories</a>
-            <a href="Playlists.html">Playlists</a>
-            <a href="account.html">Account</a>
+            <a href="MainActivity.html">Home</a>
+            <a href="#">Following</a>
+            <a href="Favorites.html">Favorites</a>
+            <a href="playlists.html">Playlists</a>
+            <a href="#">Account</a>
         </nav>
         <div class="profile-icon">
             <img src="profile-icon.png" alt="User Profile">
@@ -142,7 +142,7 @@
     <div class="playlists-container">
         <div class="new-playlist-box" onclick="openNewPlaylistModal()">+ Create New Playlist</div>
         <div id="playlists">
-            <!-- Playlists will be dynamically loaded here -->
+            
         </div>
     </div>
 
@@ -154,13 +154,13 @@
             <a href="#">Privacy Policy</a>
         </div>
         <div class="social-media">
-            <a href="#"><img src="Images/Facebook_Logo_2023.png" alt="Facebook"></a>
-            <a href="#"><img src="Images/twitter-new-2023-x-logo-white-background-vector_1017-45422.avif" alt="Twitter"></a>
-            <a href="#"><img src="Images/Instagram_icon.png.webp" alt="Instagram"></a>
+            <a href="#"><img src="facebook-icon.png" alt="Facebook"></a>
+            <a href="#"><img src="twitter-icon.png" alt="Twitter"></a>
+            <a href="#"><img src="instagram-icon.png" alt="Instagram"></a>
         </div>
     </footer>
 
-    <!-- Modal for creating a new playlist -->
+    
     <div id="newPlaylistModal" class="modal">
         <div class="modal-content">
             <span class="close" onclick="closeNewPlaylistModal()">&times;</span>
@@ -172,7 +172,7 @@
             <div class="form-group">
                 <label for="podcasts">Select Podcasts:</label>
                 <select id="podcasts" multiple>
-                    <!-- Podcast options will be dynamically loaded here -->
+                    
                 </select>
             </div>
             <button onclick="createPlaylist()">Create Playlist</button>
@@ -203,16 +203,15 @@
                 <button>Delete Playlist</button>
             `;
 
-            // Insert new playlist to the right of the "Create New Playlist" box
+           
             const playlistsContainer = document.getElementById('playlists');
-            playlistsContainer.insertBefore(playlistElement, playlistsContainer.children[1]); // Insert at index 1
+            playlistsContainer.insertBefore(playlistElement, playlistsContainer.children[1]);
 
-            // Close the modal
+            
             closeNewPlaylistModal();
         }
 
-        // Fetch podcasts and populate the select dropdown
-        // Sample data, replace with actual data fetched from API
+        
         const podcasts = ['Podcast 1', 'Podcast 2', 'Podcast 3', 'Podcast 4', 'Podcast 5'];
 
         const podcastsSelect = document.getElementById('podcasts');

@@ -179,6 +179,39 @@
         .heart-icon.filled {
             color: red;
         }
+
+
+
+        #scrollToTopBtn {
+      display: none;
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background-color: red;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      padding: 10px 15px;
+      cursor: pointer;
+      
+    }
+
+    .profile-icon {
+            width: 75px; 
+            height: 75px; 
+        }
+        .profile-icon img {
+            width: 100%; 
+            height: 100%;
+            object-fit: contain; 
+        }
+
+
+
+
+
+
+
     </style>
 </head>
 <body>
@@ -189,6 +222,8 @@
             <a href="favorites.html">Favorites</a>
             <a href="playlists.html">Playlists</a>
             <a href="#">Account</a>
+            <a href="Upload.html">Upload</a>
+         
         </nav>
         <div class="search-bar">
             <div class="search-wrapper">
@@ -199,7 +234,7 @@
             </div>
         </div>
         <div class="profile-icon">
-            <img src="pfp-icon2.png" alt="User Profile">
+            <img src="podsforsquadslogo_noBackground.png" alt="User Profile">
         </div>
     </header>
 
@@ -361,5 +396,38 @@
             fetchPodcasts('best_podcasts?genre_id=93', 'trendingPodcasts');
         });
     </script>
+
+<button id="scrollToTopBtn" onclick="scrollToTop()">Top Of Screen</button>
+
+<script>
+  
+  var mybutton = document.getElementById("scrollToTopBtn");
+
+  window.onscroll = function() {
+    scrollFunction();
+  };
+
+  function scrollFunction() {
+    if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+      mybutton.style.display = "block";
+    } else {
+      mybutton.style.display = "none";
+    }
+  }
+
+  
+  function scrollToTop() {
+    document.body.scrollTop = 0; // For Safari
+    document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
+  }
+</script>
+
+
+<script src="LightDarkMode.js"></script>
+
+</body>
+</html>
+
+
 </body>
 </html>
