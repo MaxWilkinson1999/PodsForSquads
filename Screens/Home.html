@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Podcast Streaming Service</title>
     <link rel="stylesheet" href="../Screens/Styles/HomeStyle.css">
 </head>
+
 <body>
     <header>
         <div class="logo">PodsForSquads</div>
@@ -28,26 +30,26 @@
     <div class="hero">
         <h1>Featured Podcasts</h1>
         <div class="carousel" id="featuredPodcasts">
-            <!-- Featured podcasts will be inserted here -->
+
         </div>
     </div>
 
     <div class="section">
         <h2>Trending Podcasts</h2>
         <div class="carousel" id="trendingPodcasts">
-            <!-- Trending podcasts will be inserted here -->
+
         </div>
     </div>
 
     <div class="section">
         <h2>New Releases</h2>
         <div class="carousel" id="newReleases">
-            <!-- New releases will be inserted here -->
+
         </div>
     </div>
 
     <div id="categoriesContainer">
-        <!-- Genres will be inserted here -->
+
     </div>
     <button class="show-more-btn" onclick="showMoreGenres()">Show More</button>
 
@@ -55,7 +57,7 @@
         <div class="modal-content" onclick="event.stopPropagation()">
             <span class="close" onclick="closeModal()">&times;</span>
             <div id="modalContent">
-                <!-- Podcast details will be inserted here -->
+
             </div>
         </div>
     </div>
@@ -190,4 +192,5 @@
         fetchGenres();
     </script>
 </body>
+
 </html>

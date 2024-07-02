@@ -1,18 +1,19 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sign Up - Pods For Squads</title>
     <link rel="stylesheet" href="../Styles/SignUpStyle.css">
     <style>
-        /* Basic styles for better error messages */
         .error {
             color: red;
             margin-top: 5px;
         }
     </style>
 </head>
+
 <body>
     <div class="container">
         <div class="logo">
@@ -51,9 +52,7 @@
         </div>
     </div>
 
-    <!-- Import Firebase -->
     <script type="module">
-        // Import the Firebase functions
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
         import { getAuth, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
         import { getFirestore, doc, setDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
@@ -74,9 +73,9 @@
         const auth = getAuth(app);
         const db = getFirestore(app);
 
-        // Handle sign-up form submission
         document.getElementById('signup-form').addEventListener('submit', async (e) => {
             e.preventDefault();
+
             const username = document.getElementById('username').value;
             const email = document.getElementById('email').value;
             const password = document.getElementById('password').value;
@@ -94,21 +93,21 @@
             }
 
             try {
+                // Create user with email and password
                 const userCredential = await createUserWithEmailAndPassword(auth, email, password);
                 const user = userCredential.user;
 
-                // Save additional user information in Firestore
-                await setDoc(doc(db, "users", user.uid), {
+                // Save user data to Firestore
+                await setDoc(doc(db, "BBL Max Users", user.uid), {
                     username: username,
                     email: email
                 });
 
                 console.log('User signed up:', user);
-                window.location.href = 'Profile.html'; // Replace 'profile.html' with the actual URL
+                window.location.href = 'Login.html';
             } catch (error) {
                 console.error('Error signing up:', error.code, error.message);
 
-                // Display error messages
                 if (error.code === 'auth/email-already-in-use') {
                     document.getElementById('email-error').innerText = 'Email already in use!';
                 } else if (error.code === 'auth/invalid-email') {
@@ -122,4 +121,5 @@
         });
     </script>
 </body>
+
 </html>

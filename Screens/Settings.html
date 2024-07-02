@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Settings - PodsForSquads</title>
     <link rel="stylesheet" href="../Screens/Styles/SettingsStyle.css">
 </head>
+
 <body>
     <div class="settings-container">
         <div class="sidebar">
@@ -20,7 +22,8 @@
                 <h2>My Profile</h2>
                 <div class="profile-image-container">
                     <img src="default-profile.png" alt="Profile Image" id="profileImage" class="profile-image">
-                    <input type="file" id="profileImageInput" style="display: none;" onchange="changeProfileImage(event)">
+                    <input type="file" id="profileImageInput" style="display: none;"
+                        onchange="changeProfileImage(event)">
                 </div>
                 <div class="card">
                     <h3>Personal Information <button class="edit-btn" onclick="editPersonalInfo()">Edit</button></h3>
@@ -52,7 +55,7 @@
             </div>
             <div id="notifications" class="tab-content">
                 <h2>Notifications</h2>
-                
+
             </div>
             <div id="appearance" class="tab-content">
                 <h2>Appearance Settings</h2>
@@ -116,16 +119,151 @@
 
         function changeProfileImage(event) {
             var reader = new FileReader();
-            reader.onload = function(){
+            reader.onload = function () {
                 var output = document.getElementById('profileImage');
                 output.src = reader.result;
             };
             reader.readAsDataURL(event.target.files[0]);
         }
 
-        document.getElementById('profileImage').addEventListener('click', function() {
+        document.getElementById('profileImage').addEventListener('click', function () {
+            document.getElementById('profileImageInput').click();
+        });
+    </script>
+    <script type="module">
+        // Firebase Integration
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+        import { getAuth, onAuthStateChanged, updateProfile, updateEmail } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyBVoIP81JWXonhwnvVrSdIEkaprBuLxvjQ",
+            authDomain: "podsforsquads.firebaseapp.com",
+            databaseURL: "https://podsforsquads-default-rtdb.firebaseio.com",
+            projectId: "podsforsquads",
+            storageBucket: "podsforsquads.appspot.com",
+            messagingSenderId: "369944495856",
+            appId: "1:369944495856:web:d2027932e60be6f17da435"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+
+        document.addEventListener('DOMContentLoaded', () => {
+            onAuthStateChanged(auth, (user) => {
+                if (user) {
+                    const displayName = user.displayName || " ";
+                    const email = user.email;
+                    const photoURL = user.photoURL;
+
+                    document.getElementById('firstNameDisplay').innerText = displayName.split(' ')[0];
+                    document.getElementById('lastNameDisplay').innerText = displayName.split(' ')[1];
+                    document.getElementById('emailDisplay').innerText = email;
+                    document.getElementById('profileImage').src = photoURL || 'default-profile.png';
+
+                    document.getElementById('firstName').value = displayName.split(' ')[0];
+                    document.getElementById('lastName').value = displayName.split(' ')[1];
+                    document.getElementById('email').value = email;
+                } else {
+                    window.location.href = './Auth/Login.html';
+                }
+            });
+        });
+
+        function openTab(tabId) {
+            var i, tabcontent, tablinks;
+            tabcontent = document.getElementsByClassName("tab-content");
+            for (i = 0; i < tabcontent.length; i++) {
+                tabcontent[i].classList.remove("active");
+            }
+            document.getElementById(tabId).classList.add("active");
+
+            tablinks = document.querySelectorAll(".sidebar a");
+            for (i = 0; i < tablinks.length; i++) {
+                tablinks[i].classList.remove("active");
+            }
+            document.querySelector('.sidebar a[href="#' + tabId + '"]').classList.add("active");
+        }
+
+        function toggleDarkMode() {
+            document.body.classList.toggle('dark-mode');
+        }
+
+        function editPersonalInfo() {
+            document.getElementById('personal-info-display').style.display = 'none';
+            document.getElementById('personal-info-edit').style.display = 'block';
+        }
+
+        async function savePersonalInfo() {
+            var firstName = document.getElementById('firstName').value;
+            var lastName = document.getElementById('lastName').value;
+
+            const user = auth.currentUser;
+            if (user) {
+                try {
+                    await updateProfile(user, {
+                        displayName: `${firstName} ${lastName}`
+                    });
+                    document.getElementById('firstNameDisplay').innerText = firstName;
+                    document.getElementById('lastNameDisplay').innerText = lastName;
+                    document.getElementById('personal-info-display').style.display = 'block';
+                    document.getElementById('personal-info-edit').style.display = 'none';
+                } catch (error) {
+                    console.error('Error updating profile:', error);
+                    alert('Error updating profile: ' + error.message);
+                }
+            }
+        }
+
+        function editEmail() {
+            document.getElementById('email-display').style.display = 'none';
+            document.getElementById('email-edit').style.display = 'block';
+        }
+
+        async function saveEmail() {
+            var email = document.getElementById('email').value;
+
+            const user = auth.currentUser;
+            if (user) {
+                try {
+                    await updateEmail(user, email);
+                    document.getElementById('emailDisplay').innerText = email;
+                    document.getElementById('email-display').style.display = 'block';
+                    document.getElementById('email-edit').style.display = 'none';
+                } catch (error) {
+                    console.error('Error updating email:', error);
+                    alert('Error updating email: ' + error.message);
+                }
+            }
+        }
+
+        function cancelEdit(section) {
+            document.getElementById(section + '-display').style.display = 'block';
+            document.getElementById(section + '-edit').style.display = 'none';
+        }
+
+        function changeProfileImage(event) {
+            var reader = new FileReader();
+            reader.onload = function () {
+                var output = document.getElementById('profileImage');
+                output.src = reader.result;
+
+                const user = auth.currentUser;
+                if (user) {
+                    updateProfile(user, {
+                        photoURL: reader.result
+                    }).catch(error => {
+                        console.error('Error updating profile image:', error);
+                        alert('Error updating profile image: ' + error.message);
+                    });
+                }
+            };
+            reader.readAsDataURL(event.target.files[0]);
+        }
+
+        document.getElementById('profileImage').addEventListener('click', function () {
             document.getElementById('profileImageInput').click();
         });
     </script>
 </body>
+
 </html>
