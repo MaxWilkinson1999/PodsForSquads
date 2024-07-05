@@ -29,35 +29,31 @@
             transition: margin 0.3s ease-in-out; 
         }
         .search-wrapper {
-    position: relative;
-    display: inline-block;
-    margin-right: 1em;
-}
-
-.search-wrapper input {
-    border: none;
-    outline: none;
-    padding: 10px 30px 10px 10px;
-    border-radius: 20px;
-    width: 200px; 
-}
-
-.search-wrapper button {
-    position: absolute;
-    right: 5px;
-    top: 50%;
-    transform: translateY(-50%);
-    background: none;
-    border: none;
-    cursor: pointer;
-    padding: 5px;
-}
-
-.search-wrapper button img {
-    width: 20px;
-    height: 20px;
-}
-
+            position: relative;
+            display: inline-block;
+            margin-right: 1em;
+        }
+        .search-wrapper input {
+            border: none;
+            outline: none;
+            padding: 10px 30px 10px 10px;
+            border-radius: 20px;
+            width: 200px; 
+        }
+        .search-wrapper button {
+            position: absolute;
+            right: 5px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 5px;
+        }
+        .search-wrapper button img {
+            width: 20px;
+            height: 20px;
+        }
         .favorites-container {
             padding: 2em;
         }
@@ -135,6 +131,9 @@
             <span class="close" onclick="closeModal()">&times;</span>
             <div id="modalContent">
             </div>
+            <button id="removeFromFavoritesButton" onclick="removeFromFavorites()">
+                <img src="c:/Users/maxwi/Downloads/icons8-trash-can-64.png" alt="Remove from Favorites">
+            </button>
         </div>
     </div>
 
@@ -172,35 +171,41 @@
         }
 
         function openPodcastDetails(podcast) {
-    const modalContent = document.createElement('div');
-    modalContent.innerHTML = `
-        <h2>${podcast.title}</h2>
-        <img src="${podcast.thumbnail}" alt="${podcast.title}" style="width:200px;">
-        <p><strong>Publisher:</strong> ${podcast.publisher}</p>
-        <p>Description: ${podcast.description}</p>
-        <button onclick="removeFromFavorites('${podcast.id}')">Remove from Favorites</button>
-    `;
-    
-    const modal = document.getElementById('podcastModal');
-    modal.style.display = 'block';
-    modal.querySelector('#modalContent').innerHTML = ''; 
-    modal.querySelector('#modalContent').appendChild(modalContent);
-}
-
+            const modalContent = document.createElement('div');
+            modalContent.innerHTML = `
+                <h2>${podcast.title}</h2>
+                <img src="${podcast.thumbnail}" alt="${podcast.title}" style="width:200px;">
+                <p><strong>Publisher:</strong> ${podcast.publisher}</p>
+                <p>Description: ${podcast.description}</p>
+            `;
+            
+            const modal = document.getElementById('podcastModal');
+            modal.style.display = 'block';
+            modal.querySelector('#modalContent').innerHTML = ''; 
+            modal.querySelector('#modalContent').appendChild(modalContent);
+        }
 
         function closeModal() {
             document.getElementById('podcastModal').style.display = 'none';
         }
 
-        function removeFromFavorites(podcastId) {
-            let favorites = JSON.parse(localStorage.getItem('favorites')) || [];
-            favorites = favorites.filter(podcast => podcast.id !== podcastId);
-            localStorage.setItem('favorites', JSON.stringify(favorites));
+        function removeFromFavorites() {
+            const favorites = JSON.parse(localStorage.getItem('favorites')) || [];
+            const modal = document.getElementById('podcastModal');
+            const modalContent = modal.querySelector('#modalContent');
+            
+            // Retrieve podcast title from modal content
+            const podcastTitle = modalContent.querySelector('h2').textContent.trim();
 
-           
+            // Remove podcast from favorites
+            const updatedFavorites = favorites.filter(podcast => podcast.title !== podcastTitle);
+            localStorage.setItem('favorites', JSON.stringify(updatedFavorites));
+
+            // Refresh favorites list
             const container = document.getElementById('favoritesContainer');
             container.innerHTML = '<h1>Your Favorite Podcasts</h1>';
             renderFavorites(); 
+            
             closeModal(); 
         }
 
