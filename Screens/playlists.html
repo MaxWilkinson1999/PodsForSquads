@@ -5,11 +5,26 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Playlists - Podcast Streaming Service</title>
     <style>
+         :root {
+            --background-color: #FFFFFF;
+            --text-color: #000000;
+            --header-background-color: #FF9494;
+            --header-text-color: #000000;
+        }
+
         body {
             font-family: 'proxima-nova', sans-serif;
             margin: 0;
-            background-color: #FFFFFF;
-            color: #000000;
+            background-color: var(--background-color);
+            color: var(--text-color);
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        body.dark-mode {
+            --background-color: #000000;
+            --text-color: #ff9494;
+            --header-background-color: #333333;
+            --header-text-color: #ff9494;
         }
         header {
             background-color: #FF9494;
@@ -178,6 +193,8 @@
             <button onclick="createPlaylist()">Create Playlist</button>
         </div>
     </div>
+
+<script src="LightDarkMode.js"></script>
 
     <script>
         function openNewPlaylistModal() {
