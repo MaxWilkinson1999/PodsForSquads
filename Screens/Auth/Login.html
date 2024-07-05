@@ -102,7 +102,7 @@
                 const result = await signInWithPopup(auth, provider);
                 const user = result.user;
                 console.log('User logged in with Google:', user);
-                window.location.href = '../Home.html'; // Redirect to home page after successful login
+                window.location.href = '../HomeScreen.html'; // Redirect to home page after successful login
             } catch (error) {
                 console.error('Error during Google sign-in:', error.code, error.message);
                 alert('Error logging in with Google: ' + error.message);
@@ -123,7 +123,7 @@
                 const userCredential = await signInWithEmailAndPassword(auth, email, password);
                 const user = userCredential.user;
                 console.log('User logged in:', user);
-                window.location.href = '../Home.html'; // Redirect to home page after successful login
+                window.location.href = '../HomeScreen.html'; // Redirect to home page after successful login
             } catch (error) {
                 const errorCode = error.code;
                 const errorMessage = error.message;
