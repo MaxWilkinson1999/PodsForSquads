@@ -41,7 +41,7 @@
         .playlists-container {
             padding: 2em 1em;
             display: flex;
-            flex-direction: row-reverse;
+            flex-direction: row;
             gap: 1em;
             overflow-x: auto; 
         }
@@ -137,6 +137,14 @@
             border: 1px solid #ccc;
             border-radius: 5px;
         }
+        .podcast-option {
+            display: flex;
+            align-items: center;
+            margin-bottom: 0.5em;
+        }
+        .podcast-option label {
+            margin-left: 0.5em;
+        }
     </style>
 </head>
 <body>
@@ -144,10 +152,11 @@
         <div class="logo">PodsForSquads</div>
         <nav>
             <a href="HomeScreen.html">Home</a>
-            <a href="browse.html">Browse</a>
-            <a href="categories.html">Categories</a>
-            <a href="Playlists.html">Playlists</a>
-            <a href="account.html">Account</a>
+            <a href="Favorites.html">Favorites</a>
+            <a href="playlists.html">Playlists</a>
+            <a href="Upload.html">Upload</a>
+
+
         </nav>
         <div class="profile-icon">
             <img src="profile-icon.png" alt="User Profile">
@@ -157,7 +166,7 @@
     <div class="playlists-container">
         <div class="new-playlist-box" onclick="openNewPlaylistModal()">+ Create New Playlist</div>
         <div id="playlists">
-            <!-- Playlists will be dynamically loaded here -->
+            <!-- Existing playlists will be injected here -->
         </div>
     </div>
 
@@ -169,13 +178,12 @@
             <a href="#">Privacy Policy</a>
         </div>
         <div class="social-media">
-            <a href="#"><img src="Images/Facebook_Logo_2023.png" alt="Facebook"></a>
-            <a href="#"><img src="Images/twitter-new-2023-x-logo-white-background-vector_1017-45422.avif" alt="Twitter"></a>
-            <a href="#"><img src="Images/Instagram_icon.png.webp" alt="Instagram"></a>
+            <a href="#"><img src="facebook-icon.png" alt="Facebook"></a>
+            <a href="#"><img src="twitter-icon.png" alt="Twitter"></a>
+            <a href="#"><img src="instagram-icon.png" alt="Instagram"></a>
         </div>
     </footer>
 
-    <!-- Modal for creating a new playlist -->
     <div id="newPlaylistModal" class="modal">
         <div class="modal-content">
             <span class="close" onclick="closeNewPlaylistModal()">&times;</span>
@@ -185,20 +193,54 @@
                 <input type="text" id="playlistName" placeholder="Enter playlist name">
             </div>
             <div class="form-group">
-                <label for="podcasts">Select Podcasts:</label>
-                <select id="podcasts" multiple>
-                    <!-- Podcast options will be dynamically loaded here -->
-                </select>
+                <label>Select Podcasts:</label>
+                <div id="podcastOptions"></div>
             </div>
             <button onclick="createPlaylist()">Create Playlist</button>
         </div>
     </div>
 
-<script src="LightDarkMode.js"></script>
+
+    <script src="LightDarkMode.js"></script>
+
+
 
     <script>
+        const apiKey = 'cb2038d4dbd841b39dec5309c31b2d6a';
+        const apiUrl = 'https://listen-api.listennotes.com/api/v2';
+        const options = {
+            headers: {
+                'X-ListenAPI-Key': apiKey
+            }
+        };
+
+        async function fetchPodcasts() {
+            try {
+                const response = await fetch(`${apiUrl}/best_podcasts?genre_id=68`, options);
+                const data = await response.json();
+                console.log(data); // Debugging: Log the data to see if the podcasts are fetched correctly
+                const podcasts = data.podcasts;
+
+                const podcastOptionsContainer = document.getElementById('podcastOptions');
+                podcastOptionsContainer.innerHTML = '';
+
+                podcasts.forEach(podcast => {
+                    const podcastOption = document.createElement('div');
+                    podcastOption.classList.add('podcast-option');
+                    podcastOption.innerHTML = `
+                        <input type="checkbox" id="podcast-${podcast.id}" value="${podcast.title}">
+                        <label for="podcast-${podcast.id}">${podcast.title}</label>
+                    `;
+                    podcastOptionsContainer.appendChild(podcastOption);
+                });
+            } catch (error) {
+                console.error('Error fetching podcasts:', error);
+            }
+        }
+
         function openNewPlaylistModal() {
             document.getElementById('newPlaylistModal').style.display = 'block';
+            fetchPodcasts();
         }
 
         function closeNewPlaylistModal() {
@@ -207,38 +249,31 @@
 
         function createPlaylist() {
             const playlistName = document.getElementById('playlistName').value;
-            const selectedPodcasts = Array.from(document.getElementById('podcasts').selectedOptions).map(option => option.value);
+            const selectedPodcasts = Array.from(document.querySelectorAll('#podcastOptions input[type="checkbox"]:checked')).map(checkbox => ({
+                id: checkbox.id.split('-')[1],
+                title: checkbox.value
+            }));
 
-            // Create playlist HTML
             const playlistElement = document.createElement('div');
             playlistElement.classList.add('playlist-item');
             playlistElement.innerHTML = `
                 <h3>${playlistName}</h3>
                 <ul>
-                    ${selectedPodcasts.map(podcast => `<li>${podcast}</li>`).join('')}
+                    ${selectedPodcasts.map(podcast => `<li>${podcast.title}</li>`).join('')}
                 </ul>
-                <button>Delete Playlist</button>
+                <button onclick="deletePlaylist(this)">Delete Playlist</button>
             `;
 
-            // Insert new playlist to the right of the "Create New Playlist" box
             const playlistsContainer = document.getElementById('playlists');
-            playlistsContainer.insertBefore(playlistElement, playlistsContainer.children[1]); // Insert at index 1
+            playlistsContainer.appendChild(playlistElement);
 
-            // Close the modal
             closeNewPlaylistModal();
         }
 
-        // Fetch podcasts and populate the select dropdown
-        // Sample data, replace with actual data fetched from API
-        const podcasts = ['Podcast 1', 'Podcast 2', 'Podcast 3', 'Podcast 4', 'Podcast 5'];
-
-        const podcastsSelect = document.getElementById('podcasts');
-        podcasts.forEach(podcast => {
-            const option = document.createElement('option');
-            option.value = podcast;
-            option.textContent = podcast;
-            podcastsSelect.appendChild(option);
-        });
+        function deletePlaylist(button) {
+            const playlistItem = button.parentElement;
+            playlistItem.remove();
+        }
     </script>
 </body>
 </html>

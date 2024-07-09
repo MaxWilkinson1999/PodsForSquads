@@ -1,5 +1,3 @@
-Max's Favorties.html
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,7 +5,7 @@ Max's Favorties.html
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Favorite Podcasts</title>
     <style>
-      :root {
+         :root {
             --background-color: #FFFFFF;
             --text-color: #000000;
             --header-background-color: #FF9494;
@@ -46,35 +44,31 @@ Max's Favorties.html
             transition: margin 0.3s ease-in-out; 
         }
         .search-wrapper {
-    position: relative;
-    display: inline-block;
-    margin-right: 1em;
-}
-
-.search-wrapper input {
-    border: none;
-    outline: none;
-    padding: 10px 30px 10px 10px;
-    border-radius: 20px;
-    width: 200px; 
-}
-
-.search-wrapper button {
-    position: absolute;
-    right: 5px;
-    top: 50%;
-    transform: translateY(-50%);
-    background: none;
-    border: none;
-    cursor: pointer;
-    padding: 5px;
-}
-
-.search-wrapper button img {
-    width: 20px;
-    height: 20px;
-}
-
+            position: relative;
+            display: inline-block;
+            margin-right: 1em;
+        }
+        .search-wrapper input {
+            border: none;
+            outline: none;
+            padding: 10px 30px 10px 10px;
+            border-radius: 20px;
+            width: 200px; 
+        }
+        .search-wrapper button {
+            position: absolute;
+            right: 5px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 5px;
+        }
+        .search-wrapper button img {
+            width: 20px;
+            height: 20px;
+        }
         .favorites-container {
             padding: 2em;
         }
@@ -137,9 +131,9 @@ Max's Favorties.html
                 </button>
             </div>
             <a href="HomeScreen.html">Home</a>
-            <a href="#">Following</a>
             <a href="Favorites.html">Favorites</a>
             <a href="playlists.html">Playlists</a>
+            <a href="Upload.html">Upload</a>
         </nav>
     </header>
     
@@ -152,10 +146,15 @@ Max's Favorties.html
             <span class="close" onclick="closeModal()">&times;</span>
             <div id="modalContent">
             </div>
+            <button id="removeFromFavoritesButton" onclick="removeFromFavorites()">
+                <img src="c:/Users/maxwi/Downloads/icons8-trash-can-64.png" alt="Remove from Favorites">
+            </button>
         </div>
     </div>
 
-<script src="LightDarkMode.js"></script>
+
+    <script src="LightDarkMode.js"></script>
+
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
@@ -191,35 +190,41 @@ Max's Favorties.html
         }
 
         function openPodcastDetails(podcast) {
-    const modalContent = document.createElement('div');
-    modalContent.innerHTML = `
-        <h2>${podcast.title}</h2>
-        <img src="${podcast.thumbnail}" alt="${podcast.title}" style="width:200px;">
-        <p><strong>Publisher:</strong> ${podcast.publisher}</p>
-        <p>Description: ${podcast.description}</p>
-        <button onclick="removeFromFavorites('${podcast.id}')">Remove from Favorites</button>
-    `;
-    
-    const modal = document.getElementById('podcastModal');
-    modal.style.display = 'block';
-    modal.querySelector('#modalContent').innerHTML = ''; 
-    modal.querySelector('#modalContent').appendChild(modalContent);
-}
-
+            const modalContent = document.createElement('div');
+            modalContent.innerHTML = `
+                <h2>${podcast.title}</h2>
+                <img src="${podcast.thumbnail}" alt="${podcast.title}" style="width:200px;">
+                <p><strong>Publisher:</strong> ${podcast.publisher}</p>
+                <p>Description: ${podcast.description}</p>
+            `;
+            
+            const modal = document.getElementById('podcastModal');
+            modal.style.display = 'block';
+            modal.querySelector('#modalContent').innerHTML = ''; 
+            modal.querySelector('#modalContent').appendChild(modalContent);
+        }
 
         function closeModal() {
             document.getElementById('podcastModal').style.display = 'none';
         }
 
-        function removeFromFavorites(podcastId) {
-            let favorites = JSON.parse(localStorage.getItem('favorites')) || [];
-            favorites = favorites.filter(podcast => podcast.id !== podcastId);
-            localStorage.setItem('favorites', JSON.stringify(favorites));
+        function removeFromFavorites() {
+            const favorites = JSON.parse(localStorage.getItem('favorites')) || [];
+            const modal = document.getElementById('podcastModal');
+            const modalContent = modal.querySelector('#modalContent');
+            
+            
+            const podcastTitle = modalContent.querySelector('h2').textContent.trim();
+
+            
+            const updatedFavorites = favorites.filter(podcast => podcast.title !== podcastTitle);
+            localStorage.setItem('favorites', JSON.stringify(updatedFavorites));
 
            
             const container = document.getElementById('favoritesContainer');
             container.innerHTML = '<h1>Your Favorite Podcasts</h1>';
             renderFavorites(); 
+            
             closeModal(); 
         }
 
@@ -258,3 +263,5 @@ Max's Favorties.html
     </script>
 </body>
 </html>
+Fav.txt
+9 KB
