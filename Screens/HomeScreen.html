@@ -11,6 +11,11 @@
             --text-color: #000000;
             --header-background-color: #FF9494;
             --header-text-color: #000000;
+            --search-bar-background: #FFFFFF;
+            --search-bar-text: #000000;
+            --search-results-background: #F0F0F0;
+            --heart-color: #000000; /* Black for light mode */
+            --heart-filled-color: #FF0000; /* Red when filled */
         }
 
         body {
@@ -23,14 +28,16 @@
 
         body.dark-mode {
             --background-color: #000000;
-            --text-color: #ff9494;
-            --header-background-color: #333333;
-            --header-text-color: #ff9494;
+            --text-color: #FF9494;
+            --search-bar-background: #000000;
+            --search-bar-text: #FF9494;
+            --search-results-background: #333333;
+            --heart-color: #FFFFFF; /* White for dark mode */
         }
 
-
         header {
-            background-color: #FF9494;
+            background-color: var(--header-background-color);
+            color: var(--header-text-color);
             padding: 1em;
             display: flex;
             justify-content: space-between;
@@ -38,7 +45,7 @@
         }
 
         nav a {
-            color: #000000;
+            color: var(--header-text-color);
             margin: 0 1em;
             text-decoration: none;
         }
@@ -77,9 +84,10 @@
         }
 
         footer {
-            background-color: #FF9494;
+            background-color: var(--header-background-color);
             padding: 1em;
             text-align: center;
+            color: var(--header-text-color);
         }
 
         .footer-links,
@@ -91,7 +99,7 @@
 
         .footer-links a,
         .social-media a {
-            color: #000000;
+            color: var(--header-text-color);
             text-decoration: none;
         }
 
@@ -108,7 +116,7 @@
         }
 
         .modal-content {
-            background-color: #fefefe;
+            background-color: var(--search-results-background);
             margin: 10% auto;
             padding: 20px;
             border: 1px solid #888;
@@ -167,6 +175,8 @@
             max-height: 400px;
             overflow-y: auto;
             padding: 1em;
+            background-color: var(--search-results-background);
+            
         }
 
         .search-results .podcast-item {
@@ -186,7 +196,7 @@
         .search-wrapper {
             display: flex;
             align-items: center;
-            background-color: #fff;
+            background-color: var(--search-bar-background);
             border-radius: 20px;
             padding: 5px;
         }
@@ -197,6 +207,8 @@
             flex: 1;
             padding: 10px;
             border-radius: 20px;
+            background-color: var(--search-bar-background);
+            color: var(--search-bar-text);
         }
 
         .search-wrapper button {
@@ -212,21 +224,18 @@
         }
 
         .heart-icon {
-    font-size: 24px;
-    cursor: pointer;
-    color: black; 
-    transition: color 0.3s;
-    margin-left: 10px;
-    fill: none; 
-}
+            font-size: 24px;
+            cursor: pointer;
+            color: var(--heart-color);
+            transition: color 0.3s;
+            margin-left: 10px;
+            fill: none;
+        }
 
-.heart-icon.filled {
-    color: #FF0000; 
-    fill: currentColor; 
-}
-
-
-
+        .heart-icon.filled {
+            color: var(--heart-filled-color);
+            fill: currentColor;
+        }
 
         .profile-icon {
             width: 75px;
@@ -247,7 +256,6 @@
         .modal-header h2 {
             margin: 0;
         }
-
 
         .audio-player {
             position: fixed;
@@ -281,22 +289,17 @@
         }
 
         #scrollToTopBtn {
-      display: none;
-      position: fixed;
-      bottom: 20px;
-      right: 20px;
-      background-color: red;
-      color: white;
-      border: none;
-      border-radius: 5px;
-      padding: 10px 15px;
-      cursor: pointer;
-      
-    }
-
-
-
-
+            display: none;
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: red;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 10px 15px;
+            cursor: pointer;
+        }
     </style>
 </head>
 
@@ -304,12 +307,12 @@
     <header>
         <div class="logo">PodsForSquads</div>
         <nav>
-            <a href="#">Following</a>
-            <a href="favorites.html">Favorites</a>
-            <a href="playlists.html">Playlists</a>
+            <a href="HomeScreen.html">Home</a>
             <a href="Upload.html">Upload</a>
+            <a href="playlists.html">Playlists</a>
+            <a href="favorites.html">Favorites</a>
+            <a href="Categories.html">Categories</a>
             <a href="Settings.html">Settings</a>
-            <a href="#">Account</a>
         </nav>
         <div class="search-bar">
             <div class="search-wrapper">
@@ -351,17 +354,14 @@
     <footer>
         <div class="footer-links">
             <a href="#">About Us</a>
-            <a href="#">Contact</a>
+            <a href="Contact.html">Contact</a>
             <a href="#">Terms of Service</a>
             <a href="#">Privacy Policy</a>
         </div>
         <div class="social-media">
-            <a href="https://www.facebook.com/profile.php?id=61560365679571" target="_blank"><img
-                    src="Facebook_Logo_2023.png" alt="Facebook"></a>
-            <a href="https://x.com/PodsForSquads" target="_blank"><img
-                    src="twitter-new-2023-x-logo-white-background-vector_1017-45422.avif" alt="Twitter"></a>
-            <a href="https://www.instagram.com/podsforsquads/" target="_blank"><img src="Instagram_icon.png.webp"
-                    alt="Instagram"></a>
+            <a href="https://www.facebook.com/profile.php?id=61560365679571" target="_blank"><img src="FB Icon.jpg" alt="Facebook"></a>
+            <a href="https://x.com/PodsForSquads" target="_blank"><img src="twitter icon.png" alt="Twitter"></a>
+            <a href="https://www.instagram.com/podsforsquads/" target="_blank"><img src="IG Icon.jpg" alt="Instagram"></a>
         </div>
     </footer>
 

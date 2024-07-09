@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Me!</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        * {
+            margin: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        :root {
+            --background-color: #FFFFFF;
+            --text-color: #000000;
+            --header-background-color: #FF9494;
+            --header-text-color: #000000;
+        }
+
+        body.dark-mode {
+            --background-color: #000000;
+            --text-color: #ff9494;
+            --header-background-color: #333333;
+            --header-text-color: #ff9494;
+        }
+
+        body {
+            width: 100%;
+            height: 100vh;
+            background: navy;
+            display: flex;
+            flex-direction: column;
+            background-color: var(--background-color);
+            color: var(--text-color);
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        header {
+            width: 100%;
+            background-color: var(--header-background-color);
+            color: var(--header-text-color);
+            padding: 1em;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        nav a {
+            color: var(--header-text-color);
+            margin: 0 1em;
+            text-decoration: none;
+        }
+
+        .hero {
+            text-align: center;
+            padding: 2em 1em;
+        }
+
+        main {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        button {
+            color: white;
+            background-color: grey;
+            padding: 30px 100px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-left: 10px;
+            margin-bottom: 10px;
+        }
+
+        form {
+            background: var(--header-background-color);
+            display: flex;
+            flex-direction: column;
+            padding: 2vw 4vw;
+            width: 600px;
+            border-radius: 25px;
+            align-content: center;
+        }
+
+        form h3 {
+            color: var(--text-color);
+            font-weight: 800;
+            margin-bottom: 20px;
+        }
+
+        form input,
+        form textarea {
+            border: 0;
+            margin: 10px 0;
+            padding: 20px;
+            outline: none;
+            background-color: white;
+            font-size: 16px;
+        }
+
+        form button {
+            padding: 15px;
+            background-color: red;
+            color: antiquewhite;
+            font-size: 16px;
+            border: 0;
+            outline: none;
+            cursor: pointer;
+            width: 150px;
+            margin: 20px auto 0;
+            border-radius: 30px;
+        }
+
+        #Submit {
+            align-content: center;
+        }
+
+        footer {
+            width: 100%;
+            background-color: var(--header-background-color);
+            padding: 1em;
+            text-align: center;
+            color: var(--header-text-color);
+        }
+
+        .footer-links,
+        .social-media {
+            display: flex;
+            justify-content: center;
+            gap: 1em;
+        }
+
+        .footer-links a,
+        .social-media a {
+            color: var(--header-text-color);
+            text-decoration: none;
+        }
+
+        .social-media {
+            display: flex;
+            justify-content: center;
+            gap: 1em;
+        }
+
+        .social-media a {
+            display: block;
+            width: 32px;
+            height: 32px;
+        }
+
+        .social-media img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 50%;
+        }
+    </style>
+</head>
+
+<body>
+    <script src="LightDarkMode.js"></script>
+
+    <header id="Header">
+        <nav>
+            <a href="HomeScreen.html">Home</a>
+            <a href="Upload.html">Upload</a>
+            <a href="playlists.html">Playlists</a>
+            <a href="favorites.html">Favorites</a>
+            <a href="Categories.html">Categories</a>
+            <a href="Settings.html">Settings</a>
+        </nav>
+    </header>
+
+    <main>
+        <div class="container">
+            <form id="contactForm" action="https://formspree.io/f/mzzpbnov" method="POST">
+                <h3>GET IN TOUCH</h3>
+                <input type="text" id="name" name="name" placeholder="Your Name" required>
+                <input type="email" id="email"  placeholder="Please enter Companies Email" required>
+                <small>Please enter the company's email as follows to ensure you're not a bot: PodsForSquads@gmail.com</small>
+                <input type="text" id="phone" name="phone" placeholder="Phone #" required>
+                <input type="email" id="senderEmail" name="senderEmail" placeholder="Your email">
+                <textarea id="message" name="message" rows="4" placeholder="How can I help you?" required></textarea>
+                <button type="submit" id="Submit">Send</button>
+            </form>
+            <div id="ticketNumber" style="display: none;">
+                <p>Thank you! Your ticket number is: <span id="ticketNumberValue"></span></p>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="footer-links">
+            <a href="#">About Us</a>
+            <a href="Contact.html">Contact</a>
+            <a href="#">Terms of Service</a>
+            <a href="#">Privacy Policy</a>
+        </div>
+        <div class="social-media">
+            <a href="https://www.facebook.com/profile.php?id=61560365679571" target="_blank"><img src="FB Icon.jpg" alt="Facebook"></a>
+            <a href="https://x.com/PodsForSquads" target="_blank"><img src="twitter icon.png" alt="Twitter"></a>
+            <a href="https://www.instagram.com/podsforsquads/" target="_blank"><img src="IG Icon.jpg" alt="Instagram"></a>
+        </div>
+    </footer>
+
+    <script>
+        document.getElementById('contactForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            const form = event.target;
+            const data = new FormData(form);
+
+            fetch(form.action, {
+                method: form.method,
+                body: data,
+                headers: {
+                    'Accept': 'application/json'
+                }
+            }).then(response => {
+                if (response.ok) {
+                    generateTicketNumber();
+                } else {
+                    alert('There was a problem with your submission. Please try again.');
+                }
+            }).catch(error => {
+                console.error('Error:', error);
+                alert('There was a problem with your submission. Please try again.');
+            });
+        });
+
+        function generateTicketNumber() {
+            const ticketNumber = 'TICKET-' + Math.floor(Math.random() * 1000000);
+            document.getElementById('ticketNumberValue').textContent = ticketNumber;
+            document.getElementById('ticketNumber').style.display = 'block';
+        }
+    </script>
+</body>
+</html>

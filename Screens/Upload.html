@@ -24,16 +24,17 @@
             --background-color: #000000;
             --text-color: #ff9494;
             --header-background-color: #333333;
-            --header-text-color: #ff9494;
+            --header-text-color: #000000;
         }
 
         header {
-            background-color: var(--header-background-color);
+           
+            background-color: #FF9494;
+            color:#000000;
             padding: 1em;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            color: var(--header-text-color);
         }
 
         nav a {
@@ -164,6 +165,12 @@
       
     }
 
+    footer {
+            background-color: #FF9494;
+            padding: 1em;
+            text-align: center;
+        }
+
     #Submit
     {
             background-color: #FF9494;
@@ -175,10 +182,11 @@
         <div class="logo">PodsForSquads</div>
         <nav>
             <a href="HomeScreen.html">Home</a>
-           <a href="Settings.html">Settings</a>
-            <a href="Playlists.html">Playlists</a>
-          <a href="Favorites.html">Favorites</a>
             <a href="Upload.html">Upload</a>
+            <a href="playlists.html">Playlists</a>
+            <a href="favorites.html">Favorites</a>
+            <a href="Categories.html">Categories</a>
+            <a href="Settings.html">Settings</a>
         </nav>
         <div class="search-bar">
             <input type="text" placeholder="Search podcasts" id="searchInput" onkeypress="handleKeyPress(event)">
@@ -191,7 +199,7 @@
             
         </div>
 
-        <button id="theme-toggle">Toggle Theme</button>
+       
     </header>
 
     <main>
@@ -225,24 +233,17 @@
             <a href="#">Privacy Policy</a>
         </div>
         <div class="social-media">
-            <a href="https://www.facebook.com/profile.php?id=61560365679571" target="_blank">
-                <img src="Images/Facebook_Logo_2023.png" alt="Facebook">
-            </a>
-            <a href="https://x.com/PodsForSquads" target="_blank">
-                <img src="Images/twitter-new-2023-x-logo-white-background-vector_1017-45422.avif" alt="Twitter">
-            </a>
-            <a href="https://www.instagram.com/podsforsquads/" target="_blank">
-                <img src="Images/Instagram_icon.png.webp" alt="Instagram">
-            </a>
+            <a href="https://www.facebook.com/profile.php?id=61560365679571" target="_blank"><img src="FB Icon.jpg" alt="Facebook"></a>
+            <a href="https://x.com/PodsForSquads" target="_blank"><img src="twitter icon.png" alt="Twitter"></a>
+            <a href="https://www.instagram.com/podsforsquads/" target="_blank"><img src="IG Icon.jpg" alt="Instagram"></a>
         </div>
     </footer>
 
 
 
-    <script src="LightDarkMode.js"></script>
+    
 
-
-
+<script src="LightDarkMode.js"></script>
 
 
 
