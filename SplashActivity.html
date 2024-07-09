@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pods For Squads</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lobster&display=swap">
+    <style>
+        body, html {
+            height: 100%;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: Arial, sans-serif;
+            overflow: hidden;
+        }
+
+        .background-video {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: -1; 
+        }
+
+        .overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.4);
+            z-index: 0;
+        }
+
+        .logo-container {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            z-index: 1;
+        }
+
+        .logo {
+            max-width: 400px;
+            height: auto;
+            opacity: 0.7; 
+            mix-blend-mode: overlay;
+        }
+
+        .splash-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            z-index: 1;
+            color: #fff;
+            animation: fadeIn 2s ease-in;
+        }
+
+        .catchphrase {
+            font-size: 4em;
+            margin-bottom: 20px;
+            max-width: 80%;
+            font-family: 'Lobster', cursive;
+        }
+
+        .next-button {
+            padding: 15px 30px;
+            font-size: 20px;
+            color: #0c0c0c;
+            background-color: #61dafb;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .next-button:hover {
+            background-color: #f12121;
+            transform: scale(1.05);
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .logo-container {
+                top: 10px;
+                left: 10px;
+            }
+
+            .logo {
+                max-width: 100px;
+            }
+
+            .catchphrase {
+                font-size: 1.5em;
+            }
+
+            .next-button {
+                font-size: 16px;
+                padding: 10px 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <video autoplay muted loop class="background-video">
+        <source src="./Screens/Images+Videos/SplashScreen_Video.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
+    <div class="overlay"></div>
+    <div class="logo-container">
+        <img src="./Screens/Images+Videos/Website_Logo.png" alt="Logo" class="logo">
+    </div>
+    <div class="splash-container">
+        <div class="catchphrase">Unleash Your Voice with Pods For Squads</div>
+        <button class="next-button" onclick="goToNextScreen()">Continue</button>
+    </div>
+    <script>
+        function goToNextScreen() {
+            window.location.href = "./Screens/Auth/Login.html";
+        }
+    </script>
+</body>
+</html>
