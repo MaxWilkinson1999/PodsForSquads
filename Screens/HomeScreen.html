@@ -14,8 +14,10 @@
             --search-bar-background: #FFFFFF;
             --search-bar-text: #000000;
             --search-results-background: #F0F0F0;
-            --heart-color: #000000; /* Black for light mode */
-            --heart-filled-color: #FF0000; /* Red when filled */
+            --heart-color: #000000;
+            /* Black for light mode */
+            --heart-filled-color: #FF0000;
+            /* Red when filled */
         }
 
         body {
@@ -32,7 +34,8 @@
             --search-bar-background: #000000;
             --search-bar-text: #FF9494;
             --search-results-background: #333333;
-            --heart-color: #FFFFFF; /* White for dark mode */
+            --heart-color: #FFFFFF;
+            /* White for dark mode */
         }
 
         header {
@@ -176,7 +179,7 @@
             overflow-y: auto;
             padding: 1em;
             background-color: var(--search-results-background);
-            
+
         }
 
         .search-results .podcast-item {
@@ -359,9 +362,11 @@
             <a href="#">Privacy Policy</a>
         </div>
         <div class="social-media">
-            <a href="https://www.facebook.com/profile.php?id=61560365679571" target="_blank"><img src="FB Icon.jpg" alt="Facebook"></a>
+            <a href="https://www.facebook.com/profile.php?id=61560365679571" target="_blank"><img src="FB Icon.jpg"
+                    alt="Facebook"></a>
             <a href="https://x.com/PodsForSquads" target="_blank"><img src="twitter icon.png" alt="Twitter"></a>
-            <a href="https://www.instagram.com/podsforsquads/" target="_blank"><img src="IG Icon.jpg" alt="Instagram"></a>
+            <a href="https://www.instagram.com/podsforsquads/" target="_blank"><img src="IG Icon.jpg"
+                    alt="Instagram"></a>
         </div>
     </footer>
 
@@ -379,7 +384,7 @@
         </div>
     </div>
 
-   
+
 
     <script>
         const apiKey = 'cb2038d4dbd841b39dec5309c31b2d6a';
@@ -445,45 +450,45 @@
         }
 
         function searchPodcasts() {
-    const query = document.getElementById('searchInput').value;
-    if (query) {
-        fetch(`https://listen-api.listennotes.com/api/v2/search?q=${encodeURIComponent(query)}&type=podcast`, {
-            method: 'GET',
-            headers: {
-                'X-ListenAPI-Key': apiKey
-            }
-        })
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Network response was not ok');
-            }
-            return response.json();
-        })
-        .then(data => {
-            const searchResults = document.getElementById('searchResults');
-            searchResults.innerHTML = '';
+            const query = document.getElementById('searchInput').value;
+            if (query) {
+                fetch(`https://listen-api.listennotes.com/api/v2/search?q=${encodeURIComponent(query)}&type=podcast`, {
+                    method: 'GET',
+                    headers: {
+                        'X-ListenAPI-Key': apiKey
+                    }
+                })
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error('Network response was not ok');
+                        }
+                        return response.json();
+                    })
+                    .then(data => {
+                        const searchResults = document.getElementById('searchResults');
+                        searchResults.innerHTML = '';
 
-            data.results.forEach(podcast => {
-                const podcastElement = document.createElement('div');
-                podcastElement.classList.add('podcast-item');
-                podcastElement.innerHTML = `
+                        data.results.forEach(podcast => {
+                            const podcastElement = document.createElement('div');
+                            podcastElement.classList.add('podcast-item');
+                            podcastElement.innerHTML = `
                     <img src="${podcast.thumbnail}" alt="${podcast.title_original}">
                     <div>
                         <h3>${podcast.title_original}</h3>
                         <p>${podcast.publisher_original}</p>
                     </div>
                 `;
-                podcastElement.addEventListener('click', () => fetchPodcastDetails(podcast.id));
-                searchResults.appendChild(podcastElement);
-            });
+                            podcastElement.addEventListener('click', () => fetchPodcastDetails(podcast.id));
+                            searchResults.appendChild(podcastElement);
+                        });
 
-            document.getElementById('searchModal').style.display = 'block';
-        })
-        .catch(error => {
-            console.error('There has been a problem with your fetch operation:', error);
-        });
-    }
-}
+                        document.getElementById('searchModal').style.display = 'block';
+                    })
+                    .catch(error => {
+                        console.error('There has been a problem with your fetch operation:', error);
+                    });
+            }
+        }
 
 
 
@@ -550,20 +555,20 @@
         }
 
 
-    function toggleFavorite(element, podcastId, title, thumbnail, publisher) {
-    element.classList.toggle('filled');
-    const favorites = JSON.parse(localStorage.getItem('favorites')) || [];
-    const isFavorite = favorites.some(fav => fav.id === podcastId);
+        function toggleFavorite(element, podcastId, title, thumbnail, publisher) {
+            element.classList.toggle('filled');
+            const favorites = JSON.parse(localStorage.getItem('favorites')) || [];
+            const isFavorite = favorites.some(fav => fav.id === podcastId);
 
-    if (isFavorite) {
-        const updatedFavorites = favorites.filter(fav => fav.id !== podcastId);
-        localStorage.setItem('favorites', JSON.stringify(updatedFavorites));
-    } else {
-        const newFavorite = { id: podcastId, title: title, thumbnail: thumbnail, publisher: publisher };
-        favorites.push(newFavorite);
-        localStorage.setItem('favorites', JSON.stringify(favorites));
-    }
-  } 
+            if (isFavorite) {
+                const updatedFavorites = favorites.filter(fav => fav.id !== podcastId);
+                localStorage.setItem('favorites', JSON.stringify(updatedFavorites));
+            } else {
+                const newFavorite = { id: podcastId, title: title, thumbnail: thumbnail, publisher: publisher };
+                favorites.push(newFavorite);
+                localStorage.setItem('favorites', JSON.stringify(favorites));
+            }
+        }
 
 
 
@@ -574,30 +579,30 @@
     </script>
 
 
-<button id="scrollToTopBtn" onclick="scrollToTop()">Top Of Screen</button>
+    <button id="scrollToTopBtn" onclick="scrollToTop()">Top Of Screen</button>
 
-<script>
-  
-  var mybutton = document.getElementById("scrollToTopBtn");
+    <script>
 
-  window.onscroll = function() {
-    scrollFunction();
-  };
+        var mybutton = document.getElementById("scrollToTopBtn");
 
-  function scrollFunction() {
-    if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
-      mybutton.style.display = "block";
-    } else {
-      mybutton.style.display = "none";
-    }
-  }
+        window.onscroll = function () {
+            scrollFunction();
+        };
 
-  
-  function scrollToTop() {
-    document.body.scrollTop = 0; // For Safari
-    document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
-  }
-</script>
+        function scrollFunction() {
+            if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+                mybutton.style.display = "block";
+            } else {
+                mybutton.style.display = "none";
+            }
+        }
+
+
+        function scrollToTop() {
+            document.body.scrollTop = 0; // For Safari
+            document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
+        }
+    </script>
 
 
 </body>
