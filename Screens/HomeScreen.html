@@ -311,19 +311,18 @@
             <a href="Upload.html">Upload</a>
             <a href="playlists.html">Playlists</a>
             <a href="favorites.html">Favorites</a>
-            <a href="Categories.html">Categories</a>
             <a href="Settings.html">Settings</a>
         </nav>
         <div class="search-bar">
             <div class="search-wrapper">
                 <input type="text" placeholder="Search podcasts" id="searchInput" onkeypress="handleKeyPress(event)">
                 <button onclick="searchPodcasts()">
-                    <img src="search (1).png" alt="Search">
+                    <img src="icons8-search-64 (1).png" alt="Search">
                 </button>
             </div>
         </div>
         <div class="profile-icon">
-            <img src="podsforsquadslogo_noBackground.png" alt="User Profile">
+            <img src="icons8-microphone-50.png" alt="User Profile">
         </div>
     </header>
 
@@ -337,6 +336,18 @@
         <div class="carousel" id="trendingPodcasts"></div>
     </div>
 
+
+    <section id="exclusivesSection" class="section">
+        <h2>Pods For Squads Exclusives</h2>
+        <div id="exclusivesContainer" class="carousel">
+            <!-- Exclusive videos will be populated here -->
+        </div>
+    </section>
+
+
+
+
+    
     <div id="podcastModal" class="modal" onclick="closeModal(event)">
         <div class="modal-content" onclick="event.stopPropagation()">
             <span class="close" onclick="closeModal()">&times;</span>
@@ -353,7 +364,7 @@
 
     <footer>
         <div class="footer-links">
-            <a href="#">About Us</a>
+            <a href="About_Us.html">About Us</a>
             <a href="Contact.html">Contact</a>
             <a href="#">Terms of Service</a>
             <a href="#">Privacy Policy</a>
@@ -571,6 +582,17 @@
             fetchPodcasts('best_podcasts?genre_id=68', 'featuredPodcasts');
             fetchPodcasts('best_podcasts?genre_id=93', 'trendingPodcasts');
         });
+
+
+
+
+
+
+
+
+
+
+
     </script>
 
 

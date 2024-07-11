@@ -28,9 +28,8 @@
         }
 
         header {
-           
-            background-color: #FF9494;
-            color:#000000;
+            background-color: #ff9494;
+            color: black;
             padding: 1em;
             display: flex;
             justify-content: space-between;
@@ -151,30 +150,28 @@
             border-radius: 50%;
         }
 
-#scrollToTopBtn {
-      display: none;
-      position: fixed;
-      bottom: 20px;
-      right: 20px;
-      background-color: red;
-      color: white;
-      border: none;
-      border-radius: 5px;
-      padding: 10px 15px;
-      cursor: pointer;
-      
-    }
+        #scrollToTopBtn {
+            display: none;
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: red;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 10px 15px;
+            cursor: pointer;
+        }
 
-    footer {
+        footer {
             background-color: #FF9494;
             padding: 1em;
             text-align: center;
         }
 
-    #Submit
-    {
+        #Submit {
             background-color: #FF9494;
-    }
+        }
     </style>
 </head>
 <body>
@@ -185,7 +182,6 @@
             <a href="Upload.html">Upload</a>
             <a href="playlists.html">Playlists</a>
             <a href="favorites.html">Favorites</a>
-            <a href="Categories.html">Categories</a>
             <a href="Settings.html">Settings</a>
         </nav>
         <div class="search-bar">
@@ -195,11 +191,7 @@
         <div class="profile-icon">
             <img src="profile-icon.png" alt="User Profile">
         </div>
-        <div class="Upload">
-            
-        </div>
-
-       
+        <div class="Upload"></div>
     </header>
 
     <main>
@@ -208,13 +200,17 @@
             <form id="videoForm" class="modal-content" onsubmit="submitForm(event)">
                 <label for="videoUpload">Upload Video:</label>
                 <input type="file" id="videoUpload" accept="video/*" required><br><br>
-                
+
+
+                <label for="thumbnail">Upload thumbnail:</label>
+                <input type="file" id="thumbnail" accept="Image/*" required><br><br>
+
                 <label for="publisher">Publisher:</label>
                 <input type="text" id="publisher" required><br><br>
-                
+
                 <label for="description">Description:</label><br>
                 <textarea id="description" rows="4" required></textarea><br><br>
-                
+
                 <button type="submit" id="submitBtn">Submit</button>
             </form>
         </section>
@@ -223,7 +219,6 @@
             <!-- Video display area to be populated dynamically -->
         </section>
     </main>
-   
 
     <footer>
         <div class="footer-links">
@@ -239,102 +234,66 @@
         </div>
     </footer>
 
-
-
-    
-
-<script src="LightDarkMode.js"></script>
-
-
+    <script src="LightDarkMode.js"></script>
 
     <script>
         function submitForm(event) {
             event.preventDefault();
 
-            // Fetch form inputs
             const videoFile = document.getElementById('videoUpload').files[0];
             const publisher = document.getElementById('publisher').value;
             const description = document.getElementById('description').value;
+            const thumbnail = document.getElementById('thumbnail').files[0];
 
-            // Validation: Check if all fields are filled
-            if (!videoFile || !publisher || !description) {
+            if (!videoFile || !publisher || !thumbnail || !description) {
                 alert('Please fill out all fields.');
                 return;
             }
 
-            // Display submitted video details
+            const videoData = {
+                publisher: publisher,
+                description: description,
+                videoURL: URL.createObjectURL(videoFile)
+            };
+
+            localStorage.setItem('uploadedVideo', JSON.stringify(videoData));
+
             const videoDisplay = document.getElementById('videoDisplay');
             videoDisplay.innerHTML = `
                 <h2>Submitted Video Details:</h2>
                 <p><strong>Publisher:</strong> ${publisher}</p>
                 <p><strong>Description:</strong> ${description}</p>
                 <video width="400" controls>
-                    <source src="${URL.createObjectURL(videoFile)}" type="video/mp4">
+                    <source src="${videoData.videoURL}" type="video/mp4">
                     Your browser does not support HTML video.
                 </video>
             `;
 
-            // Reset form after submission (optional)
             document.getElementById('videoForm').reset();
         }
     </script>
 
+    <button id="scrollToTopBtn" onclick="scrollToTop()">Top Of Screen</button>
 
+    <script>
+        var mybutton = document.getElementById("scrollToTopBtn");
 
+        window.onscroll = function() {
+            scrollFunction();
+        };
 
+        function scrollFunction() {
+            if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+                mybutton.style.display = "block";
+            } else {
+                mybutton.style.display = "none";
+            }
+        }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    
-
-<button id="scrollToTopBtn" onclick="scrollToTop()">Top Of Screen</button>
-
-<script>
-  
-  var mybutton = document.getElementById("scrollToTopBtn");
-
-  window.onscroll = function() {
-    scrollFunction();
-  };
-
-  function scrollFunction() {
-    if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
-      mybutton.style.display = "block";
-    } else {
-      mybutton.style.display = "none";
-    }
-  }
-
-  
-  function scrollToTop() {
-    document.body.scrollTop = 0; // For Safari
-    document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
-  }
-</script>
-
-
+        function scrollToTop() {
+            document.body.scrollTop = 0;
+            document.documentElement.scrollTop = 0;
+        }
+    </script>
 </body>
 </html>
