@@ -299,8 +299,57 @@
             border-radius: 5px;
             padding: 10px 15px;
             cursor: pointer;
+            
         }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+       
+
+
+
+
+
     </style>
+
+
+
+
+<script src="https://www.gstatic.com/firebasejs/9.1.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.1.1/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.1.1/firebase-firestore.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.1.1/firebase-storage.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 </head>
 
 <body>
@@ -347,7 +396,7 @@
 
 
 
-    
+
     <div id="podcastModal" class="modal" onclick="closeModal(event)">
         <div class="modal-content" onclick="event.stopPropagation()">
             <span class="close" onclick="closeModal()">&times;</span>
@@ -366,8 +415,8 @@
         <div class="footer-links">
             <a href="About_Us.html">About Us</a>
             <a href="Contact.html">Contact</a>
-            <a href="#">Terms of Service</a>
-            <a href="#">Privacy Policy</a>
+            <a href="ToS.html">Terms of Service</a>
+            <a href="PrivPol.html">Privacy Policy</a>
         </div>
         <div class="social-media">
             <a href="https://www.facebook.com/profile.php?id=61560365679571" target="_blank"><img src="../Screens/Images+Videos/Facebook_Logo.png" alt="Facebook"></a>
@@ -377,6 +426,20 @@
     </footer>
 
     <script src="LightDarkMode.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
 
     <div id="audioPlayer" class="audio-player">
         <audio id="audioElement" controls>
@@ -391,6 +454,80 @@
     </div>
 
    
+
+
+
+
+
+
+
+
+    <script>
+        // Your existing JavaScript here
+
+        // Firebase configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyBVoIP81JWXonhwnvVrSdIEkaprBuLxvjQ",
+            authDomain: "podsforsquads.firebaseapp.com",
+            databaseURL: "https://podsforsquads-default-rtdb.firebaseio.com",
+            projectId: "podsforsquads",
+            storageBucket: "podsforsquads.appspot.com",
+            messagingSenderId: "369944495856",
+            appId: "1:369944495856:web:d2027932e60be6f17da435"
+        };
+
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+
+        // Fetch user profile photo from Firebase and update the profile icon
+        async function fetchUserProfilePhoto() {
+            try {
+                const user = firebase.auth().currentUser;
+                if (user) {
+                    const profilePhotoUrl = user.photoURL;
+                    if (profilePhotoUrl) {
+                        const profileIcon = document.getElementById('profileIcon');
+                        profileIcon.innerHTML = `<img src="${profilePhotoUrl}" alt="User Profile">`;
+                    }
+                }
+            } catch (error) {
+                console.error("Error fetching user profile photo:", error);
+            }
+        }
+
+        // Add click event listener to the profile icon for redirection
+        document.getElementById('profileIcon').addEventListener('click', () => {
+            window.location.href = 'Settings.html';
+        });
+
+        // Call the function to fetch user profile photo on page load
+        document.addEventListener('DOMContentLoaded', () => {
+            fetchUserProfilePhoto();
+        });
+    </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     <script>
         const apiKey = 'cb2038d4dbd841b39dec5309c31b2d6a';
