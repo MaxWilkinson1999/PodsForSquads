@@ -98,7 +98,7 @@
                 const user = userCredential.user;
 
                 // Save user data to Firestore
-                await setDoc(doc(db, "BBL Max Users", user.uid), {
+                await setDoc(doc(db, "Account Users", user.uid), {
                     username: username,
                     email: email
                 });
