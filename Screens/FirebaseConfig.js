@@ -18,7 +18,7 @@ const db = getFirestore(app);
 
 export async function savePodcastToFirestore(podcast) {
     try {
-        const docRef = await addDoc(collection(db, "BBL Nick Podcasts"), podcast);
+        const docRef = await addDoc(collection(db, "BBL Patrick Podcasts"), podcast);
         console.log("Document written with ID: ", docRef.id);
     } catch (e) {
         console.error("Error adding document: ", e);
