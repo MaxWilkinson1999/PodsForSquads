@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Podcast Player</title>
+</head>
+
+<body>
+    <div id="podcastPlayerContainer">
+        <h1 id="podcastTitle"></h1>
+        <iframe id="audioPlayer" style="width: 100%; height: 200px; border: none;" frameborder="0"></iframe>
+    </div>
+
+    <script>
+        // Get podcast ID from the query parameter
+        const urlParams = new URLSearchParams(window.location.search);
+        const podcastId = urlParams.get('podcastId');
+        const podcastTitle = urlParams.get('title');
+
+        // Update the page with the podcast information
+        document.getElementById('podcastTitle').textContent = podcastTitle;
+        document.getElementById('audioPlayer').src = `https://www.listennotes.com/c/${podcastId}/embed/`;
+    </script>
+</body>
+
+</html>
