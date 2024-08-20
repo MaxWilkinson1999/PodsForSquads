@@ -37,3 +37,15 @@ export async function deletePodcastFromFirestore(podcastId) {
         console.error("Error deleting document: ", e);
     }
 }
+
+export async function uploadVideo(file, metadata) {
+    try {
+        const storageRef = ref(storage, `videos/${file.name}`);
+        const snapshot = await uploadBytes(storageRef, file);
+        const downloadURL = await getDownloadURL(snapshot.ref);
+        return downloadURL;
+    } catch (error) {
+        console.error("Error uploading video: ", error);
+        throw error;
+    }
+}

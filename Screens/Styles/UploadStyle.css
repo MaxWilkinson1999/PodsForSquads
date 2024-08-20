@@ -1,0 +1,164 @@
+:root {
+    --background-color: #FFFFFF;
+    --text-color: #000000;
+    --header-background-color: #FF9494;
+    --header-text-color: #000000;
+}
+
+body {
+    font-family: 'proxima-nova', sans-serif;
+    margin: 0;
+    background-color: var(--background-color);
+    color: var(--text-color);
+    transition: background-color 0.3s, color 0.3s;
+}
+
+body.dark-mode {
+    --background-color: #000000;
+    --text-color: #ff9494;
+    --header-background-color: #333333;
+    --header-text-color: #000000;
+}
+
+header {
+    background-color: var(--header-background-color);
+    color: var(--header-text-color);
+    padding: 1em;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+nav a {
+    color: var(--header-text-color);
+    margin: 0 1em;
+    text-decoration: none;
+}
+
+.hero {
+    text-align: center;
+    padding: 2em 1em;
+}
+
+.carousel, .section {
+    margin: 2em 0;
+    display: flex;
+    overflow-x: auto;
+    gap: 1em;
+    padding: 0 1em;
+}
+
+.carousel::-webkit-scrollbar, .section::-webkit-scrollbar {
+    display: none;
+}
+
+.podcast-item {
+    min-width: 200px;
+    cursor: pointer;
+}
+
+.podcast-item img {
+    width: 100%;
+    border-radius: 10px;
+}
+
+footer {
+    background-color: var(--header-background-color);
+    padding: 1em;
+    text-align: center;
+    color: var(--header-text-color);
+}
+
+.footer-links, .social-media {
+    display: flex;
+    justify-content: center;
+    gap: 1em;
+}
+
+.footer-links a, .social-media a {
+    color: var(--header-text-color);
+    text-decoration: none;
+}
+
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.4);
+}
+
+.modal-content {
+    background-color: #fefefe;
+    margin: 10% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 50%;
+    max-width: 600px;
+    border-radius: 10px;
+    position: relative;
+}
+
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.show-more-btn {
+    background-color: #FF9494;
+    color: #000;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    margin: 20px auto;
+    display: block;
+}
+
+.social-media a {
+    display: block;
+    width: 32px;
+    height: 32px;
+}
+
+.social-media img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+}
+
+#scrollToTopBtn {
+    display: none;
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background-color: red;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 15px;
+    cursor: pointer;
+}
+
+footer {
+    background-color: #FF9494;
+    padding: 1em;
+    text-align: center;
+}
+
+#Submit {
+    background-color: #FF9494;
+}
