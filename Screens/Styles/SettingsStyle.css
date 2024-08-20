@@ -1,8 +1,13 @@
 :root {
-    --background-color: #FFFFFF;
+    
+    --background-gradient: linear-gradient(to bottom right, rgb(221, 219, 219), #b7c9e2, rgb(221, 219, 219));
     --text-color: #000000;
-    --header-background-color: #FF9494;
-    --header-text-color: #000000;
+    --header-background: #36454F;
+    --nav-hover-color: #b7c9e2;
+    --nav-underline-color: #b7c9e2;
+    --logo-color: whitesmoke;
+    --nav-link-color: whitesmoke;
+    --nav-text-color: black;
 }
 
 body {
@@ -178,4 +183,87 @@ body.dark-mode {
 .dark-mode .card h3 button,
 .dark-mode .edit-section button {
     color: #c5b358;
+}
+
+
+.protan-mode {
+    background-color: #121212;
+    color: #a691ae;
+}
+
+.protan-mode .sidebar {
+    background-color: #6fde6e;
+    color: black;
+}
+
+.protan-mode .sidebar a {
+    color: black;
+}
+
+.protan-mode .sidebar a:hover,
+.protan-mode .sidebar a.active {
+    background-color: #a691ae;
+}
+
+.protan-mode .content {
+    background-color: #a691ae;
+    color: black;
+}
+
+.protan-mode .card {
+    background-color: #a691ae;
+    color: black;
+}
+
+.protan-mode .edit-section input {
+    background-color: #a691ae;
+    border: 1px solid #a691ae;
+    color: black;
+}
+
+.protan-mode .card h3 button,
+.protan-mode .edit-section button {
+    color: black;
+}
+
+
+
+.deuter-mode {
+    background-color: #121212;
+    color: #e89f43;
+}
+
+.deuter-mode .sidebar {
+    background-color: #2f88dc;
+    color: black;
+}
+
+.deuter-mode .sidebar a {
+    color: black;
+}
+
+.protan-mode .sidebar a:hover,
+.protan-mode .sidebar a.active {
+    background-color: #e89f43;
+}
+
+.deuter-mode .content {
+    background-color: #e89f43;
+    color: black;
+}
+
+.deuter-mode .card {
+    background-color: #e89f43;
+    color: black;
+}
+
+.deuter-mode .edit-section input {
+    background-color: #e89f43;
+    border: 1px solid #e89f43;
+    color: black;
+}
+
+.deuter-mode .card h3 button,
+.deuter-mode .edit-section button {
+    color: black;
 }

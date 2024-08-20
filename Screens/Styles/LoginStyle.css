@@ -27,12 +27,12 @@ body {
 }
 
 .login-section {
-    background-color: white;
+    background-color: whitesmoke;
     padding: 40px;
 }
 
 .signup-section {
-    background-color: #ff9494;
+    background-color: #36454F;
     color: white;
     overflow: hidden;
     position: relative;
@@ -82,7 +82,7 @@ p {
     padding: 10px;
     border: none;
     border-radius: 5px;
-    background-color: #ff9494;
+    background-color: #36454F;
     color: white;
     cursor: pointer;
     margin-top: 10px;
@@ -90,7 +90,7 @@ p {
 
 .forgot-password {
     margin-top: 10px;
-    color: #ff9494;
+    color: #36454F;
     text-decoration: none;
 }
 

@@ -6,8 +6,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Podcast Streaming Service</title>
     <style>
-      :root {
-    /* Light Mode */
+      :root
+       {
+
     --background-gradient: linear-gradient(to bottom right, rgb(221, 219, 219), #b7c9e2, rgb(221, 219, 219));
     --text-color: #000000;
     --header-background: #36454F;
@@ -18,7 +19,8 @@
     --nav-text-color: black;
 }
 
-body {
+body
+ {
             font-family: 'proxima-nova', sans-serif;
             margin: 0;
             background-image: var(--background-gradient);
@@ -27,11 +29,42 @@ body {
             transition: opacity 0.5s ease-in-out;
         }
 
-        body.fade-out {
+        body.fade-out
+         {
             opacity: 0;
         }
 
+
+
+
+        body.protan-mode{
+   
+    --background-gradient: linear-gradient(to bottom right, #a691ae, #e8f086,#a691ae);
+    --text-color: #235fa4;
+    --header-background:#6fde6e ;
+    --nav-hover-color: black;
+    --nav-underline-color: #b7c9e2;
+    --logo-color: whitesmoke;
+    --nav-link-color: whitesmoke;
+
+}
+
+
+
+body.deuter-mode{
+   
+   --background-gradient: linear-gradient(to bottom right, #2d3043, #2f88dc,#2d3043);
+   --text-color: black;
+   --header-background:#e89f43 ;
+   --nav-hover-color: black;
+   --nav-underline-color: #b7c9e2;
+   --logo-color: whitesmoke;
+   --nav-link-color: whitesmoke;
+
+}
+
 body.dark-mode {
+   
     --background-gradient: linear-gradient(to bottom right, rgb(105, 104, 104), black, rgb(105, 104, 104));
     --text-color: #c5b358;
     --header-background:#c5b358 ;
@@ -40,6 +73,8 @@ body.dark-mode {
     --logo-color: whitesmoke;
     --nav-link-color: whitesmoke;
 }
+
+
 
 
 header {
@@ -161,7 +196,7 @@ footer a:hover::after {
         }
 
         .podcast-item {
-            min-width: 300px;
+            min-width: 200px;
             cursor: pointer;
             animation: slideInFromRight 1.0s ease-out;
         }
@@ -401,6 +436,46 @@ footer a:hover::after {
     transition: opacity 0.5s ease-in;
 }
 
+
+
+.moving-container {
+  width: 100%;
+  overflow: hidden;
+  white-space: nowrap;
+  
+}
+
+.moving-text {
+  display: inline-block;
+  animation: moveText 20s linear infinite;
+  white-space: nowrap; /* Prevents wrapping */
+  max-width: 100%; /* Ensures the text stays in one line */
+  --text-color: black;
+}
+
+@keyframes moveText {
+  0% {
+    transform: translateX(100%); /* Start just outside the right edge */
+  }
+  2% {
+    transform: translateX(95%); /* Bring it into view almost immediately */
+  }
+  100% {
+    transform: translateX(-100%); /* Move to outside the left edge */
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
+
 /* Keyframes for sliding the navbar in from the left */
 @keyframes slideInFromLeft {
     0% {
@@ -510,10 +585,26 @@ footer a:hover::after {
         </div>
     </header>
 
+
+
+
+<!-- Moving Text Bar -->
+<div class="text-bar">
+    <span class="moving-text">Welcome to PodsForSquads, The home for all your podcasting needs! We will soon be displaying more info on this text bar, so stay tuned for further updates and see whats to come with us! If you have an questions, please seek the contact form below by pressing the CONTACT button, and fill out the form and we will get back to you shortly!</span>
+  </div>
+
+
+
+
     <div class="hero">
         <h1>Featured Podcasts</h1>
         <div class="carousel" id="featuredPodcasts"></div>
     </div>
+
+
+ 
+
+
 
     <div class="section">
         <h2>Trending Podcasts</h2>
