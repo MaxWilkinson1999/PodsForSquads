@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Podcast Analytics</title>
+    <style>
+        body {
+            font-family: 'proxima-nova', sans-serif;
+            margin: 0;
+            background-image: linear-gradient(to bottom right,rgb(221, 219, 219),#b7c9e2 ,rgb(221, 219, 219));
+            color: #000000;
+        }
+
+        header {
+            background-color: #36454F;
+            padding: 1em;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        nav {
+            display: flex;
+            gap: 1em;
+        }
+
+        nav a {
+            color: whitesmoke;
+            text-decoration: none;
+            position: relative;
+            padding: 5px 15px;
+            font-size: 18px;
+            transition: color 0.3s ease;
+        }
+
+        nav a:hover {
+            color: #b7c9e2;
+        }
+
+        nav a::after {
+            content: "";
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 0;
+            height: 2px;
+            background-color: #b7c9e2;
+            transition: width 0.3s ease;
+        }
+
+        nav a:hover::after {
+            width: 100%;
+        }
+
+        .logo{
+            color: whitesmoke;
+            text-decoration: none;
+            position: relative;
+            padding: 5px 15px;
+            font-size: 35px;
+            transition: color 0.3s ease
+        }
+        .search-wrapper {
+            position: relative;
+            display: inline-block;
+            margin-right: 1em;
+        }
+        .search-wrapper input {
+            border: none;
+            outline: none;
+            padding: 10px 30px 10px 10px;
+            border-radius: 20px;
+            width: 200px;
+        }
+        .search-wrapper button {
+            position: absolute;
+            right: 5px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 5px;
+        }
+        .search-wrapper button img {
+            width: 20px;
+            height: 20px;
+        }
+        .analytics-container {
+            padding: 2em;
+        }
+        .stats {
+            margin-bottom: 1em;
+        }
+        .chart-container {
+            margin-top: 2em;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        .chart {
+            width: 45%;
+            min-width: 300px;
+            margin-bottom: 1em;
+        }
+        @media (max-width: 768px) {
+            .chart {
+                width: 100%;
+            }
+        }
+        button {
+            background-color: #36454F;
+            border: none;
+            color: white;
+            padding: 10px 20px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            cursor: pointer;
+            transition: background-color 0.3s ease-in-out, transform 0.2s;
+            border-radius: 5px;
+        }
+        button:hover {
+            background-color: #FF5E5E;
+            transform: translateY(-2px);
+        }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+</head>
+<body>
+    <header>
+        <div class="logo">PodsForSquads</div>
+        <nav>
+            <div class="search-wrapper">
+                <input type="text" placeholder="Search podcasts" id="searchInput" oninput="searchPodcasts()">
+                <button type="submit">
+                    <img src="search (1).png" alt="Search">
+                </button>
+            </div>
+            <a href="MainActivity.html">Home</a>
+            <a href="Analytics.html">Stats</a>
+            <a href="Favorites.html">Favorites</a>
+            <a href="playlists.html">Playlists</a>
+        </nav>
+    </header>
+    
+    <div class="analytics-container" id="analyticsContainer">
+        <h1>Podcast Analytics</h1>
+        <div class="stats" id="statsContainer">
+            <h2>Statistics</h2>
+            <p>Total Podcasts Watched: <span id="totalPodcastsWatched">42</span></p>
+            <p>Most Watched Podcast: <span id="mostWatchedPodcast">Podcast A</span></p>
+            <p>Time Spent Listening: <span id="timeSpentListening">24 hours</span></p>
+        </div>
+
+       
+        <button id="shareButton">Share</button>
+        <button id="twitterShareButton">Share via Twitter</button>
+
+       
+        <div class="chart-container">
+            
+            <div class="chart">
+                <h3>Hours Watched Throughout the Week</h3>
+                <canvas id="lineChart"></canvas>
+            </div>
+
+            
+            <div class="chart">
+                <h3>Podcasts by Genre</h3>
+                <canvas id="pieChart"></canvas>
+            </div>
+        </div>
+
+        <div class="chart-container">
+            <div class="chart">
+                <h3>Time Spent by Podcast</h3>
+                <canvas id="barChart"></canvas>
+            </div>
+        </div>
+    </div>
+
+   
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            fetchGenresData();
+        });
+
+        let genresMap = {};
+
+        function fetchGenresData() {
+            fetch('https://listen-api.listennotes.com/api/v2/genres', {
+                headers: {
+                    'X-ListenAPI-Key': 'cb2038d4dbd841b39dec5309c31b2d6a'
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                genresMap = data.genres.reduce((map, genre) => {
+                    map[genre.id] = genre.name;
+                    return map;
+                }, {});
+                fetchAnalyticsData();
+            })
+            .catch(error => console.error('Error fetching genres:', error));
+        }
+
+        function fetchAnalyticsData() {
+            fetch('https://listen-api.listennotes.com/api/v2/best_podcasts', {
+                headers: {
+                    'X-ListenAPI-Key': 'cb2038d4dbd841b39dec5309c31b2d6a'
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                const podcasts = data.podcasts;
+                updateStatistics(podcasts);
+                updateCharts(podcasts);
+            })
+            .catch(error => console.error('Error fetching data:', error));
+        }
+
+        function updateStatistics(podcasts) {
+            const totalPodcastsWatched = podcasts.length;
+            const mostWatchedPodcast = podcasts[0].title; 
+            const timeSpentListening = totalPodcastsWatched * 0.5 + ' hours';
+
+            document.getElementById('totalPodcastsWatched').textContent = totalPodcastsWatched;
+            document.getElementById('mostWatchedPodcast').textContent = mostWatchedPodcast;
+            document.getElementById('timeSpentListening').textContent = timeSpentListening;
+        }
+
+        function updateCharts(podcasts) {
+            const podcastData = {
+                labels: [],
+                data: []
+            };
+
+            const genresData = {
+                labels: [],
+                data: []
+            };
+
+            const weeklyData = generateWeeklyData();
+
+            const podcastTime = {};
+            const genreCount = {};
+
+            podcasts.forEach(podcast => {
+                const title = podcast.title;
+                const genres = podcast.genre_ids.map(id => genresMap[id] || 'Unknown');
+                const listeningTime = 1; 
+
+                if (podcastTime[title]) {
+                    podcastTime[title] += listeningTime;
+                } else {
+                    podcastTime[title] = listeningTime;
+                }
+
+                genres.forEach(genre => {
+                    if (genre !== "Podcasts") { 
+                        if (genreCount[genre]) {
+                            genreCount[genre] += listeningTime;
+                        } else {
+                            genreCount[genre] = listeningTime;
+                        }
+                    }
+                });
+            });
+
+            
+            const sortedPodcastTitles = Object.keys(podcastTime).sort((a, b) => podcastTime[b] - podcastTime[a]).slice(0, 8);
+            const sortedPodcastTimes = sortedPodcastTitles.map(title => podcastTime[title]);
+
+            podcastData.labels = sortedPodcastTitles;
+            podcastData.data = sortedPodcastTimes;
+
+           
+            const sortedGenres = Object.keys(genreCount).sort((a, b) => genreCount[b] - genreCount[a]).slice(0, 10);
+            const sortedGenreCounts = sortedGenres.map(genre => genreCount[genre]);
+
+            genresData.labels = sortedGenres;
+            genresData.data = sortedGenreCounts;
+
+            renderLineChart(weeklyData);
+            renderBarChart(podcastData);
+            renderPieChart(genresData);
+        }
+
+        function renderLineChart(data) {
+            const ctx = document.getElementById('lineChart').getContext('2d');
+            new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: data.labels,
+                    datasets: [{
+                        label: 'Hours Watched',
+                        data: data.data,
+                        borderColor: '#36454F',
+                        backgroundColor: '#36454F',
+                        borderWidth: 2
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+        }
+
+        function renderBarChart(data) {
+            const ctx = document.getElementById('barChart').getContext('2d');
+            new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: data.labels,
+                    datasets: [{
+                        label: 'Hours Spent',
+                        data: data.data,
+                        backgroundColor: '#36454F',
+                        borderColor: '#36454F',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+        }
+
+        function renderPieChart(data) {
+            const ctx = document.getElementById('pieChart').getContext('2d');
+            new Chart(ctx, {
+                type: 'pie',
+                data: {
+                    labels: data.labels,
+                    datasets: [{
+                        label: 'Podcasts by Genre',
+                        data: data.data,
+                        backgroundColor: [
+                            'rgba(255, 148, 148, 0.8)',
+                            'rgba(255, 205, 86, 0.8)',
+                            'rgba(75, 192, 192, 0.8)',
+                            'rgba(54, 162, 235, 0.8)',
+                            'rgba(153, 102, 255, 0.8)',
+                            'rgba(255, 159, 64, 0.8)',
+                            'rgba(255, 99, 132, 0.8)',
+                            'rgba(201, 203, 207, 0.8)',
+                            'rgba(255, 193, 7, 0.8)',
+                            'rgba(233, 30, 99, 0.8)'
+                        ]
+                    }]
+                },
+                options: {
+                    responsive: true
+                }
+            });
+        }
+
+        function generateWeeklyData() {
+            return {
+                labels: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],
+                data: [2, 3, 4, 2, 5, 6, 4] 
+            };
+        }
+
+        document.getElementById('shareButton').addEventListener('click', () => {
+            html2canvas(document.getElementById('analyticsContainer')).then(canvas => {
+                if (navigator.share) {
+                    canvas.toBlob(blob => {
+                        const file = new File([blob], 'analytics.png', { type: 'image/png' });
+                        navigator.share({
+                            files: [file],
+                            title: 'Podcast Analytics',
+                            text: 'Check out my podcast analytics!'
+                        });
+                    });
+                } else {
+                    alert('Your browser does not support the Share API.');
+                }
+            });
+        });
+
+        document.getElementById('twitterShareButton').addEventListener('click', () => {
+            html2canvas(document.getElementById('analyticsContainer')).then(canvas => {
+                const dataUrl = canvas.toDataURL();
+                const encodedDataUrl = encodeURIComponent(dataUrl);
+                const twitterUrl = `https://twitter.com/intent/tweet?text=Check%20out%20my%20podcast%20analytics!&url=${encodedDataUrl}`;
+                window.open(twitterUrl, '_blank');
+            });
+        });
+    </script>
+</body>
+</html>

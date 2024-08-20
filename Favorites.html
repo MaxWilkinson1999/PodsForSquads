@@ -8,25 +8,58 @@
         body {
             font-family: 'proxima-nova', sans-serif;
             margin: 0;
-            background-color: #FFFFFF;
+            background-image: linear-gradient(to bottom right,rgb(221, 219, 219),#b7c9e2 ,rgb(221, 219, 219));
             color: #000000;
         }
+
         header {
-            background-color: #FF9494;
+            background-color: #36454F;
             padding: 1em;
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
+
         nav {
             display: flex;
-            align-items: center;
+            gap: 1em;
         }
+
         nav a {
-            color: #000000;
-            margin: 0 1em;
+            color: whitesmoke;
             text-decoration: none;
-            transition: margin 0.3s ease-in-out; 
+            position: relative;
+            padding: 5px 15px;
+            font-size: 18px;
+            transition: color 0.3s ease;
+        }
+
+        nav a:hover {
+            color: #b7c9e2;
+        }
+
+        nav a::after {
+            content: "";
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 0;
+            height: 2px;
+            background-color: #b7c9e2;
+            transition: width 0.3s ease;
+        }
+
+        nav a:hover::after {
+            width: 100%;
+        }
+
+        .logo{
+            color: whitesmoke;
+            text-decoration: none;
+            position: relative;
+            padding: 5px 15px;
+            font-size: 35px;
+            transition: color 0.3s ease
         }
         .search-wrapper {
             position: relative;
