@@ -1,6 +1,7 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 import { getAuth } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
-import { getFirestore, collection, addDoc, deleteDoc, doc, query, where, getDocs } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+import { getFirestore, collection, addDoc, deleteDoc, doc, query, where, getDocs, orderBy } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+import { getStorage, ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-storage.js";
 
 const firebaseConfig = {
     apiKey: "AIzaSyBVoIP81JWXonhwnvVrSdIEkaprBuLxvjQ",
@@ -15,6 +16,7 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getFirestore(app);
+const storage = getStorage(app);
 
 export async function savePodcastToFirestore(podcast) {
     try {
@@ -40,12 +42,29 @@ export async function deletePodcastFromFirestore(podcastId) {
 
 export async function uploadVideo(file, metadata) {
     try {
+        console.log("Starting upload process...");
         const storageRef = ref(storage, `videos/${file.name}`);
+        console.log("Reference created, uploading...");
         const snapshot = await uploadBytes(storageRef, file);
+        console.log("Upload complete, fetching URL...");
         const downloadURL = await getDownloadURL(snapshot.ref);
+        console.log("Download URL obtained:", downloadURL);
+
+        console.log("Preparing video data for Firestore...");
+        const videoData = {
+            videoURL: downloadURL,
+            publisher: metadata.publisher,
+            description: metadata.description,
+            timestamp: new Date(),
+        };
+
+        console.log("Saving to Firestore...");
+        const docRef = await addDoc(collection(db, 'videos'), videoData);
+        console.log("Video metadata saved successfully with ID:", docRef.id);
+
         return downloadURL;
     } catch (error) {
-        console.error("Error uploading video: ", error);
-        throw error;
+        console.error("Caught error during process:", error);
+        throw error; // Throw error to be caught by submitForm
     }
 }

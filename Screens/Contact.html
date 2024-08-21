@@ -13,44 +13,109 @@
         }
 
         :root {
-            --background-color: #FFFFFF;
+            /* Light Mode */
+            --background-gradient: linear-gradient(to bottom right, rgb(221, 219, 219), #b7c9e2, rgb(221, 219, 219));
             --text-color: #000000;
-            --header-background-color: #FF9494;
-            --header-text-color: #000000;
+            --header-background: #36454F;
+            --nav-hover-color: #b7c9e2;
+            --nav-underline-color: #b7c9e2;
+            --logo-color: whitesmoke;
+            --nav-link-color: whitesmoke;
+            --footer-color: #36454F;
         }
 
         body.dark-mode {
-            --background-color: #000000;
-            --text-color: #ff9494;
-            --header-background-color: #333333;
-            --header-text-color: #ff9494;
+            --background-gradient: linear-gradient(to bottom right, rgb(105, 104, 104), black, rgb(105, 104, 104));
+            --text-color: #c5b358;
+            --header-background: #c5b358;
+            --nav-hover-color: black;
+            --header-background: #c5b358;
+            --footer-color: #c5b358;
+            --nav-underline-color: #b7c9e2;
+            --logo-color: whitesmoke;
+            --nav-link-color: whitesmoke;
+        }
+
+
+        body.protan-mode {
+
+            --background-gradient: linear-gradient(to bottom right, #a691ae, #e8f086, #a691ae);
+            --text-color: #235fa4;
+            --header-background: #6fde6e;
+            --nav-hover-color: black;
+            --nav-underline-color: #b7c9e2;
+            --logo-color: whitesmoke;
+            --nav-link-color: whitesmoke;
+
         }
 
         body {
-            width: 100%;
-            height: 100vh;
-            background: navy;
-            display: flex;
-            flex-direction: column;
-            background-color: var(--background-color);
+
+            font-family: 'proxima-nova', sans-serif;
+            margin: 0;
+            background-image: var(--background-gradient);
             color: var(--text-color);
-            transition: background-color 0.3s, color 0.3s;
+            opacity: 1;
+            transition: opacity 0.5s ease-in-out;
+
+        }
+
+        body.fade-out {
+            opacity: 0;
         }
 
         header {
-            width: 100%;
-            background-color: var(--header-background-color);
-            color: var(--header-text-color);
+
+            background-color: var(--header-background);
             padding: 1em;
             display: flex;
             justify-content: space-between;
             align-items: center;
+            animation: slideInFromLeft 1.0s ease-out;
+        }
+
+        nav {
+            display: flex;
+            gap: 1em;
+            animation: slideInFromLeft 1.0s ease-out;
+
         }
 
         nav a {
-            color: var(--header-text-color);
-            margin: 0 1em;
+            color: var(--nav-link-color);
             text-decoration: none;
+            position: relative;
+            padding: 5px 15px;
+            font-size: 18px;
+            transition: color 0.3s ease;
+        }
+
+        nav a:hover {
+            color: var(--nav-hover-color);
+        }
+
+        nav a::after {
+            content: "";
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 0;
+            height: 2px;
+            background-color: var(--nav-underline-color);
+            transition: width 0.3s ease;
+        }
+
+        nav a:hover::after {
+            width: 100%;
+        }
+
+        .logo {
+            color: var(--logo-color);
+            text-decoration: none;
+            position: relative;
+            padding: 5px 15px;
+            font-size: 35px;
+            transition: color 0.3s ease;
         }
 
         .hero {
@@ -104,7 +169,7 @@
 
         form button {
             padding: 15px;
-            background-color: red;
+            background-color: var(--footer-color);
             color: antiquewhite;
             font-size: 16px;
             border: 0;
@@ -113,18 +178,51 @@
             width: 150px;
             margin: 20px auto 0;
             border-radius: 30px;
+
         }
 
         #Submit {
             align-content: center;
+
         }
 
         footer {
-            width: 100%;
-            background-color: var(--header-background-color);
+            background-color: var(--header-background);
             padding: 1em;
             text-align: center;
-            color: var(--header-text-color);
+            color: whitesmoke;
+            animation: slideInFromLeft 1.0s ease-out;
+        }
+
+
+
+
+        footer a {
+            color: var(--nav-link-color);
+            text-decoration: none;
+            position: relative;
+            padding: 5px 15px;
+            font-size: 18px;
+            transition: color 0.3s ease;
+        }
+
+        footer a:hover {
+            color: var(--nav-hover-color);
+        }
+
+        footer a::after {
+            content: "";
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 0;
+            height: 2px;
+            background-color: var(--nav-underline-color);
+            transition: width 0.3s ease;
+        }
+
+        footer a:hover::after {
+            width: 100%;
         }
 
         .footer-links,
@@ -158,7 +256,63 @@
             object-fit: cover;
             border-radius: 50%;
         }
+
+
+        /* Add this to both HTML files */
+        .fade-out {
+            opacity: 0;
+            transition: opacity 0.5s ease-out;
+        }
+
+        .fade-in {
+            opacity: 1;
+            transition: opacity 0.5s ease-in;
+        }
+
+
+
+        /* Keyframes for sliding the navbar in from the left */
+        @keyframes slideInFromLeft {
+            0% {
+                transform: translateX(-100%);
+                opacity: 0;
+            }
+
+            100% {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        @keyframes slideInFromRight {
+            from {
+                transform: translateX(100%);
+                /* Start off-screen to the right */
+            }
+
+            to {
+                transform: translateX(0);
+                /* End at its original position */
+            }
+        }
     </style>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const links = document.querySelectorAll("nav a");
+
+            links.forEach(link => {
+                link.addEventListener("click", function (event) {
+                    event.preventDefault();
+                    const href = this.getAttribute("href");
+                    document.body.classList.add("fade-out");
+
+                    setTimeout(() => {
+                        window.location.href = href;
+                    }, 500);
+                });
+            });
+        });
+    </script>
 </head>
 
 <body>
@@ -170,8 +324,8 @@
             <a href="Upload.html">Upload</a>
             <a href="playlists.html">Playlists</a>
             <a href="favorites.html">Favorites</a>
-            <a href="Categories.html">Categories</a>
             <a href="Settings.html">Settings</a>
+            <a href="Analytics.html">Stats</a>
         </nav>
     </header>
 
@@ -180,8 +334,9 @@
             <form id="contactForm" action="https://formspree.io/f/mzzpbnov" method="POST">
                 <h3>GET IN TOUCH</h3>
                 <input type="text" id="name" name="name" placeholder="Your Name" required>
-                <input type="email" id="email"  placeholder="Please enter Companies Email" required>
-                <small>Please enter the company's email as follows to ensure you're not a bot: PodsForSquads@gmail.com</small>
+                <input type="email" id="email" placeholder="Please enter Companies Email" required>
+                <small>Please enter the company's email as follows to ensure you're not a bot:
+                    PodsForSquads@gmail.com</small>
                 <input type="text" id="phone" name="phone" placeholder="Phone #" required>
                 <input type="email" id="senderEmail" name="senderEmail" placeholder="Your email">
                 <textarea id="message" name="message" rows="4" placeholder="How can I help you?" required></textarea>
@@ -195,20 +350,25 @@
 
     <footer>
         <div class="footer-links">
-            <a href="#">About Us</a>
-            <a href="Contact.html">Contact</a>
-            <a href="#">Terms of Service</a>
-            <a href="#">Privacy Policy</a>
+            <div class="footer-links">
+                <a href="About_Us.html">About Us</a>
+                <a href="Contact.html">Contact</a>
+                <a href="ToS.html">Terms of Service</a>
+                <a href="PrivPol.html">Privacy Policy</a>
+            </div>
         </div>
         <div class="social-media">
-            <a href="https://www.facebook.com/profile.php?id=61560365679571" target="_blank"><img src="FB Icon.jpg" alt="Facebook"></a>
-            <a href="https://x.com/PodsForSquads" target="_blank"><img src="twitter icon.png" alt="Twitter"></a>
-            <a href="https://www.instagram.com/podsforsquads/" target="_blank"><img src="IG Icon.jpg" alt="Instagram"></a>
+            <a href="https://www.facebook.com/profile.php?id=61560365679571"><img
+                    src="../Screens/Images+Videos/Facebook_Logo.png" alt="Facebook"></a>
+            <a href="https://x.com/PodsForSquads"><img src="../Screens/Images+Videos/Twitter_Logo.png"
+                    alt="Twitter"></a>
+            <a href="https://www.instagram.com/podsforsquads/"><img src="../Screens/Images+Videos/Instagram_Logo.png"
+                    alt="Instagram"></a>
         </div>
     </footer>
 
     <script>
-        document.getElementById('contactForm').addEventListener('submit', function(event) {
+        document.getElementById('contactForm').addEventListener('submit', function (event) {
             event.preventDefault();
 
             const form = event.target;
@@ -239,4 +399,5 @@
         }
     </script>
 </body>
+
 </html>

@@ -1,8 +1,9 @@
 import { uploadVideo } from './FirebaseConfig.js';
 
-async function submitForm(event) {
+function submitForm(event) {
     event.preventDefault();
-
+    alert("Form submitted!");  // Check if this alert appears
+    
     const videoFile = document.getElementById('videoUpload').files[0];
     const publisher = document.getElementById('publisher').value;
     const description = document.getElementById('description').value;
@@ -13,24 +14,23 @@ async function submitForm(event) {
     }
 
     try {
-        const videoURL = await uploadVideo(videoFile);
-        const videoDisplay = document.getElementById('videoDisplay');
-        videoDisplay.innerHTML = `
-            <h2>Submitted Video Details:</h2>
-            <p><strong>Publisher:</strong> ${publisher}</p>
-            <p><strong>Description:</strong> ${description}</p>
-            <video width="400" controls>
-                <source src="${videoURL}" type="video/mp4">
-                Your browser does not support HTML video.
-            </video>
-        `;
+        console.log("Starting video upload...");
+        uploadVideo(videoFile, { publisher, description }).then((videoURL) => {
+            console.log("Video uploaded successfully:", videoURL);
 
-        document.getElementById('videoForm').reset();
-        alert('Video uploaded successfully!');
+            // Redirect to HomeScreen.html after successful upload
+            window.location.href = "HomeScreen.html";
+        }).catch((error) => {
+            console.error('Error during upload:', error);
+            alert('Error during upload. Please try again.');
+        });
+
     } catch (error) {
-        console.error('Error during upload:', error);
-        alert('Error during upload. Please try again.');
+        console.error('Unexpected error during upload:', error);
+        alert('Unexpected error during upload. Please try again.');
     }
 }
 
-document.getElementById('videoForm').addEventListener('submit', submitForm);
+window.addEventListener('DOMContentLoaded', (event) => {
+    document.getElementById('videoForm').addEventListener('submit', submitForm);
+});

@@ -1,0 +1,673 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Podcast Analytics</title>
+    <style>
+        :root {
+            /* Light Mode */
+            --background-gradient: linear-gradient(to bottom right, rgb(221, 219, 219), #b7c9e2, rgb(221, 219, 219));
+            --text-color: #000000;
+            --header-background: #36454F;
+            --nav-hover-color: #b7c9e2;
+            --nav-underline-color: #b7c9e2;
+            --logo-color: whitesmoke;
+            --nav-link-color: whitesmoke;
+            --linechart-color: #36454F;
+
+
+
+
+        }
+
+        body {
+            font-family: 'proxima-nova', sans-serif;
+            margin: 0;
+            background-image: var(--background-gradient);
+            color: var(--text-color);
+        }
+
+        body.protan-mode {
+
+            --background-gradient: linear-gradient(to bottom right, #a691ae, #e8f086, #a691ae);
+            --text-color: #235fa4;
+            --header-background: #6fde6e;
+            --nav-hover-color: black;
+            --nav-underline-color: #b7c9e2;
+            --logo-color: whitesmoke;
+            --nav-link-color: whitesmoke;
+
+        }
+
+        body.dark-mode {
+            --background-gradient: linear-gradient(to bottom right, rgb(105, 104, 104), black, rgb(105, 104, 104));
+            --text-color: #c5b358;
+            --header-background: #c5b358;
+            --nav-hover-color: black;
+            --nav-underline-color: #b7c9e2;
+            --logo-color: whitesmoke;
+            --nav-link-color: whitesmoke;
+            --linechart-color: #c5b358;
+        }
+
+
+        header {
+            background-color: var(--header-background);
+            padding: 1em;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            animation: slideInFromTop 1.0s ease-out;
+        }
+
+
+        nav {
+            display: flex;
+            gap: 1em;
+        }
+
+        nav a {
+            color: var(--nav-link-color);
+            text-decoration: none;
+            position: relative;
+            padding: 5px 15px;
+            font-size: 18px;
+            transition: color 0.3s ease;
+        }
+
+        nav a:hover {
+            color: var(--nav-hover-color);
+        }
+
+        nav a::after {
+            content: "";
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 0;
+            height: 2px;
+            background-color: var(--nav-underline-color);
+            transition: width 0.3s ease;
+        }
+
+        nav a:hover::after {
+            width: 100%;
+        }
+
+        .logo {
+            color: var(--logo-color);
+            text-decoration: none;
+            position: relative;
+            padding: 5px 15px;
+            font-size: 35px;
+            transition: color 0.3s ease;
+        }
+
+        footer {
+            background-color: var(--header-background);
+            padding: 1em;
+            text-align: center;
+            color: whitesmoke;
+            animation: slideInFromLeft 1.0s ease-out;
+        }
+
+
+
+
+        footer a {
+            color: var(--nav-link-color);
+            text-decoration: none;
+            position: relative;
+            padding: 5px 15px;
+            font-size: 18px;
+            transition: color 0.3s ease;
+        }
+
+        footer a:hover {
+            color: var(--nav-hover-color);
+        }
+
+        footer a::after {
+            content: "";
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 0;
+            height: 2px;
+            background-color: var(--nav-underline-color);
+            transition: width 0.3s ease;
+        }
+
+        footer a:hover::after {
+            width: 100%;
+        }
+
+
+        .footer-links,
+        .social-media {
+            display: flex;
+            justify-content: center;
+            gap: 1em;
+        }
+
+        .footer-links a,
+        .social-media a {
+            color: var(--header-text-color);
+            text-decoration: none;
+        }
+
+        .social-media {
+            display: flex;
+            justify-content: center;
+            gap: 1em;
+        }
+
+        .social-media a {
+            display: block;
+            width: 32px;
+            height: 32px;
+        }
+
+        .social-media img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 50%;
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        .search-wrapper {
+            position: relative;
+            display: inline-block;
+            margin-right: 1em;
+        }
+
+        .search-wrapper input {
+            border: none;
+            outline: none;
+            padding: 10px 30px 10px 10px;
+            border-radius: 20px;
+            width: 200px;
+        }
+
+        .search-wrapper button {
+            position: absolute;
+            right: 5px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 5px;
+        }
+
+        .search-wrapper button img {
+            width: 20px;
+            height: 20px;
+        }
+
+        .analytics-container {
+            padding: 2em;
+            animation: slideInFromLeft 1.0s ease-out;
+        }
+
+        .stats {
+            margin-bottom: 1em;
+        }
+
+        .chart-container {
+            margin-top: 2em;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            flex-wrap: wrap;
+            animation: slideInFromRight 1.0s ease-out;
+        }
+
+        .chart {
+            width: 45%;
+            min-width: 300px;
+            margin-bottom: 1em;
+            animation: slideInFromLeft 1.0s ease-out;
+        }
+
+        @media (max-width: 768px) {
+            .chart {
+                width: 100%;
+            }
+        }
+
+        button {
+            background-color: #36454F;
+            border: none;
+            color: white;
+            padding: 10px 20px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            cursor: pointer;
+            transition: background-color 0.3s ease-in-out, transform 0.2s;
+            border-radius: 5px;
+        }
+
+        button:hover {
+            background-color: #FF5E5E;
+            transform: translateY(-2px);
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+        /* Add this to both HTML files */
+        .fade-out {
+            opacity: 0;
+            transition: opacity 0.5s ease-out;
+        }
+
+        .fade-in {
+            opacity: 1;
+            transition: opacity 0.5s ease-in;
+        }
+
+
+
+        /* Keyframes for sliding the navbar in from the left */
+        @keyframes slideInFromLeft {
+            0% {
+                transform: translateX(-100%);
+                opacity: 0;
+            }
+
+            100% {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        @keyframes slideInFromRight {
+            from {
+                transform: translateX(100%);
+                /* Start off-screen to the right */
+            }
+
+            to {
+                transform: translateX(0);
+                /* End at its original position */
+            }
+        }
+
+
+
+        @keyframes slideInFromTop {
+            from {
+                transform: translateY(-100%);
+                /* Start off-screen above */
+            }
+
+            to {
+                transform: translateY(0);
+                /* End at its original position */
+            }
+        }
+
+        @keyframes slideInFromBottom {
+            from {
+                transform: translateY(100%);
+                /* Start off-screen below */
+            }
+
+            to {
+                transform: translateY(0);
+                /* End at its original position */
+            }
+        }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const links = document.querySelectorAll("nav a");
+
+            links.forEach(link => {
+                link.addEventListener("click", function (event) {
+                    event.preventDefault();
+                    const href = this.getAttribute("href");
+                    document.body.classList.add("fade-out");
+
+                    setTimeout(() => {
+                        window.location.href = href;
+                    }, 500);
+                });
+            });
+        });
+    </script>
+</head>
+
+<body>
+    <header>
+        <div class="logo">PodsForSquads</div>
+        <nav>
+            <div class="search-wrapper">
+                <input type="text" placeholder="Search podcasts" id="searchInput" oninput="searchPodcasts()">
+                <button type="submit">
+                    <img src="search (1).png" alt="Search">
+                </button>
+            </div>
+            <a href="HomeScreen.html">Home</a>
+            <a href="Upload.html">Upload</a>
+            <a href="playlists.html">Playlists</a>
+            <a href="favorites.html">Favorites</a>
+            <a href="Settings.html">Settings</a>
+            <a href="Analytics.html">Stats</a>
+        </nav>
+    </header>
+
+    <div class="analytics-container" id="analyticsContainer">
+        <h1>Podcast Analytics</h1>
+        <div class="stats" id="statsContainer">
+            <h2>Statistics</h2>
+            <p>Total Podcasts Watched: <span id="totalPodcastsWatched">42</span></p>
+            <p>Most Watched Podcast: <span id="mostWatchedPodcast">Podcast A</span></p>
+            <p>Time Spent Listening: <span id="timeSpentListening">24 hours</span></p>
+        </div>
+
+        <!-- Share Buttons -->
+        <button id="shareButton">Share</button>
+        <button id="twitterShareButton">Share via Twitter</button>
+
+        <!-- Charts -->
+        <div class="chart-container">
+            <!-- Line Chart -->
+            <div class="chart">
+                <h3>Hours Watched Throughout the Week</h3>
+                <canvas id="lineChart"></canvas>
+            </div>
+
+            <!-- Pie Chart -->
+            <div class="chart">
+                <h3>Podcasts by Genre</h3>
+                <canvas id="pieChart"></canvas>
+            </div>
+        </div>
+
+        <div class="chart-container">
+            <!-- Bar Chart -->
+            <div class="chart">
+                <h3>Time Spent by Podcast</h3>
+                <canvas id="barChart"></canvas>
+            </div>
+        </div>
+    </div>
+
+
+    <footer>
+        <div class="footer-links">
+            <a href="About_Us.html">About Us</a>
+            <a href="Contact.html">Contact</a>
+            <a href="ToS.html">Terms of Service</a>
+            <a href="PrivPol.html">Privacy Policy</a>
+        </div>
+        <div class="social-media">
+            <a href="https://www.facebook.com/profile.php?id=61560365679571" target="_blank"><img
+                    src="../Screens/Images+Videos/Facebook_Logo.png" alt="Facebook"></a>
+            <a href="https://x.com/PodsForSquads" target="_blank"><img src="../Screens/Images+Videos/Twitter_Logo.png"
+                    alt="Twitter"></a>
+            <a href="https://www.instagram.com/podsforsquads/" target="_blank"><img
+                    src="../Screens/Images+Videos/Instagram_Logo.png" alt="Instagram"></a>
+        </div>
+    </footer>
+
+
+
+    <script src="LightDarkMode.js"></script>
+
+
+    <!-- JavaScript code remains the same -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            fetchGenresData();
+        });
+
+        let genresMap = {};
+
+        function fetchGenresData() {
+            fetch('https://listen-api.listennotes.com/api/v2/genres', {
+                headers: {
+                    'X-ListenAPI-Key': 'cb2038d4dbd841b39dec5309c31b2d6a'
+                }
+            })
+                .then(response => response.json())
+                .then(data => {
+                    genresMap = data.genres.reduce((map, genre) => {
+                        map[genre.id] = genre.name;
+                        return map;
+                    }, {});
+                    fetchAnalyticsData();
+                })
+                .catch(error => console.error('Error fetching genres:', error));
+        }
+
+        function fetchAnalyticsData() {
+            fetch('https://listen-api.listennotes.com/api/v2/best_podcasts', {
+                headers: {
+                    'X-ListenAPI-Key': 'cb2038d4dbd841b39dec5309c31b2d6a'
+                }
+            })
+                .then(response => response.json())
+                .then(data => {
+                    const podcasts = data.podcasts;
+                    updateStatistics(podcasts);
+                    updateCharts(podcasts);
+                })
+                .catch(error => console.error('Error fetching data:', error));
+        }
+
+        function updateStatistics(podcasts) {
+            const totalPodcastsWatched = podcasts.length;
+            const mostWatchedPodcast = podcasts[0].title; // Placeholder logic
+            const timeSpentListening = totalPodcastsWatched * 0.5 + ' hours'; // Placeholder logic
+
+            document.getElementById('totalPodcastsWatched').textContent = totalPodcastsWatched;
+            document.getElementById('mostWatchedPodcast').textContent = mostWatchedPodcast;
+            document.getElementById('timeSpentListening').textContent = timeSpentListening;
+        }
+
+        function updateCharts(podcasts) {
+            const podcastData = {
+                labels: [],
+                data: []
+            };
+
+            const genresData = {
+                labels: [],
+                data: []
+            };
+
+            const weeklyData = generateWeeklyData();
+
+            const podcastTime = {};
+            const genreCount = {};
+
+            podcasts.forEach(podcast => {
+                const title = podcast.title;
+                const genres = podcast.genre_ids.map(id => genresMap[id] || 'Unknown');
+                const listeningTime = 1; // Placeholder value for listening time in hours, replace with actual data if available
+
+                if (podcastTime[title]) {
+                    podcastTime[title] += listeningTime;
+                } else {
+                    podcastTime[title] = listeningTime;
+                }
+
+                genres.forEach(genre => {
+                    if (genre !== "Podcasts") { // Filter out "Podcasts" genre
+                        if (genreCount[genre]) {
+                            genreCount[genre] += listeningTime;
+                        } else {
+                            genreCount[genre] = listeningTime;
+                        }
+                    }
+                });
+            });
+
+            // Limit to top 8 podcasts
+            const sortedPodcastTitles = Object.keys(podcastTime).sort((a, b) => podcastTime[b] - podcastTime[a]).slice(0, 8);
+            const sortedPodcastTimes = sortedPodcastTitles.map(title => podcastTime[title]);
+
+            podcastData.labels = sortedPodcastTitles;
+            podcastData.data = sortedPodcastTimes;
+
+            // Limit pie chart to top 10 genres
+            const sortedGenres = Object.keys(genreCount).sort((a, b) => genreCount[b] - genreCount[a]).slice(0, 10);
+            const sortedGenreCounts = sortedGenres.map(genre => genreCount[genre]);
+
+            genresData.labels = sortedGenres;
+            genresData.data = sortedGenreCounts;
+
+            renderLineChart(weeklyData);
+            renderBarChart(podcastData);
+            renderPieChart(genresData);
+        }
+
+        function renderLineChart(data) {
+            const ctx = document.getElementById('lineChart').getContext('2d');
+            new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: data.labels,
+                    datasets: [{
+                        label: 'Hours Watched',
+                        data: data.data,
+                        borderColor: '#36454F',
+                        backgroundColor: '#36454F',
+                        borderWidth: 2
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+        }
+
+        function renderBarChart(data) {
+            const ctx = document.getElementById('barChart').getContext('2d');
+            new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: data.labels,
+                    datasets: [{
+                        label: 'Hours Spent',
+                        data: data.data,
+                        backgroundColor: '#36454F',
+                        borderColor: '#36454F',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+        }
+
+        function renderPieChart(data) {
+            const ctx = document.getElementById('pieChart').getContext('2d');
+            new Chart(ctx, {
+                type: 'pie',
+                data: {
+                    labels: data.labels,
+                    datasets: [{
+                        label: 'Podcasts by Genre',
+                        data: data.data,
+                        backgroundColor: [
+                            'rgba(255, 148, 148, 0.8)',
+                            'rgba(255, 205, 86, 0.8)',
+                            'rgba(75, 192, 192, 0.8)',
+                            'rgba(54, 162, 235, 0.8)',
+                            'rgba(153, 102, 255, 0.8)',
+                            'rgba(255, 159, 64, 0.8)',
+                            'rgba(255, 99, 132, 0.8)',
+                            'rgba(201, 203, 207, 0.8)',
+                            'rgba(255, 193, 7, 0.8)',
+                            'rgba(233, 30, 99, 0.8)'
+                        ]
+                    }]
+                },
+                options: {
+                    responsive: true
+                }
+            });
+        }
+
+        function generateWeeklyData() {
+            return {
+                labels: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],
+                data: [2, 3, 4, 2, 5, 6, 4] // Placeholder values, replace with actual data if available
+            };
+        }
+
+        document.getElementById('shareButton').addEventListener('click', () => {
+            html2canvas(document.getElementById('analyticsContainer')).then(canvas => {
+                if (navigator.share) {
+                    canvas.toBlob(blob => {
+                        const file = new File([blob], 'analytics.png', { type: 'image/png' });
+                        navigator.share({
+                            files: [file],
+                            title: 'Podcast Analytics',
+                            text: 'Check out my podcast analytics!'
+                        });
+                    });
+                } else {
+                    alert('Your browser does not support the Share API.');
+                }
+            });
+        });
+
+        document.getElementById('twitterShareButton').addEventListener('click', () => {
+            html2canvas(document.getElementById('analyticsContainer')).then(canvas => {
+                const dataUrl = canvas.toDataURL();
+                const encodedDataUrl = encodeURIComponent(dataUrl);
+                const twitterUrl = `https://twitter.com/intent/tweet?text=Check%20out%20my%20podcast%20analytics!&url=${encodedDataUrl}`;
+                window.open(twitterUrl, '_blank');
+            });
+        });
+    </script>
+</body>
+
+</html>

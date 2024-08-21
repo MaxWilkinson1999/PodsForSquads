@@ -6,6 +6,24 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Playlists - Podcast Streaming Service</title>
     <link rel="stylesheet" href="Styles/PlaylistStyle.css">
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const links = document.querySelectorAll("nav a");
+
+            links.forEach(link => {
+                link.addEventListener("click", function (event) {
+                    event.preventDefault();
+                    const href = this.getAttribute("href");
+                    document.body.classList.add("fade-out");
+
+                    setTimeout(() => {
+                        window.location.href = href;
+                    }, 500);
+                });
+            });
+        });
+    </script>
 </head>
 
 <body>
@@ -14,13 +32,22 @@
         <nav>
             <a href="HomeScreen.html">Home</a>
             <a href="Upload.html">Upload</a>
-            <a href="playlists.html">Playlists</a>
-            <a href="favorites.html">Favorites</a>
-            <a href="Categories.html">Categories</a>
+            <a href="Playlists.html">Playlists</a>
+            <a href="Favorites.html">Favorites</a>
+            <a href="Analytics.html">Stats</a>
             <a href="Settings.html">Settings</a>
+
         </nav>
+        <div class="search-bar">
+            <div class="search-wrapper">
+                <input type="text" placeholder="Search podcasts" id="searchInput" onkeypress="handleKeyPress(event)">
+                <button onclick="searchPodcasts()">
+                    <img src="Images+Videos/search-red.png" alt="Search">
+                </button>
+            </div>
+        </div>
         <div class="profile-icon">
-            <img src="profile-icon.png" alt="User Profile">
+            <img src="./Images+Videos/DefaultProfile.png" alt="User Profile">
         </div>
     </header>
 
@@ -33,17 +60,18 @@
 
     <footer>
         <div class="footer-links">
-            <a href="#">About Us</a>
-            <a href="#">Contact</a>
-            <a href="#">Terms of Service</a>
-            <a href="#">Privacy Policy</a>
+            <a href="About_Us.html">About Us</a>
+            <a href="Contact.html">Contact</a>
+            <a href="ToS.html">Terms of Service</a>
+            <a href="PrivPol.html">Privacy Policy</a>
         </div>
         <div class="social-media">
-            <a href="https://www.facebook.com/profile.php?id=61560365679571" target="_blank"><img src="FB Icon.jpg"
-                    alt="Facebook"></a>
-            <a href="https://x.com/PodsForSquads" target="_blank"><img src="twitter icon.png" alt="Twitter"></a>
-            <a href="https://www.instagram.com/podsforsquads/" target="_blank"><img src="IG Icon.jpg"
-                    alt="Instagram"></a>
+            <a href="https://www.facebook.com/profile.php?id=61560365679571" target="_blank"><img
+                    src="../Screens/Images+Videos/Facebook_Logo.png" alt="Facebook"></a>
+            <a href="https://x.com/PodsForSquads" target="_blank"><img src="../Screens/Images+Videos/Twitter_Logo.png"
+                    alt="Twitter"></a>
+            <a href="https://www.instagram.com/podsforsquads/" target="_blank"><img
+                    src="../Screens/Images+Videos/Instagram_Logo.png" alt="Instagram"></a>
         </div>
     </footer>
 

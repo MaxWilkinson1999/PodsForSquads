@@ -1,297 +1,531 @@
-:root {
-    --background-color: #FFFFFF;
+ :root
+       {
+
+    --background-gradient: linear-gradient(to bottom right, rgb(221, 219, 219), #b7c9e2, rgb(221, 219, 219));
     --text-color: #000000;
-    --header-background-color: #FF9494;
-    --header-text-color: #000000;
-    --search-bar-background: #FFFFFF;
-    --search-bar-text: #000000;
-    --search-results-background: #F0F0F0;
-    --heart-color: #000000;
-    /* Black for light mode */
-    --heart-filled-color: #FF0000;
-    /* Red when filled */
+    --header-background: #36454F;
+    --nav-hover-color: #b7c9e2;
+    --nav-underline-color: #b7c9e2;
+    --logo-color: whitesmoke;
+    --nav-link-color: whitesmoke;
+    --nav-text-color: black;
 }
 
-body {
-    font-family: 'proxima-nova', sans-serif;
-    margin: 0;
-    background-color: var(--background-color);
-    color: var(--text-color);
-    transition: background-color 0.3s, color 0.3s;
+body
+ {
+            font-family: 'proxima-nova', sans-serif;
+            margin: 0;
+            background-image: var(--background-gradient);
+            color: var(--text-color);
+            opacity: 1;
+            transition: opacity 0.5s ease-in-out;
+        }
+
+        body.fade-out
+         {
+            opacity: 0;
+        }
+
+
+
+
+        body.protan-mode{
+   
+    --background-gradient: linear-gradient(to bottom right, #a691ae, #e8f086,#a691ae);
+    --text-color: #235fa4;
+    --header-background:#6fde6e ;
+    --nav-hover-color: black;
+    --nav-underline-color: #b7c9e2;
+    --logo-color: whitesmoke;
+    --nav-link-color: whitesmoke;
+
+}
+
+
+
+body.deuter-mode{
+   
+   --background-gradient: linear-gradient(to bottom right, #2d3043, #2f88dc,#2d3043);
+   --text-color: black;
+   --header-background:#e89f43 ;
+   --nav-hover-color: black;
+   --nav-underline-color: #b7c9e2;
+   --logo-color: whitesmoke;
+   --nav-link-color: whitesmoke;
+
 }
 
 body.dark-mode {
-    --background-color: #000000;
-    --text-color: #FF9494;
-    --search-bar-background: #000000;
-    --search-bar-text: #FF9494;
-    --search-results-background: #333333;
-    --heart-color: #FFFFFF;
-    /* White for dark mode */
+   
+    --background-gradient: linear-gradient(to bottom right, rgb(105, 104, 104), black, rgb(105, 104, 104));
+    --text-color: #c5b358;
+    --header-background:#c5b358 ;
+    --nav-hover-color: black;
+    --nav-underline-color: #b7c9e2;
+    --logo-color: whitesmoke;
+    --nav-link-color: whitesmoke;
 }
 
+
+
+
 header {
-    background-color: var(--header-background-color);
-    color: var(--header-text-color);
+    background-color: var(--header-background);
     padding: 1em;
     display: flex;
     justify-content: space-between;
     align-items: center;
+    animation: slideInFromLeft 1.0s ease-out;
+}
+
+
+nav {
+    display: flex;
+    gap: 1em;
+    animation: slideInFromLeft 1.0s ease-out;
+
 }
 
 nav a {
-    color: var(--header-text-color);
-    margin: 0 1em;
+    color: var(--nav-link-color);
     text-decoration: none;
+    position: relative;
+    padding: 5px 15px;
+    font-size: 18px;
+    transition: color 0.3s ease;
 }
 
-.hero {
-    text-align: center;
-    padding: 2em 1em;
+nav a:hover {
+    color: var(--nav-hover-color);
 }
 
-.carousel,
-.section {
-    margin: 2em 0;
+nav a::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 0;
+    height: 2px;
+    background-color: var(--nav-underline-color);
+    transition: width 0.3s ease;
 }
 
-.carousel {
-    display: flex;
-    overflow-x: auto;
-    gap: 1em;
-    padding: 0 1em;
-    max-width: 100%;
-}
-
-.carousel::-webkit-scrollbar,
-.section::-webkit-scrollbar {
-    display: none;
-}
-
-.podcast-item {
-    min-width: 200px;
-    cursor: pointer;
-}
-
-.podcast-item img {
+nav a:hover::after {
     width: 100%;
-    border-radius: 10px;
+}
+
+.logo {
+    color: var(--logo-color);
+    text-decoration: none;
+    position: relative;
+    padding: 5px 15px;
+    font-size: 35px;
+    transition: color 0.3s ease;
 }
 
 footer {
-    background-color: var(--header-background-color);
-    padding: 1em;
-    text-align: center;
-    color: var(--header-text-color);
-}
+            background-color: var(--header-background);
+            padding: 1em;
+            text-align: center;
+            color: whitesmoke;
+            animation: slideInFromLeft 1.0s ease-out;
+        }
 
-.footer-links,
-.social-media {
-    display: flex;
-    justify-content: center;
-    gap: 1em;
-}
 
-.footer-links a,
-.social-media a {
-    color: var(--header-text-color);
+        
+
+footer a {
+    color: var(--nav-link-color);
     text-decoration: none;
-}
-
-.modal {
-    display: none;
-    position: fixed;
-    z-index: 1;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    overflow: auto;
-    background-color: rgba(0, 0, 0, 0.4);
-}
-
-.modal-content {
-    background-color: var(--search-results-background);
-    margin: 10% auto;
-    padding: 20px;
-    border: 1px solid #888;
-    width: 80%;
-    max-width: 600px;
-    border-radius: 10px;
     position: relative;
-    max-height: 70vh;
-    overflow-y: auto;
+    padding: 5px 15px;
+    font-size: 18px;
+    transition: color 0.3s ease;
 }
 
-.close {
-    color: #aaa;
-    float: right;
-    font-size: 28px;
-    font-weight: bold;
+footer a:hover {
+    color: var(--nav-hover-color);
 }
 
-.close:hover,
-.close:focus {
-    color: black;
-    text-decoration: none;
-    cursor: pointer;
-}
-
-.show-more-btn {
-    background-color: #FF9494;
-    color: #000;
-    border: none;
-    padding: 10px 20px;
-    cursor: pointer;
-    margin: 20px auto;
-    display: block;
-}
-
-.social-media {
-    display: flex;
-    justify-content: center;
-    gap: 1em;
-}
-
-.social-media a {
-    display: block;
-    width: 32px;
-    height: 32px;
-}
-
-.social-media img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    border-radius: 50%;
-}
-
-.search-results {
-    max-height: 400px;
-    overflow-y: auto;
-    padding: 1em;
-    background-color: var(--search-results-background);
-
-}
-
-.search-results .podcast-item {
-    display: flex;
-    gap: 1em;
-    padding: 1em 0;
-    border-bottom: 1px solid #ccc;
-}
-
-.search-results .podcast-item img {
-    width: 50px;
-    height: 50px;
-    object-fit: cover;
-    border-radius: 5px;
-}
-
-.search-wrapper {
-    display: flex;
-    align-items: center;
-    background-color: var(--search-bar-background);
-    border-radius: 20px;
-    padding: 5px;
-}
-
-.search-wrapper input {
-    border: none;
-    outline: none;
-    flex: 1;
-    padding: 10px;
-    border-radius: 20px;
-    background-color: var(--search-bar-background);
-    color: var(--search-bar-text);
-}
-
-.search-wrapper button {
-    background: none;
-    border: none;
-    cursor: pointer;
-    padding: 5px;
-}
-
-.search-wrapper button img {
-    width: 20px;
-    height: 20px;
-}
-
-.heart-icon {
-    font-size: 24px;
-    cursor: pointer;
-    color: var(--heart-color);
-    transition: color 0.3s;
-    margin-left: 10px;
-    fill: none;
-}
-
-.heart-icon.filled {
-    color: var(--heart-filled-color);
-    fill: currentColor;
-}
-
-.profile-icon {
-    width: 50px;
-    height: 50px;
-}
-
-.profile-icon img {
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
-}
-
-.modal-header {
-    display: flex;
-    align-items: center;
-}
-
-.modal-header h2 {
-    margin: 0;
-}
-
-.audio-player {
-    position: fixed;
-    bottom: 0;
+footer a::after {
+    content: "";
+    position: absolute;
     left: 0;
+    bottom: 0;
+    width: 0;
+    height: 2px;
+    background-color: var(--nav-underline-color);
+    transition: width 0.3s ease;
+}
+
+footer a:hover::after {
     width: 100%;
-    background-color: #f0f0f0;
-    padding: 10px;
-    box-shadow: 0px -1px 10px rgba(0, 0, 0, 0.1);
-    display: none;
 }
 
-.audio-controls {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-top: 5px;
+
+
+        .hero {
+            text-align: center;
+            padding: 2em 1em;
+        }
+
+        .carousel,
+        .section {
+            margin: 2em 0;
+        }
+
+        .carousel {
+            display: flex;
+            overflow-x: auto;
+            gap: 1em;
+            padding: 0 1em;
+            max-width: 100%;
+        }
+
+        .carousel::-webkit-scrollbar,
+        .section::-webkit-scrollbar {
+            display: none;
+        }
+
+        .podcast-item {
+            min-width: 200px;
+            cursor: pointer;
+            animation: slideInFromRight 1.0s ease-out;
+        }
+
+        .podcast-item img {
+            width: 100%;
+            border-radius: 10px;
+        }
+
+       
+
+        .footer-links,
+        .social-media {
+            display: flex;
+            justify-content: center;
+            gap: 1em;
+        }
+
+        .footer-links a,
+        .social-media a {
+            color: var(--header-text-color);
+            text-decoration: none;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.4);
+           
+        }
+
+        .modal-content {
+            background-color: #fefefe;
+            margin: 10% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
+            max-width: 600px;
+            border-radius: 10px;
+            position: relative;
+            max-height: 70vh;
+            overflow-y: auto;
+        }
+
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .show-more-btn {
+            background-color: #FF9494;
+            color: #000;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+            margin: 20px auto;
+            display: block;
+        }
+
+        .social-media {
+            display: flex;
+            justify-content: center;
+            gap: 1em;
+        }
+
+        .social-media a {
+            display: block;
+            width: 32px;
+            height: 32px;
+        }
+
+        .social-media img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 50%;
+        }
+
+        .search-results {
+            max-height: 400px;
+            overflow-y: auto;
+            padding: 1em;
+            background-color: var(--search-results-background);
+            
+        }
+
+        .search-results .podcast-item {
+            display: flex;
+            gap: 1em;
+            padding: 1em 0;
+            border-bottom: 1px solid #ccc;
+        }
+
+        .search-results .podcast-item img {
+            width: 50px;
+            height: 50px;
+            object-fit: cover;
+            border-radius: 5px;
+        }
+
+        .search-wrapper {
+            display: flex;
+            align-items: center;
+            background-color: #ffffff;
+            border-radius: 20px;
+            padding: 5px;
+        }
+
+        .search-wrapper input {
+            border: none;
+            outline: none;
+            flex: 1;
+            padding: 10px;
+            border-radius: 20px;
+            background-color: var(--search-bar-background);
+            color: var(--search-bar-text);
+        }
+
+        .search-wrapper button {
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 5px;
+        }
+
+        .search-wrapper button img {
+            width: 20px;
+            height: 20px;
+        }
+
+        .heart-icon {
+            font-size: 24px;
+            cursor: pointer;
+            color: var(--heart-color);
+            transition: color 0.3s;
+            margin-left: 10px;
+            fill: none;
+        }
+
+        .heart-icon.filled {
+            color: var(--heart-filled-color);
+            fill: currentColor;
+        }
+
+        .profile-icon {
+            width: 75px;
+            height: 75px;
+        }
+
+        .profile-icon img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        .modal-header {
+            display: flex;
+            align-items: center;
+        }
+
+        .modal-header h2 {
+            margin: 0;
+        }
+
+        .audio-player {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background-color: #f0f0f0;
+            padding: 10px;
+            box-shadow: 0px -1px 10px rgba(0, 0, 0, 0.1);
+            display: none;
+        }
+
+        .audio-controls {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-top: 5px;
+        }
+
+        .audio-controls button {
+            background-color: #FF9494;
+            color: #fff;
+            border: none;
+            padding: 5px 10px;
+            cursor: pointer;
+        }
+
+        .audio-controls input[type="range"] {
+            width: 100px;
+            cursor: pointer;
+        }
+
+        #scrollToTopBtn {
+            display: none;
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: red;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 10px 15px;
+            cursor: pointer;
+            
+        }
+
+        .video-item {
+    width: 30%; /* Adjusts the width of each video item */
+    margin: 10px; /* Adds some space around each video item */
+    display: inline-block;
+    vertical-align: top;
 }
 
-.audio-controls button {
-    background-color: #FF9494;
-    color: #fff;
-    border: none;
-    padding: 5px 10px;
-    cursor: pointer;
+.video-item video {
+    width: 100%; /* Makes the video take up the full width of the video item */
+    height: auto; /* Keeps the video aspect ratio intact */
 }
 
-.audio-controls input[type="range"] {
-    width: 100px;
-    cursor: pointer;
+.video-item h3, 
+.video-item p {
+    text-align: center; /* Centers the text below the video */
+    font-size: 0.9em; /* Adjusts the font size to match the smaller video */
 }
 
-#scrollToTopBtn {
-    display: none;
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
-    background-color: red;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    padding: 10px 15px;
-    cursor: pointer;
+
+
+
+
+/* Add this to both HTML files */
+.fade-out {
+    opacity: 0;
+    transition: opacity 0.5s ease-out;
+}
+
+.fade-in {
+    opacity: 1;
+    transition: opacity 0.5s ease-in;
+}
+
+
+
+.moving-container {
+  width: 100%;
+  overflow: hidden;
+  white-space: nowrap;
+  
+}
+
+.moving-text {
+  display: inline-block;
+  animation: moveText 20s linear infinite;
+  white-space: nowrap; /* Prevents wrapping */
+  max-width: 100%; /* Ensures the text stays in one line */
+  --text-color: black;
+}
+
+@keyframes moveText {
+  0% {
+    transform: translateX(100%); /* Start just outside the right edge */
+  }
+  2% {
+    transform: translateX(95%); /* Bring it into view almost immediately */
+  }
+  100% {
+    transform: translateX(-100%); /* Move to outside the left edge */
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+/* Keyframes for sliding the navbar in from the left */
+@keyframes slideInFromLeft {
+    0% {
+        transform: translateX(-100%);
+        opacity: 0;
+    }
+    100% {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+@keyframes slideInFromRight {
+    from {
+        transform: translateX(100%); /* Start off-screen to the right */
+    }
+    to {
+        transform: translateX(0); /* End at its original position */
+    }
+}
+
+/* Apply the animation to the navbar */
+
+
+
+
+@keyframes slideInFromTop {
+    from {
+        transform: translateY(-100%); /* Start off-screen above */
+    }
+    to {
+        transform: translateY(0); /* End at its original position */
+    }
+}
+
+@keyframes slideInFromBottom {
+    from {
+        transform: translateY(100%); /* Start off-screen below */
+    }
+    to {
+        transform: translateY(0); /* End at its original position */
+    }
 }
