@@ -3,7 +3,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const protanModeSwitch = document.getElementById('ProtanModeSwitch');
     const deuterModeSwitch = document.getElementById('deuterModeSwitch');
 
-    // Load initial state from local storage
+    
     const mode = localStorage.getItem('colorMode');
     if (mode) {
         document.body.classList.add(mode);
@@ -13,10 +13,10 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function updateColorModes(selectedMode) {
-        // Remove all color mode classes
+        
         document.body.classList.remove('dark-mode', 'protan-mode', 'deuter-mode');
 
-        // Add the selected color mode class
+       
         if (selectedMode) {
             document.body.classList.add(selectedMode);
             localStorage.setItem('colorMode', selectedMode);
@@ -24,13 +24,13 @@ document.addEventListener('DOMContentLoaded', () => {
             localStorage.removeItem('colorMode');
         }
 
-        // Ensure only the selected switch is checked
+        
         darkModeSwitch.checked = (selectedMode === 'dark-mode');
         protanModeSwitch.checked = (selectedMode === 'protan-mode');
         deuterModeSwitch.checked = (selectedMode === 'deuter-mode');
     }
 
-    // Dark mode toggle
+  
     darkModeSwitch.addEventListener('change', () => {
         if (darkModeSwitch.checked) {
             updateColorModes('dark-mode');
@@ -39,7 +39,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // Protanopia mode toggle
+  
     protanModeSwitch.addEventListener('change', () => {
         if (protanModeSwitch.checked) {
             updateColorModes('protan-mode');
@@ -48,7 +48,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // Deuteropia mode toggle
+  
     deuterModeSwitch.addEventListener('change', () => {
         if (deuterModeSwitch.checked) {
             updateColorModes('deuter-mode');
