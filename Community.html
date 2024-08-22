@@ -78,7 +78,7 @@
             align-items: center;
             font-size: 12px;
             font-weight: bold;
-            display: none; /* Initially hidden */
+            display: none;
         }
 
         .container {
@@ -274,7 +274,7 @@
                 </div>
             </div>
             <div class="replies-container">
-                <!-- Replies will be dynamically inserted here -->
+                
             </div>
             <div class="reply-form-wrapper">
                 <div class="reply-form">
@@ -283,7 +283,7 @@
                 </div>
             </div>
 
-            <!-- More comments -->
+           
             <div class="comment-box">
                 <img src="John_Smith.jpg" alt="Profile Picture">
                 <div class="comment-content">
@@ -292,7 +292,7 @@
                 </div>
             </div>
             <div class="replies-container">
-                <!-- Replies will be dynamically inserted here -->
+                
             </div>
             <div class="reply-form-wrapper">
                 <div class="reply-form">
@@ -311,10 +311,10 @@
                 <button onclick="vote('News')">News</button>
                 <button onclick="vote('Sports')">Sports</button>
                 <div class="poll-results">
-                    <!-- Poll results will be dynamically inserted here -->
+                    
                 </div>
             </div>
-            <!-- More polls -->
+           
         </div>
     </div>
 
@@ -323,13 +323,13 @@
     </footer>
 
     <script>
-        // Example notification data
+        
         let notifications = [
-            { id: 1, text: "New episode added: The Basement Yard" },
-            { id: 2, text: "Top podcast update: Bad Friends" }
+            { id: 1, text: "New episode added: Directors Commentary with Mike Flanagan" },
+            { id: 2, text: "Top podcast added: B2B Breakthrough Podcast" }
         ];
 
-        // Update the notification badge
+       
         function updateNotificationBadge() {
             const badge = document.getElementById('notificationBadge');
             badge.textContent = notifications.length;
@@ -340,36 +340,36 @@
             }
         }
 
-        // Handle click on notification center
+       
         document.getElementById('notificationCenter').addEventListener('click', function () {
             alert(notifications.map(n => n.text).join('\n'));
-            // Alternatively, you could open a modal or a notification dropdown here
+           
         });
 
-        // Initialize the notification badge
+        
         updateNotificationBadge();
 
-        // Function to add a reply
+       
         function addReply(button) {
-            const commentBox = button.closest('.section').querySelector('.comment-box');
-            const replyText = button.previousElementSibling.value;
-            if (replyText.trim()) {
-                const repliesContainer = commentBox.nextElementSibling;
-                const newReply = document.createElement('div');
-                newReply.className = 'reply';
-                newReply.innerHTML = `<img src="regular_guy.jpg" alt="User Profile Picture">
+            const replyForm = button.closest('.reply-form');
+            const replyText = replyForm.querySelector('input[type="text"]').value.trim();
+
+            if (replyText === "") return;
+
+            const repliesContainer = replyForm.closest('.reply-form-wrapper').previousElementSibling;
+            const replyElement = document.createElement('div');
+            replyElement.classList.add('reply');
+            replyElement.innerHTML = `
+                <img src="regular_guy.jpg" alt="User Profile Picture">
                                       <div class="reply-content">
                                           <p><strong>Joe Shmoe</strong></p>
                                           <p>${replyText}</p>
-                                      </div>`;
-                repliesContainer.appendChild(newReply);
-                repliesContainer.scrollTop = repliesContainer.scrollHeight; // Scroll to the bottom
-                button.previousElementSibling.value = ''; // Clear input field
-                button.previousElementSibling.focus(); // Focus input field
-            }
+            `;
+            repliesContainer.appendChild(replyElement);
+            replyForm.querySelector('input[type="text"]').value = '';
         }
 
-        // Function to handle Enter key for replies
+       
         function handleKeyPress(event, input) {
             if (event.key === 'Enter') {
                 event.preventDefault();
@@ -377,10 +377,10 @@
             }
         }
 
-        // Function to handle voting in polls
+        
         function vote(option) {
             alert('You voted for: ' + option);
-            // Update poll results dynamically here
+           
         }
     </script>
 </body>
