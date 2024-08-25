@@ -4,75 +4,60 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Playlists - Podcast Streaming Service</title>
+    <title>Playlists - PodsForSquads</title>
     <link rel="stylesheet" href="Styles/PlaylistStyle.css">
-
-    <script>
-        document.addEventListener("DOMContentLoaded", function () {
-            const links = document.querySelectorAll("nav a");
-
-            links.forEach(link => {
-                link.addEventListener("click", function (event) {
-                    event.preventDefault();
-                    const href = this.getAttribute("href");
-                    document.body.classList.add("fade-out");
-
-                    setTimeout(() => {
-                        window.location.href = href;
-                    }, 500);
-                });
-            });
-        });
-    </script>
 </head>
 
 <body>
     <header>
+        <!--- WEBSITE NAME AND TITLE -->
         <div class="logo">PodsForSquads</div>
+
+        <!--- TABS/TOP NAV BAR -->
         <nav>
             <a href="HomeScreen.html">Home</a>
             <a href="Upload.html">Upload</a>
             <a href="Playlists.html">Playlists</a>
             <a href="Favorites.html">Favorites</a>
+            <a href="Community.html">Community</a>
             <a href="Analytics.html">Stats</a>
             <a href="Settings.html">Settings</a>
-
         </nav>
-        <div class="search-bar">
-            <div class="search-wrapper">
-                <input type="text" placeholder="Search podcasts" id="searchInput" onkeypress="handleKeyPress(event)">
-                <button onclick="searchPodcasts()">
-                    <img src="Images+Videos/search-red.png" alt="Search">
-                </button>
-            </div>
-        </div>
+
+        <!--- PROFILE ICON -->
         <div class="profile-icon">
-            <img src="./Images+Videos/DefaultProfile.png" alt="User Profile">
+            <img src="Images+Videos/DefaultProfile.png" alt="User Profile">
         </div>
+
     </header>
 
     <div class="playlists-container">
         <div class="new-playlist-box" onclick="openNewPlaylistModal()">+ Create New Playlist</div>
         <div id="playlists">
-            <!-- Existing playlists will be injected here -->
+
         </div>
     </div>
 
     <footer>
+
+        <!--- FOOTER INFO -->
         <div class="footer-links">
             <a href="About_Us.html">About Us</a>
             <a href="Contact.html">Contact</a>
             <a href="ToS.html">Terms of Service</a>
             <a href="PrivPol.html">Privacy Policy</a>
         </div>
+
+        <!--- FOOTER SOCIAL MEDIA LINKS/IMAGES -->
         <div class="social-media">
             <a href="https://www.facebook.com/profile.php?id=61560365679571" target="_blank"><img
-                    src="../Screens/Images+Videos/Facebook_Logo.png" alt="Facebook"></a>
-            <a href="https://x.com/PodsForSquads" target="_blank"><img src="../Screens/Images+Videos/Twitter_Logo.png"
+                    src="Images+Videos/FB Icon.jpg" alt="Facebook"></a>
+            <a href="https://x.com/PodsForSquads" target="_blank"><img src="Images+Videos/twitter icon.png"
                     alt="Twitter"></a>
-            <a href="https://www.instagram.com/podsforsquads/" target="_blank"><img
-                    src="../Screens/Images+Videos/Instagram_Logo.png" alt="Instagram"></a>
+            <a href="https://www.instagram.com/podsforsquads/" target="_blank"><img src="Images+Videos/IG Icon.jpg"
+                    alt="Instagram"></a>
         </div>
+
     </footer>
 
     <div id="newPlaylistModal" class="modal">
@@ -83,6 +68,16 @@
                 <label for="playlistName">Playlist Name:</label>
                 <input type="text" id="playlistName" placeholder="Enter playlist name">
             </div>
+            <div class="color-picker-container">
+                <div>
+                    <label for="bannerColor">Banner Color:</label>
+                    <input type="color" id="bannerColor" value="#FF9494">
+                </div>
+                <div>
+                    <label for="textColor">Text Color:</label>
+                    <input type="color" id="textColor" value="#FFFFFF">
+                </div>
+            </div>
             <div class="form-group">
                 <label>Select Podcasts:</label>
                 <div id="podcastOptions"></div>
@@ -91,10 +86,12 @@
         </div>
     </div>
 
-
-    <script src="LightDarkMode.js"></script>
-
-
+    <div id="playlistModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closePlaylistModal()">&times;</span>
+            <div id="playlistDetails"></div>
+        </div>
+    </div>
 
     <script>
         const apiKey = 'cb2038d4dbd841b39dec5309c31b2d6a';
@@ -109,7 +106,6 @@
             try {
                 const response = await fetch(`${apiUrl}/best_podcasts?genre_id=68`, options);
                 const data = await response.json();
-                console.log(data); // Debugging: Log the data to see if the podcasts are fetched correctly
                 const podcasts = data.podcasts;
 
                 const podcastOptionsContainer = document.getElementById('podcastOptions');
@@ -119,7 +115,7 @@
                     const podcastOption = document.createElement('div');
                     podcastOption.classList.add('podcast-option');
                     podcastOption.innerHTML = `
-                        <input type="checkbox" id="podcast-${podcast.id}" value="${podcast.title}">
+                        <input type="checkbox" id="podcast-${podcast.id}" value="${podcast.id}" data-title="${podcast.title}" data-image="${podcast.image}">
                         <label for="podcast-${podcast.id}">${podcast.title}</label>
                     `;
                     podcastOptionsContainer.appendChild(podcastOption);
@@ -140,20 +136,24 @@
 
         function createPlaylist() {
             const playlistName = document.getElementById('playlistName').value;
+            const bannerColor = document.getElementById('bannerColor').value;
+            const textColor = document.getElementById('textColor').value;
+
             const selectedPodcasts = Array.from(document.querySelectorAll('#podcastOptions input[type="checkbox"]:checked')).map(checkbox => ({
-                id: checkbox.id.split('-')[1],
-                title: checkbox.value
+                id: checkbox.value,
+                title: checkbox.getAttribute('data-title'),
+                image: checkbox.getAttribute('data-image')
             }));
 
             const playlistElement = document.createElement('div');
             playlistElement.classList.add('playlist-item');
             playlistElement.innerHTML = `
-                <h3>${playlistName}</h3>
-                <ul>
-                    ${selectedPodcasts.map(podcast => `<li>${podcast.title}</li>`).join('')}
-                </ul>
-                <button onclick="deletePlaylist(this)">Delete Playlist</button>
+                <img src="${selectedPodcasts[0]?.image || ''}" alt="${playlistName}">
+                <div class="banner" style="background-color: ${bannerColor}; color: ${textColor};">
+                    ${playlistName}
+                </div>
             `;
+            playlistElement.addEventListener('click', () => openPlaylistModal(selectedPodcasts));
 
             const playlistsContainer = document.getElementById('playlists');
             playlistsContainer.appendChild(playlistElement);
@@ -161,11 +161,75 @@
             closeNewPlaylistModal();
         }
 
-        function deletePlaylist(button) {
-            const playlistItem = button.parentElement;
-            playlistItem.remove();
+        function openPlaylistModal(podcasts) {
+            const playlistDetailsContainer = document.getElementById('playlistDetails');
+            playlistDetailsContainer.innerHTML = `
+                <h2>Playlist</h2>
+                <ul class="podcast-list">
+                    ${podcasts.map(podcast => `
+                        <li onclick="openPodcastModal('${podcast.id}')">
+                            <img src="${podcast.image}" alt="${podcast.title}">
+                            ${podcast.title}
+                        </li>
+                    `).join('')}
+                </ul>
+            `;
+            document.getElementById('playlistModal').style.display = 'block';
+        }
+
+        function closePlaylistModal() {
+            document.getElementById('playlistModal').style.display = 'none';
+        }
+
+        function openPodcastModal(podcastId) {
+            const modal = document.createElement('div');
+            modal.classList.add('modal');
+            modal.innerHTML = `
+                <div class="modal-content">
+                    <span class="close" onclick="closePodcastModal()">&times;</span>
+                    <h2>Podcast Title</h2>
+                    <iframe src="https://www.listennotes.com/c/your-podcast-episode-url/" width="100%" height="150" frameborder="0" allow="autoplay"></iframe>
+                    <div id="episodesList">
+                        <!-- Episodes list will be injected here -->
+                    </div>
+                </div>
+            `;
+            document.body.appendChild(modal);
+            modal.style.display = 'block';
+
+            fetchPodcastEpisodes(podcastId);
+        }
+
+        function closePodcastModal() {
+            const modal = document.querySelector('.modal');
+            if (modal) {
+                modal.remove();
+            }
+        }
+
+        async function fetchPodcastEpisodes(podcastId) {
+            try {
+                const response = await fetch(`${apiUrl}/podcasts/${podcastId}`, options);
+                const data = await response.json();
+                const episodes = data.episodes;
+
+                const episodesListContainer = document.getElementById('episodesList');
+                episodesListContainer.innerHTML = `
+                    <h3>Episodes</h3>
+                    <ul>
+                        ${episodes.map(episode => `
+                            <li>
+                                <a href="${episode.audio}" target="_blank">${episode.title}</a>
+                            </li>
+                        `).join('')}
+                    </ul>
+                `;
+            } catch (error) {
+                console.error('Error fetching podcast episodes:', error);
+            }
         }
     </script>
+    <script src="LightDarkMode.js"></script>
 </body>
 
 </html>

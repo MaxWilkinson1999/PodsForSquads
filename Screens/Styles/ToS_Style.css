@@ -1,0 +1,326 @@
+ :root {
+            /* Light Mode */
+            --background-gradient: linear-gradient(to bottom right, rgb(221, 219, 219), #b7c9e2, rgb(221, 219, 219));
+            --text-color: #000000;
+            --header-background: #36454F;
+            --nav-hover-color: #b7c9e2;
+            --nav-underline-color: #b7c9e2;
+            --logo-color: whitesmoke;
+            --nav-link-color: whitesmoke;
+            --footer-color: #36454F;
+        }
+
+        body {
+            font-family: 'proxima-nova', sans-serif;
+            margin: 0;
+            background-image: var(--background-gradient);
+            color: var(--text-color);
+            opacity: 1;
+            transition: opacity 0.5s ease-in-out;
+        }
+
+        body.fade-out {
+            opacity: 0;
+        }
+
+
+        body.protan-mode {
+
+            --background-gradient: linear-gradient(to bottom right, #a691ae, #e8f086, #a691ae);
+            --text-color: #235fa4;
+            --header-background: #6fde6e;
+            --nav-hover-color: black;
+            --nav-underline-color: #b7c9e2;
+            --logo-color: whitesmoke;
+            --nav-link-color: whitesmoke;
+
+        }
+
+        body.dark-mode {
+            --background-gradient: linear-gradient(to bottom right, rgb(105, 104, 104), black, rgb(105, 104, 104));
+            --text-color: #c5b358;
+            --header-background: #c5b358;
+            --nav-hover-color: black;
+            --nav-underline-color: #b7c9e2;
+            --logo-color: whitesmoke;
+            --nav-link-color: whitesmoke;
+            --footer-color: #c5b358;
+        }
+
+        header {
+
+            background-color: #FF9494;
+            color: #000000;
+            padding: 1em;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: var(--header-background);
+            padding: 1em;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            animation: slideInFromLeft 1.0s ease-out;
+        }
+
+        nav {
+            display: flex;
+            gap: 1em;
+            animation: slideInFromLeft 1.0s ease-out;
+
+        }
+
+        nav a {
+            color: var(--nav-link-color);
+            text-decoration: none;
+            position: relative;
+            padding: 5px 15px;
+            font-size: 18px;
+            transition: color 0.3s ease;
+        }
+
+        nav a:hover {
+            color: var(--nav-hover-color);
+        }
+
+        nav a::after {
+            content: "";
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 0;
+            height: 2px;
+            background-color: var(--nav-underline-color);
+            transition: width 0.3s ease;
+        }
+
+        nav a:hover::after {
+            width: 100%;
+        }
+
+        .logo {
+            color: var(--logo-color);
+            text-decoration: none;
+            position: relative;
+            padding: 5px 15px;
+            font-size: 35px;
+            transition: color 0.3s ease;
+        }
+
+        .hero {
+            text-align: center;
+            padding: 2em 1em;
+        }
+
+        .carousel,
+        .section {
+            margin: 2em 0;
+        }
+
+        .carousel,
+        .section {
+            display: flex;
+            overflow-x: auto;
+            gap: 1em;
+            padding: 0 1em;
+        }
+
+        .carousel::-webkit-scrollbar,
+        .section::-webkit-scrollbar {
+            display: none;
+        }
+
+        .podcast-item {
+            min-width: 200px;
+            cursor: pointer;
+        }
+
+        .podcast-item img {
+            width: 100%;
+            border-radius: 10px;
+        }
+
+
+        .footer-links,
+        .social-media {
+            display: flex;
+            justify-content: center;
+            gap: 1em;
+        }
+
+        .footer-links a,
+        .social-media a {
+            color: var(--header-text-color);
+            text-decoration: none;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.4);
+        }
+
+        .modal-content {
+            background-color: #fefefe;
+            margin: 10% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 50%;
+            max-width: 600px;
+            border-radius: 10px;
+            position: relative;
+        }
+
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .show-more-btn {
+            background-color: #FF9494;
+            color: #000;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+            margin: 20px auto;
+            display: block;
+        }
+
+        .social-media a {
+            display: block;
+            width: 32px;
+            height: 32px;
+        }
+
+        .social-media img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 50%;
+        }
+
+        #scrollToTopBtn {
+            display: none;
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: red;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 10px 15px;
+            cursor: pointer;
+
+        }
+
+        footer {
+            background-color: var(--header-background);
+            padding: 1em;
+            text-align: center;
+            color: whitesmoke;
+            animation: slideInFromLeft 1.0s ease-out;
+        }
+
+
+
+
+        footer a {
+            color: var(--nav-link-color);
+            text-decoration: none;
+            position: relative;
+            padding: 5px 15px;
+            font-size: 18px;
+            transition: color 0.3s ease;
+        }
+
+        footer a:hover {
+            color: var(--nav-hover-color);
+        }
+
+        footer a::after {
+            content: "";
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 0;
+            height: 2px;
+            background-color: var(--nav-underline-color);
+            transition: width 0.3s ease;
+        }
+
+        footer a:hover::after {
+            width: 100%;
+        }
+
+        #AboutUsBox {
+            size: 20px;
+            font-size: 40px;
+            border-spacing: 200px;
+
+        }
+
+
+
+
+        #Text-style {
+
+            background-color: var(--background-color);
+
+            --text-color: var(--header-background-color);
+
+        }
+
+
+
+        /* Add this to both HTML files */
+        .fade-out {
+            opacity: 0;
+            transition: opacity 0.5s ease-out;
+        }
+
+        .fade-in {
+            opacity: 1;
+            transition: opacity 0.5s ease-in;
+        }
+
+
+
+        /* Keyframes for sliding the navbar in from the left */
+        @keyframes slideInFromLeft {
+            0% {
+                transform: translateX(-100%);
+                opacity: 0;
+            }
+
+            100% {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        @keyframes slideInFromRight {
+            from {
+                transform: translateX(100%);
+                /* Start off-screen to the right */
+            }
+
+            to {
+                transform: translateX(0);
+                /* End at its original position */
+            }
+        }

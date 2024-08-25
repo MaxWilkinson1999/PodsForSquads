@@ -8,6 +8,10 @@ body {
     margin: 0;
     background-color: #36454F;
 }
+.error {
+            color: red;
+            margin-top: 5px;
+        }
 
 .container {
     display: flex;

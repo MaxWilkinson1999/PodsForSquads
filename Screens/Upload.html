@@ -4,8 +4,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Podcast Streaming Service - Upload</title>
+    <title>Upload - PodsForSquads</title>
     <link rel="stylesheet" href="Styles/UploadStyle.css">
+    <link rel="icon" type="image/png" href="Images+Videos/Website_Logo.png">
 </head>
 
 <body>
@@ -16,15 +17,12 @@
             <a href="Upload.html">Upload</a>
             <a href="Playlists.html">Playlists</a>
             <a href="Favorites.html">Favorites</a>
-            <a href="Categories.html">Categories</a>
+            <a href="Community.html">Community</a>
+            <a href="Analytics.html">Stats</a>
             <a href="Settings.html">Settings</a>
         </nav>
-        <div class="search-bar">
-            <input type="text" placeholder="Search podcasts" id="searchInput">
-            <button onclick="searchPodcasts()">Search</button>
-        </div>
         <div class="profile-icon">
-            <img src="profile-icon.png" alt="User Profile">
+            <img src="Images+Videos/DefaultProfile.png" alt="User Profile">
         </div>
     </header>
 
@@ -48,16 +46,17 @@
 
     <footer>
         <div class="footer-links">
-            <a href="#">About Us</a>
-            <a href="#">Contact</a>
-            <a href="#">Terms of Service</a>
-            <a href="#">Privacy Policy</a>
+            <a href="About_Us.html">About Us</a>
+            <a href="Contact.html">Contact</a>
+            <a href="ToS.html">Terms of Service</a>
+            <a href="PrivPol.html">Privacy Policy</a>
         </div>
         <div class="social-media">
-            <a href="https://www.facebook.com/profile.php?id=61560365679571" target="_blank"><img src="FB Icon.jpg"
-                    alt="Facebook"></a>
-            <a href="https://x.com/PodsForSquads" target="_blank"><img src="twitter icon.png" alt="Twitter"></a>
-            <a href="https://www.instagram.com/podsforsquads/" target="_blank"><img src="IG Icon.jpg"
+            <a href="https://www.facebook.com/profile.php?id=61560365679571" target="_blank"><img
+                    src="Images+Videos/FB Icon.jpg" alt="Facebook"></a>
+            <a href="https://x.com/PodsForSquads" target="_blank"><img src="Images+Videos/twitter icon.png"
+                    alt="Twitter"></a>
+            <a href="https://www.instagram.com/podsforsquads/" target="_blank"><img src="Images+Videos/IG Icon.jpg"
                     alt="Instagram"></a>
         </div>
     </footer>
@@ -65,6 +64,7 @@
     <!-- Include the Firebase and Upload scripts -->
     <script src="FirebaseConfig.js" type="module"></script>
     <script src="Upload.js" type="module"></script>
+    <script src="LightDarkMode.js"></script>
 </body>
 
 </html>

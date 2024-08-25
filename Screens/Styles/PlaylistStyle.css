@@ -1,53 +1,17 @@
-:root {
-            /* Light Mode */
-            --background-gradient: linear-gradient(to bottom right, rgb(221, 219, 219), #b7c9e2, rgb(221, 219, 219));
-            --text-color: #000000;
-            --header-background: #36454F;
-            --nav-hover-color: #b7c9e2;
-            --nav-underline-color: #b7c9e2;
-            --logo-color: whitesmoke;
-            --nav-link-color: whitesmoke;
-        }
-
-        body {
+ body {
             font-family: 'proxima-nova', sans-serif;
             margin: 0;
-            background-image: var(--background-gradient);
-            color: var(--text-color);
+            background-image: linear-gradient(to bottom right, rgb(221, 219, 219), #b7c9e2, rgb(221, 219, 219));
+            color: #000000;
         }
-
-        body.protan-mode {
-
-            --background-gradient: linear-gradient(to bottom right, #a691ae, #e8f086, #a691ae);
-            --text-color: #235fa4;
-            --header-background: #6fde6e;
-            --nav-hover-color: black;
-            --nav-underline-color: #b7c9e2;
-            --logo-color: whitesmoke;
-            --nav-link-color: whitesmoke;
-
-        }
-
-        body.dark-mode {
-            --background-gradient: linear-gradient(to bottom right, rgb(105, 104, 104), black, rgb(105, 104, 104));
-            --text-color: #c5b358;
-            --header-background: #c5b358;
-            --nav-hover-color: black;
-            --nav-underline-color: #b7c9e2;
-            --logo-color: whitesmoke;
-            --nav-link-color: whitesmoke;
-        }
-
 
         header {
-            background-color: var(--header-background);
+            background-color: #36454F;
             padding: 1em;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            animation: slideInFromTop 1.0s ease-out;
         }
-
 
         nav {
             display: flex;
@@ -55,7 +19,7 @@
         }
 
         nav a {
-            color: var(--nav-link-color);
+            color: whitesmoke;
             text-decoration: none;
             position: relative;
             padding: 5px 15px;
@@ -64,7 +28,7 @@
         }
 
         nav a:hover {
-            color: var(--nav-hover-color);
+            color: #b7c9e2;
         }
 
         nav a::after {
@@ -74,7 +38,7 @@
             bottom: 0;
             width: 0;
             height: 2px;
-            background-color: var(--nav-underline-color);
+            background-color: #b7c9e2;
             transition: width 0.3s ease;
         }
 
@@ -83,117 +47,12 @@
         }
 
         .logo {
-            color: var(--logo-color);
+            color: whitesmoke;
             text-decoration: none;
             position: relative;
             padding: 5px 15px;
             font-size: 35px;
             transition: color 0.3s ease;
-        }
-
-        footer {
-            background-color: var(--header-background);
-            padding: 1em;
-            text-align: center;
-            color: whitesmoke;
-            animation: slideInFromLeft 1.0s ease-out;
-        }
-
-
-
-
-        footer a {
-            color: var(--nav-link-color);
-            text-decoration: none;
-            position: relative;
-            padding: 5px 15px;
-            font-size: 18px;
-            transition: color 0.3s ease;
-        }
-
-        footer a:hover {
-            color: var(--nav-hover-color);
-        }
-
-        footer a::after {
-            content: "";
-            position: absolute;
-            left: 0;
-            bottom: 0;
-            width: 0;
-            height: 2px;
-            background-color: var(--nav-underline-color);
-            transition: width 0.3s ease;
-        }
-
-        footer a:hover::after {
-            width: 100%;
-        }
-
-
-        .footer-links,
-        .social-media {
-            display: flex;
-            justify-content: center;
-            gap: 1em;
-        }
-
-        .footer-links a,
-        .social-media a {
-            color: var(--header-text-color);
-            text-decoration: none;
-        }
-
-        .social-media {
-            display: flex;
-            justify-content: center;
-            gap: 1em;
-        }
-
-        .social-media a {
-            display: block;
-            width: 32px;
-            height: 32px;
-        }
-
-        .social-media img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            border-radius: 50%;
-        }
-
-        .search-results {
-            max-height: 400px;
-            overflow-y: auto;
-            padding: 1em;
-            background-color: var(--search-results-background);
-            
-        }
-
-         .profile-icon {
-            width: 75px;
-            height: 75px;
-        }
-
-        .profile-icon img {
-            width: 100%;
-            height: 100%;
-            object-fit: contain;
-        }
-
-        .search-results .podcast-item {
-            display: flex;
-            gap: 1em;
-            padding: 1em 0;
-            border-bottom: 1px solid #ccc;
-        }
-
-        .search-results .podcast-item img {
-            width: 50px;
-            height: 50px;
-            object-fit: cover;
-            border-radius: 5px;
         }
 
         .playlists-container {
@@ -202,12 +61,10 @@
             flex-direction: row;
             gap: 1em;
             overflow-x: auto;
-            animation: slideInFromLeft 1.0s ease-out;
         }
 
         .new-playlist-box,
         .playlist-item {
-            border: 1px solid #ccc;
             border-radius: 10px;
             padding: 1em;
             width: 200px;
@@ -215,23 +72,37 @@
             text-align: center;
             box-sizing: border-box;
             flex: 0 0 auto;
+            position: relative;
         }
 
         .new-playlist-box {
-            border: 2px dashed #ccc;
+            border: 2px dashed #000;
+            /* Changed to black dashed border */
             cursor: pointer;
-            color: #777;
+            color: #000;
+            /* Changed text color to black */
             display: flex;
             align-items: center;
             justify-content: center;
         }
 
+        .playlist-item {
+            border: 2px solid #000;
+            /* Changed to black solid border */
+        }
+
+        .playlist-item img {
+            width: 95%;
+            height: auto;
+            border-radius: 10px;
+        }
+
         .playlist-item h3 {
-            margin: 0 0 0.5em 0;
+            margin: 0;
         }
 
         .playlist-item p {
-            margin: 0.5em 0;
+            margin: 0;
         }
 
         .playlist-item button {
@@ -243,6 +114,12 @@
             color: #000;
         }
 
+        footer {
+            background-color: #36454F;
+            padding: 1em;
+            text-align: center;
+        }
+
         .footer-links,
         .social-media {
             display: flex;
@@ -252,7 +129,7 @@
 
         .footer-links a,
         .social-media a {
-            color: #fefefe;
+            color: whitesmoke;
             text-decoration: none;
         }
 
@@ -273,8 +150,8 @@
             margin: 10% auto;
             padding: 20px;
             border: 1px solid #888;
-            width: 50%;
-            max-width: 600px;
+            width: 80%;
+            max-width: 800px;
             border-radius: 10px;
             position: relative;
         }
@@ -319,67 +196,78 @@
             margin-left: 0.5em;
         }
 
-
-
-
-        .fade-out {
-            opacity: 0;
-            transition: opacity 0.5s ease-out;
+        .color-picker-container {
+            display: flex;
+            gap: 1em;
+            margin-bottom: 1em;
         }
 
-        .fade-in {
-            opacity: 1;
-            transition: opacity 0.5s ease-in;
+        .color-picker-container label {
+            margin-right: 0.5em;
         }
 
-
-        /* Keyframes For Sliding Objects */
-        @keyframes slideInFromLeft {
-            0% {
-                transform: translateX(-100%);
-                opacity: 0;
-            }
-
-            100% {
-                transform: translateX(0);
-                opacity: 1;
-            }
+        .color-picker-container input[type="color"] {
+            border: none;
+            height: 2em;
+            width: 2em;
         }
 
-        @keyframes slideInFromRight {
-            from {
-                transform: translateX(100%);
-                /* Start off-screen to the right */
-            }
-
-            to {
-                transform: translateX(0);
-                /* End at its original position */
-            }
+        .podcast-list {
+            list-style-type: none;
+            padding: 0;
         }
 
-
-
-        @keyframes slideInFromTop {
-            from {
-                transform: translateY(-100%);
-                /* Start off-screen above */
-            }
-
-            to {
-                transform: translateY(0);
-                /* End at its original position */
-            }
+        .podcast-list li {
+            margin-bottom: 1em;
+            display: flex;
+            align-items: center;
+            cursor: pointer;
         }
 
-        @keyframes slideInFromBottom {
-            from {
-                transform: translateY(100%);
-                /* Start off-screen below */
-            }
-
-            to {
-                transform: translateY(0);
-                /* End at its original position */
-            }
+        .podcast-list li img {
+            width: 50px;
+            height: 50px;
+            margin-right: 0.5em;
         }
+
+        .banner {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background-color: #000000;
+            color: #FFFFFF;
+            padding: 0.2em 0.5em;
+            transform: rotate(-45deg);
+            transform-origin: left top;
+        }
+
+         .social-media {
+            display: flex;
+            justify-content: center;
+            gap: 1em;
+        }
+
+        .social-media a {
+            display: block;
+            width: 32px;
+            height: 32px;
+        }
+
+        .social-media img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 50%;
+        }
+
+        .profile-icon {
+            width: 75px;
+            height: 75px;
+        }
+
+        .profile-icon img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+

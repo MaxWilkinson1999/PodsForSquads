@@ -4,8 +4,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Podcast Streaming Service</title>
+    <title>Home - PodsForSquads</title>
     <link rel="stylesheet" href="Styles/HomeStyle.css">
+    <link rel="icon" type="image/png" href="Images+Videos/Website_Logo.png">
 </head>
 
 <body>
@@ -16,6 +17,7 @@
             <a href="Upload.html">Upload</a>
             <a href="Playlists.html">Playlists</a>
             <a href="Favorites.html">Favorites</a>
+            <a href="Community.html">Community</a>
             <a href="Analytics.html">Stats</a>
             <a href="Settings.html">Settings</a>
         </nav>
@@ -28,11 +30,13 @@
             </div>
         </div>
         <div class="profile-icon">
-            <img src="./Images+Videos/DefaultProfile.png" alt="User Profile">
+            <a href="Settings.html">
+                <img id="profileImage" src="./Images+Videos/DefaultProfile.png" alt="User Profile">
+            </a>
         </div>
         <select id="languageSelector" onchange="changeLanguage(this.value)">
-            <option value="en">English</option>
-            <option value="es">Español</option>
+            <option value="English">English</option>
+            <option value="Spanish">Español</option>
         </select>
     </header>
 
@@ -115,8 +119,7 @@
         document.addEventListener('DOMContentLoaded', fetchVideos);
     </script>
 
-    <script src="LightDarkMode.js"></script>
-    <script src="Language.js"></script>
+
     <script type="module">
         import { savePodcastToFirestore, deletePodcastFromFirestore } from './FirebaseConfig.js';
 
@@ -335,6 +338,10 @@
             document.documentElement.scrollTop = 0;
         }
     </script>
+
+    <script src="LightDarkMode.js"></script>
+    <script src="Language.js"></script>
+
 </body>
 
 </html>
