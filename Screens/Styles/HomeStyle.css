@@ -114,7 +114,7 @@ nav a:hover::after {
     width: 100%;
 }
 
-.logo {
+#logo {
     color: var(--logo-color);
     text-decoration: none;
     position: relative;
@@ -158,6 +158,37 @@ footer a::after {
     transition: width 0.3s ease;
 }
 
+h1 {
+    display: block;
+    font-size: 2em;
+    margin-block-start: 0.67em;
+    margin-block-end: 0.67em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+    font-weight: bold;
+    unicode-bidi: isolate;
+}
+h2 {
+    display: block;
+    font-size: 2em;
+    margin-block-start: 0.67em;
+    margin-block-end: 0.67em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+    font-weight: bold;
+    unicode-bidi: isolate;
+}
+h4 {
+    display: block;
+    font-size: 2em;
+    margin-block-start: 0.67em;
+    margin-block-end: 0.67em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+    font-weight: bold;
+    unicode-bidi: isolate;
+}
+
 footer a:hover::after {
     width: 100%;
 }
@@ -171,7 +202,8 @@ footer a:hover::after {
 
         .carousel,
         .section {
-            margin: 2em 0;
+            text-align: center;
+            padding: 2em 1em;
         }
 
         .carousel {
@@ -358,6 +390,21 @@ footer a:hover::after {
             height: 100%;
             object-fit: contain;
         }
+
+        /* Profile icon hover effect */
+.profile-icon {
+    cursor: pointer; /* Makes the cursor a pointer to indicate it's clickable */
+}
+
+.profile-icon img {
+    transition: transform 0.3s ease, box-shadow 0.3s ease; /* Smooth transition for the hover effects */
+}
+
+.profile-icon:hover img {
+    transform: scale(1.1); /* Slightly enlarges the profile image */
+    box-shadow: 0px 4px 10px rgba(130, 151, 125, 0.288); /* Adds a shadow effect */
+}
+
 
         .modal-header {
             display: flex;

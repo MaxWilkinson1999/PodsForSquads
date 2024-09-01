@@ -1,68 +1,109 @@
-fetch(`JSON/${language}.json`)
-
-// Default language setting
 const DEFAULT_LANGUAGE = 'en';
 
-// Function to get the user's preferred language from localStorage
 function getUserLanguage() {
     return localStorage.getItem('language') || DEFAULT_LANGUAGE;
 }
 
-// Function to set the user's preferred language
+
 function setUserLanguage(language) {
     localStorage.setItem('language', language);
 }
 
-// Function to load a language file and return its contents as a JSON object
-function loadLanguageFile(language) {
+
+async function loadLanguageFile(language) {
     console.log(`Attempting to load ${language}.json`);
-    return fetch(`${language}.json`)
-        .then(response => {
-            if (!response.ok) {
-                throw new Error(`Failed to load ${language}.json`);
-            }
-            return response.json();
-        })
-        .catch(error => {
-            console.error('Error loading language file:', error);
+    try {
+        const response = await fetch(`JSON/${language}.json`);
+        if (!response.ok) {
+            throw new Error(`Failed to load ${language}.json`);
+        }
+        return await response.json();
+    } catch (error) {
+        console.error('Error loading language file:', error);
+        if (language !== DEFAULT_LANGUAGE) {
             return loadLanguageFile(DEFAULT_LANGUAGE);
-        });
+        } else {
+            throw new Error('Unable to load any language files.');
+        }
+    }
 }
 
 
-// Function to apply the language to the HTML elements
 function applyLanguage(data) {
-    document.getElementById('logoText').textContent = data.logo;
-    document.getElementById('homeLink').textContent = data.home;
-    document.getElementById('uploadLink').textContent = data.upload;
-    document.getElementById('playlistsLink').textContent = data.playlists;
-    document.getElementById('favoritesLink').textContent = data.favorites;
-    document.getElementById('statsLink').textContent = data.stats;
-    document.getElementById('settingsLink').textContent = data.settings;
-    document.getElementById('searchInput').placeholder = data.search_placeholder;
-    document.querySelector('.hero h1').textContent = data.featured_podcasts;
-    document.querySelector('.section h2').textContent = data.trending_podcasts;
-    document.querySelector('.section h3').textContent = data.uploaded_videos;
-    document.querySelector('footer .footer-links a[href="About_Us.html"]').textContent = data.about_us;
-    document.querySelector('footer .footer-links a[href="Contact.html"]').textContent = data.contact;
-    document.querySelector('footer .footer-links a[href="ToS.html"]').textContent = data.terms_of_service;
-    document.querySelector('footer .footer-links a[href="PrivPol.html"]').textContent = data.privacy_policy;
+    const logoTextElement = document.getElementById('logo');
+    if (logoTextElement) {
+        logoTextElement.textContent = data.logo;
+    } 
+
+    const homeElement = document.getElementById('Home');
+    if (homeElement) homeElement.textContent = data.home;
+
+    const uploadLinkElement = document.getElementById('Upload');
+    if (uploadLinkElement) uploadLinkElement.textContent = data.upload;
+
+    const playlistsLinkElement = document.getElementById('Playlists');
+    if (playlistsLinkElement) playlistsLinkElement.textContent = data.playlists;
+
+    const favoritesLinkElement = document.getElementById('Favorites');
+    if (favoritesLinkElement) favoritesLinkElement.textContent = data.favorites;
+
+    const statsLinkElement = document.getElementById('Analytics');
+    if (statsLinkElement) statsLinkElement.textContent = data.stats;
+
+    const settingsLinkElement = document.getElementById('Settings');
+    if (settingsLinkElement) settingsLinkElement.textContent = data.settings;
+
+     const communityLinkElement = document.getElementById('Community');
+    if (communityLinkElement) communityLinkElement.textContent = data.community;
+
+    const searchInputElement = document.getElementById('searchInput');
+    if (searchInputElement) searchInputElement.placeholder = data.search_placeholder;
+
+    const heroH1Element = document.querySelector('.hero h1');
+    if (heroH1Element) heroH1Element.textContent = data.featured_podcasts;
+
+    const sectionH2Element = document.querySelector('.section h2');
+    if (sectionH2Element) sectionH2Element.textContent = data.trending_podcasts;
+
+    const sectionH3Element = document.querySelector('.section h4');
+    if (sectionH3Element) sectionH3Element.textContent = data.uploaded_videos;
+
+    const aboutUsLink = document.querySelector('footer .footer-links a[href="About_Us.html"]');
+    if (aboutUsLink) aboutUsLink.textContent = data.about_us;
+
+    const contactLink = document.querySelector('footer .footer-links a[href="Contact.html"]');
+    if (contactLink) contactLink.textContent = data.contact;
+
+    const tosLink = document.querySelector('footer .footer-links a[href="ToS.html"]');
+    if (tosLink) tosLink.textContent = data.terms_of_service;
+
+    const privPolLink = document.querySelector('footer .footer-links a[href="PrivPol.html"]');
+    if (privPolLink) privPolLink.textContent = data.privacy_policy;
 }
 
-// Function to change the language
+
 async function changeLanguage(language) {
-    const languageData = await loadLanguageFile(language);
-    applyLanguage(languageData);
-    setUserLanguage(language); // Save the selected language
+    try {
+        const languageData = await loadLanguageFile(language);
+        applyLanguage(languageData);
+        setUserLanguage(language); // Save the selected language
+    } catch (error) {
+        console.error('Error applying the language:', error);
+        // Optionally, show a user-friendly message
+    }
 }
 
-// Initialize the page with the saved or default language
+
 document.addEventListener('DOMContentLoaded', async () => {
     const savedLanguage = getUserLanguage();
-    const languageData = await loadLanguageFile(savedLanguage);
-    applyLanguage(languageData);
-    document.getElementById('languageSelector').value = savedLanguage;
+    try {
+        const languageData = await loadLanguageFile(savedLanguage);
+        applyLanguage(languageData);
+        document.getElementById('languageSelector').value = savedLanguage;
+    } catch (error) {
+        console.error('Error during initialization:', error);
+        
+    }
 });
 
-// Expose functions to the global scope (if needed)
 window.changeLanguage = changeLanguage;
