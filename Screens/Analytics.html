@@ -34,12 +34,6 @@
     <header>
         <div id="logo">PodsForSquads</div>
         <nav>
-            <div class="search-wrapper">
-                <input type="text" placeholder="Search podcasts" id="searchInput" oninput="searchPodcasts()">
-                <button type="submit">
-                    <img src="search (1).png" alt="Search">
-                </button>
-            </div>
             <a id="Home" href="HomeScreen.html">Home</a>
             <a id="Upload" href="Upload.html">Upload</a>
             <a id="Playlists" href="Playlists.html">Playlists</a>
@@ -48,6 +42,17 @@
             <a id="Analytics" href="Analytics.html">Stats</a>
             <a id="Settings" href="Settings.html">Settings</a>
         </nav>
+
+        <div class="profile-dropdown">
+            <div class="profile-icon">
+                <img id="profileImage" src="./Images+Videos/DefaultProfile.png" alt="User Profile">
+                <i class="arrow down"></i>
+            </div>
+            <div class="dropdown-content">
+                <a href="Settings.html">View Profile</a>
+                <a href="Auth/Login.html">Log Out</a>
+            </div>
+        </div>
     </header>
 
     <div class="analytics-container" id="analyticsContainer">
