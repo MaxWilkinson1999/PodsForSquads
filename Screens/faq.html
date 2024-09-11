@@ -15,17 +15,29 @@
     --logo-color: whitesmoke;
     --nav-link-color: whitesmoke;
     --footer-color: #36454F;
+    --answer-color: #36454f;
+    --bubble-background: purple;
 }
 
 body {
-            font-family: 'proxima-nova', sans-serif;
-            margin: 0;
-            background-image: var(--background-gradient);
-            color: var(--text-color);
-            opacity: 1;
-            transition: opacity 0.5s ease-in-out;
-           
-        }
+    font-family: 'proxima-nova', sans-serif;
+    margin: 0;
+    background-image: var(--background-gradient);
+    color: var(--text-color);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Ensures the main content fills the space between the header and footer */
+main {
+    flex: 1;
+
+}
+
+
+
+
 
         body.fade-out {
             
@@ -42,6 +54,7 @@ body {
    --nav-underline-color: #b7c9e2;
    --logo-color: whitesmoke;
    --nav-link-color: whitesmoke;
+   --answer-color: whitesmoke;
 
 }
 
@@ -55,6 +68,7 @@ body {
     --nav-underline-color: #b7c9e2;
     --logo-color: whitesmoke;
     --nav-link-color: whitesmoke;
+    --answer-color: purple;
 
 }
 
@@ -75,6 +89,7 @@ body.dark-mode {
     --nav-underline-color: #b7c9e2;
     --logo-color: whitesmoke;
     --nav-link-color: whitesmoke;
+    --answer-color: whitesmoke;
 }
 
 
@@ -130,13 +145,14 @@ nav a:hover::after {
     transition: color 0.3s ease;
 }
 
-footer {
-            background-color: var(--header-background);
-            padding: 1em;
-            text-align: center;
-            color: whitesmoke;
-            animation: slideInFromLeft 1.0s ease-out;
-        }
+footer
+ {
+    background-color: var(--header-background);
+    padding: 1em;
+    text-align: center;
+    color: whitesmoke;
+    animation: slideInFromLeft 1.0s ease-out;
+}
 
 
         
@@ -351,10 +367,52 @@ footer a:hover::after {
 
 
 
+summary {
+    padding: 0.5em 1.3rem;
+    list-style: none;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start; /* Align items to the start */
+    font-size: 30px; /* Increases the size of questions */
+    cursor: pointer;
+    
+}
+
+summary::after {
+    content: "\002B";
+    font-size: 40px; /* Increase the size of the button */
+    margin-left: 20px; /* Space between the question and the button */
+    background-color: #ccc; /* Adds a background color to the button */
+    border-radius: 50%; /* Makes the button round */
+    width: 40px;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+details[open] summary::after {
+    content: "\00D7"; /* Change the icon when the details are open */
+}
+
+details[open] summary {
+    border-bottom: 1px solid  var(--bubble-background);
+    margin-bottom: 0.5em;
+    color: var(--bubble-background);
+}
+
+details[open] div {
+    padding: 0.5em 1em;
+    color: var( --answer-color);
+    font-size: 30px; /* Increases the size of answers */
+}
 
 
+.container h1{
+  color: var(--header-background);
+  text-align: center;
 
-
+}
 
 
 
@@ -404,29 +462,70 @@ footer a:hover::after {
     </header>
 
     <main>
-        <section class="upload-section">
-            <h2>Submit Your Video</h2>
-            <form id="videoForm" class="modal-content" onsubmit="submitForm(event)">
-                <label for="videoUpload">Upload Video:</label>
-                <input type="file" id="videoUpload" accept="video/*" required><br><br>
+        <div class="container">
+            <h1>Frequently Asked Questions</h1>
 
 
-                <label for="thumbnail">Upload thumbnail:</label>
-                <input type="file" id="thumbnail" accept="Image/*" required><br><br>
 
-                <label for="publisher">Publisher:</label>
-                <input type="text" id="publisher" required><br><br>
+            <details>
+            <summary>What is a podcast?</summary>
+            <div>
+          - A podcast is an audio (and sometimes video) medium for creative content. Podcast creators upload podcast episodes, which are downloaded by listeners and listened to on their mobile devices or computers.
+            </div>
+          </details>
 
-                <label for="description">Description:</label><br>
-                <textarea id="description" rows="4" required></textarea><br><br>
 
-                <button type="submit" id="submitBtn">Submit</button>
-            </form>
-        </section>
+          <details>
+            <summary>Whats the point of this website?</summary>
+            <div>
+         -  PodsForSquads is your one stop shop for podcasts of all varieties! We welcome all people from all walks of life to come and enjoy the ever expanding catalog of podcasts. We are here to help create an awesome and welcoming experience for people looking to listen to some of their favorite people talking. 
+            </div>
+          </details>
 
-        <section id="videoDisplay" class="modal-content">
-            <!-- Video display area to be populated dynamically -->
-        </section>
+
+         <details>
+            <summary>Where is this podcast hosted from?</summary>
+            <div>
+         -  PodsForSquads uses a wonderful API known as ListenNotes to offer our catalog of podcasts for users to listen to. So when scrolling through our website, and then proceed to find a podcast and you click to watch it and it brings you out into the new tab, that is ListenNotes player to offer you the ability to listen to the podcast all the while still giving you the ability to go through other pod casts and select others.
+            </div>
+          </details>
+
+          <details>
+          <summary>Why is there a heart button next to podcast titles?</summary>
+          <div>
+       -  The heart icon next to the podcast titles when you enter the model is used for the favorites option! With PodsForSquads, we allow our users to create a list on their respective accounts to keep all their favorites in one area to go back and resume listening to podcasts when they are coming back after closing out the website, and not have to navigate around to find the beloved listen. 
+        </div>
+        </details>
+
+
+        <details>
+            <summary>What is the analytics page showing me?</summary>
+            <div>
+         - The analytics page is here to give you a run down on your stats! We want reocurring and even newer customers to get an idea of what they are watching, for how long, and what category they seem to like most. This will allow you to get a better grasp on what you could like. 
+          </div>
+          </details>
+
+
+
+
+
+          <details>
+            <summary>What is the point of making a playlist?</summary>
+            <div>
+         - Making a playlist is a awesome and exciting way to enhance upon your favorites. Now you can put not only all yout favorites into one area, you can then organize and categorize them further however you see fit. 
+            </div>
+          </details>
+
+          <details>
+            <summary>Is there any colorblind accessabilities to this website?</summary>
+            <div>
+         - Absolutely! 
+             </div>
+          </details>
+
+
+
+          </div>
     </main>
 
     <footer>
@@ -435,7 +534,6 @@ footer a:hover::after {
             <a href="Contact.html">Contact</a>
             <a href="ToS.html">Terms of Service</a>
             <a href="PrivPol.html">Privacy Policy</a>
-            <a href="faq.html">FAQ</a>
         </div>
         <div class="social-media">
             <a href="https://www.facebook.com/profile.php?id=61560365679571" target="_blank"><img src="../Screens/Images+Videos/Facebook_Logo.png" alt="Facebook"></a>
@@ -453,59 +551,6 @@ footer a:hover::after {
 
         
     <script>
-        function submitForm(event) {
-            event.preventDefault();
-
-            const videoFile = document.getElementById('videoUpload').files[0];
-            const publisher = document.getElementById('publisher').value;
-            const description = document.getElementById('description').value;
-            const thumbnail = document.getElementById('thumbnail').files[0];
-
-            if (!videoFile || !publisher || !thumbnail || !description) {
-                alert('Please fill out all fields.');
-                return;
-            }
-
-            const videoData = {
-                publisher: publisher,
-                description: description,
-                videoURL: URL.createObjectURL(videoFile)
-            };
-
-            localStorage.setItem('uploadedVideo', JSON.stringify(videoData));
-
-            const videoDisplay = document.getElementById('videoDisplay');
-            videoDisplay.innerHTML = `
-                <h2>Submitted Video Details:</h2>
-                <p><strong>Publisher:</strong> ${publisher}</p>
-                <p><strong>Description:</strong> ${description}</p>
-                <video width="400" controls>
-                    <source src="${videoData.videoURL}" type="video/mp4">
-                    Your browser does not support HTML video.
-                </video>
-            `;
-
-            document.getElementById('videoForm').reset();
-        }
-    </script>
-
-    <button id="scrollToTopBtn" onclick="scrollToTop()">Top Of Screen</button>
-
-    <script>
-        var mybutton = document.getElementById("scrollToTopBtn");
-
-        window.onscroll = function() {
-            scrollFunction();
-        };
-
-        function scrollFunction() {
-            if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
-                mybutton.style.display = "block";
-            } else {
-                mybutton.style.display = "none";
-            }
-        }
-
         function scrollToTop() {
             document.body.scrollTop = 0;
             document.documentElement.scrollTop = 0;

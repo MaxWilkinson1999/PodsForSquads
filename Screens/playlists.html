@@ -15,12 +15,19 @@
     --logo-color: whitesmoke;
     --nav-link-color: whitesmoke;
 }
+html, body {
+            height: 100%;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+        }
 
 body {
     font-family: 'proxima-nova', sans-serif;
     margin: 0;
     background-image: var(--background-gradient);
     color: var(--text-color);
+
 }
 body.protan-mode{
    
@@ -170,6 +177,7 @@ footer a:hover::after {
         }
 
         .playlists-container {
+            flex: 1; /* This makes the playlists container grow to fill the available space */
             padding: 2em 1em;
             display: flex;
             flex-direction: row;

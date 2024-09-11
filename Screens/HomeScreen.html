@@ -412,19 +412,23 @@ footer a:hover::after {
             cursor: pointer;
         }
 
-        #scrollToTopBtn {
-            display: none;
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            background-color: red;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            padding: 10px 15px;
-            cursor: pointer;
-            
-        }
+        
+    #scrollToTopBtn {
+        display: none;
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        border: none;
+        border-radius: 5px;
+        padding: 10px;
+        cursor: pointer;
+        background: url('Top.jpg') no-repeat center center; 
+        height: 20px; 
+    }
+
+    #scrollToTopBtn:hover {
+        transform: scale(1.1); 
+    }
 
 
 
@@ -455,8 +459,27 @@ footer a:hover::after {
   animation: moveText 20s linear infinite;
   white-space: nowrap; /* Prevents wrapping */
   max-width: 100%; /* Ensures the text stays in one line */
+  max-height: fit-content;
   --text-color: black;
+  
 }
+
+
+.text-bar{
+    size: 30px;
+
+}
+
+
+
+
+
+
+
+
+
+
+
 
 @keyframes moveText {
   0% {
@@ -469,6 +492,7 @@ footer a:hover::after {
     transform: translateX(-100%); /* Move to outside the left edge */
   }
 }
+
 
 
 
@@ -576,6 +600,7 @@ footer a:hover::after {
             <a href="favorites.html">Favorites</a>
             <a href="Settings.html">Settings</a>
             <a href="Analytics.html">Stats</a>
+            <a href="Community.html">Community</a>
         </nav>
         <div class="search-bar">
             <div class="search-wrapper">
@@ -595,8 +620,8 @@ footer a:hover::after {
 
 <!-- Moving Text Bar -->
 <div class="text-bar">
-    <span class="moving-text">Welcome to PodsForSquads, The home for all your podcasting needs! We will soon be displaying more info on this text bar, so stay tuned for further updates and see whats to come with us! If you have an questions, please seek the contact form below by pressing the CONTACT button, and fill out the form and we will get back to you shortly!</span>
-  </div>
+    <h1 class="moving-text">Welcome to PodsForSquads, The home for all your podcasting needs! We will soon be displaying more info on this text bar, so stay tuned for further updates and see whats to come with us! If you have an questions, please seek the contact form below by pressing the CONTACT button, and fill out the form and we will get back to you shortly!</span>
+    </div>
 
 
 
@@ -648,6 +673,7 @@ footer a:hover::after {
             <a href="Contact.html">Contact</a>
             <a href="ToS.html">Terms of Service</a>
             <a href="PrivPol.html">Privacy Policy</a>
+            <a href="faq.html">FAQ</a>
         </div>
         <div class="social-media">
             <a href="https://www.facebook.com/profile.php?id=61560365679571" target="_blank"><img src="../Screens/Images+Videos/Facebook_Logo.png" alt="Facebook"></a>
@@ -926,37 +952,33 @@ document.addEventListener('DOMContentLoaded', () => {
     </script>
 
 
-<button id="scrollToTopBtn" onclick="scrollToTop()">Top Of Screen</button>
+<button id="scrollToTopBtn" onclick="scrollToTop()"></button>
+
+
+<!-- Add the Scroll to Top Button -->
+<button id="scrollToTopBtn"></button>
 
 <script>
-  
-  var mybutton = document.getElementById("scrollToTopBtn");
+    // JavaScript to handle the scroll-to-top functionality
+    window.onscroll = function() {
+        scrollFunction();
+    };
 
-  window.onscroll = function() {
-    scrollFunction();
-  };
-
-  function scrollFunction() {
-    if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
-      mybutton.style.display = "block";
-    } else {
-      mybutton.style.display = "none";
+    function scrollFunction() {
+        const scrollToTopBtn = document.getElementById("scrollToTopBtn");
+        if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+            scrollToTopBtn.style.display = "block";
+        } else {
+            scrollToTopBtn.style.display = "none";
+        }
     }
-  }
 
-  
-  function scrollToTop() {
-    document.body.scrollTop = 0; // For Safari
-    document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
-  }
+    function scrollToTop() {
+        document.body.scrollTop = 0;
+        document.documentElement.scrollTop = 0;
+    }
 
-
-
-
-
-
-
-
+    document.getElementById("scrollToTopBtn").addEventListener("click", scrollToTop);
 </script>
 
 
