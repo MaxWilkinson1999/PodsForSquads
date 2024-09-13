@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html ng-app="notificationApp">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Notification Bell</title>
+    <link rel="stylesheet" href="notification-bell.css">
+</head>
+<body ng-controller="notificationController">
+
+    <div class="notification-bell">
+        <div class="bell-icon" ng-click="showNotifications($event)">
+            <div id="notifications-count" class="notifications-count" ng-if="awaitingNotifications > 0">
+                {{awaitingNotifications}}
+            </div>
+        </div>
+        <div class="dropdown-menu">
+            <div class="dropdown-body">
+                <div class="notification-item" ng-repeat="notification in newNotifications">
+                    <img ng-src="{{notification.user.imageUrl}}" alt="User Image" class="notification-image">
+                    <span class="notification-user">{{notification.user.name}}</span>
+                    <span class="notification-action">{{notification.action}} {{notification.target}}</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular-animate.min.js"></script>
+    <script src="notification-bell.js"></script>
+
+</body>
+</html>

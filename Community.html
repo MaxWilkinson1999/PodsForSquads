@@ -78,7 +78,49 @@
             align-items: center;
             font-size: 12px;
             font-weight: bold;
+            box-shadow: 0 0 3px rgba(0, 0, 0, 0.2);
+        }
+
+        .dropdown {
+            position: relative;
+            display: inline-block;
+        }
+
+        .dropdown-content {
             display: none;
+            position: absolute;
+            background-color: #ffffff;
+            min-width: 250px;
+            max-height: 300px;
+            overflow-y: auto;
+            box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+            padding: 10px;
+            border-radius: 8px;
+            z-index: 1;
+            font-size: 14px;
+            color: #333;
+            transition: opacity 0.3s ease;
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        .dropdown-content a {
+            color: #333;
+            padding: 10px;
+            text-decoration: none;
+            display: block;
+            border-radius: 4px;
+            transition: background-color 0.3s ease;
+        }
+
+        .dropdown-content a:hover {
+            background-color: #f1f1f1;
+        }
+
+        .dropdown:hover .dropdown-content {
+            display: block;
+            opacity: 1;
+            visibility: visible;
         }
 
         .container {
@@ -242,8 +284,9 @@
 
 <body>
     <header>
-        <div class="logo" id="notificationCenter">PodsForSquads
+        <div class="logo dropdown" id="notificationCenter">PodsForSquads
             <div class="notification-badge" id="notificationBadge">0</div>
+            <div class="dropdown-content" id="notificationDropdown"></div>
         </div>
         <nav>
             <a href="MainActivity.html">Home</a>
@@ -270,51 +313,35 @@
                 <img src="Jane_Doe.jpg" alt="Profile Picture">
                 <div class="comment-content">
                     <h3>Jane Doe</h3>
-                    <p>The new Joe Rogan episode was the best, cant wait for more!</p>
+                    <p>This podcast is fantastic! It has great content and the hosts are hilarious.</p>
                 </div>
             </div>
             <div class="replies-container">
-                
+                <div class="reply">
+                    <img src="John_Smith.jpg" alt="Profile Picture">
+                    <div class="reply-content">
+                        <p>Absolutely agree! I can't stop listening to it.</p>
+                    </div>
+                </div>
             </div>
             <div class="reply-form-wrapper">
-                <div class="reply-form">
-                    <input type="text" placeholder="Add a reply..." onkeypress="handleKeyPress(event, this)">
-                    <button onclick="addReply(this)">Reply</button>
-                </div>
-            </div>
-
-           
-            <div class="comment-box">
-                <img src="John_Smith.jpg" alt="Profile Picture">
-                <div class="comment-content">
-                    <h3>John Smith</h3>
-                    <p>No podcast is better than Bad Friends! Bobby Lee is the GOAT!</p>
-                </div>
-            </div>
-            <div class="replies-container">
-                
-            </div>
-            <div class="reply-form-wrapper">
-                <div class="reply-form">
-                    <input type="text" placeholder="Add a reply..." onkeypress="handleKeyPress(event, this)">
-                    <button onclick="addReply(this)">Reply</button>
-                </div>
+                <form class="reply-form">
+                    <input type="text" placeholder="Write a reply...">
+                    <button type="submit">Reply</button>
+                </form>
             </div>
         </div>
-
         <div class="section polls">
-            <h2>Polls</h2>
             <div class="poll">
                 <h3>What's your favorite podcast genre?</h3>
-                <button onclick="vote('Comedy')">Comedy</button>
-                <button onclick="vote('True Crime')">True Crime</button>
-                <button onclick="vote('News')">News</button>
-                <button onclick="vote('Sports')">Sports</button>
-                <div class="poll-results">
-                    
-                </div>
+                <button>Comedy</button>
+                <button>True Crime</button>
+                <button>Science</button>
+                <button>History</button>
             </div>
-           
+            <div class="poll-results">
+                <p>Results will be displayed here.</p>
+            </div>
         </div>
     </div>
 
@@ -323,65 +350,30 @@
     </footer>
 
     <script>
-        
-        let notifications = [
-            { id: 1, text: "New episode added: Directors Commentary with Mike Flanagan" },
-            { id: 2, text: "Top podcast added: B2B Breakthrough Podcast" }
-        ];
-
-       
-        function updateNotificationBadge() {
-            const badge = document.getElementById('notificationBadge');
-            badge.textContent = notifications.length;
-            if (notifications.length > 0) {
-                badge.style.display = 'flex';
-            } else {
-                badge.style.display = 'none';
-            }
-        }
-
-       
-        document.getElementById('notificationCenter').addEventListener('click', function () {
-            alert(notifications.map(n => n.text).join('\n'));
-           
+        document.getElementById('notificationCenter').addEventListener('click', function() {
+            const dropdown = document.getElementById('notificationDropdown');
+            dropdown.style.display = dropdown.style.display === 'block' ? 'none' : 'block';
         });
 
-        
-        updateNotificationBadge();
-
-       
-        function addReply(button) {
-            const replyForm = button.closest('.reply-form');
-            const replyText = replyForm.querySelector('input[type="text"]').value.trim();
-
-            if (replyText === "") return;
-
-            const repliesContainer = replyForm.closest('.reply-form-wrapper').previousElementSibling;
-            const replyElement = document.createElement('div');
-            replyElement.classList.add('reply');
-            replyElement.innerHTML = `
-                <img src="regular_guy.jpg" alt="User Profile Picture">
-                                      <div class="reply-content">
-                                          <p><strong>Joe Shmoe</strong></p>
-                                          <p>${replyText}</p>
-            `;
-            repliesContainer.appendChild(replyElement);
-            replyForm.querySelector('input[type="text"]').value = '';
+        function updateNotifications(notifications) {
+            const dropdown = document.getElementById('notificationDropdown');
+            const badge = document.getElementById('notificationBadge');
+            dropdown.innerHTML = ''; // Clear previous notifications
+            badge.style.display = notifications.length ? 'block' : 'none';
+            badge.textContent = notifications.length;
+            notifications.forEach(notification => {
+                const item = document.createElement('a');
+                item.href = notification.url;
+                item.textContent = notification.message;
+                dropdown.appendChild(item);
+            });
         }
 
-       
-        function handleKeyPress(event, input) {
-            if (event.key === 'Enter') {
-                event.preventDefault();
-                addReply(input.nextElementSibling);
-            }
-        }
-
-        
-        function vote(option) {
-            alert('You voted for: ' + option);
-           
-        }
+        // Example notifications for testing
+        updateNotifications([
+            { message: 'New podcast added: The Basement Yard', url: 'https://www.listennotes.com/podcasts/the-basement-yard-santagato-studios-kEL5WS8fuTI/' },
+            { message: 'Podcast "Science Explained" has new episodes.', url: 'https://www.listennotes.com/c/3e98c4d435b94f28aa23c08a12c0b5f2/' }
+        ]);
     </script>
 </body>
 
