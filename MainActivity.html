@@ -260,22 +260,22 @@
         }
 
         .play-button-image {
-    display: inline-block;
-    margin-left: 50px; 
-    margin-top: -20000px;
-    }
+            display: inline-block;
+            margin-left: 50px; 
+            margin-top: -20000px;
+        }
 
-    .play-button {
-    width: 200px; 
-    height: 200px; 
-    cursor: pointer;
-    transition: transform 0.2s;
-}
+        .play-button {
+            width: 200px; 
+            height: 200px; 
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
 
-    .play-button:hover {
-    transform: scale(1.1); 
-    color: #36454F;
-    }
+        .play-button:hover {
+            transform: scale(1.1); 
+            color: #36454F;
+        }
 
         .search-results .podcast-item {
             display: flex;
@@ -400,6 +400,30 @@
         .add-to-playlist-icon:hover {
             color: #00BFFF; 
         }
+
+        .playlist-option {
+            margin-bottom: 15px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .playlist-option h3 {
+            margin-top: 0;
+        }
+
+        .playlist-option button {
+            background-color: #FF9494;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            cursor: pointer;
+            border-radius: 3px;
+        }
+
+        .playlist-option button:hover {
+            background-color: #FF7070;
+        }
     </style>
 </head>
 
@@ -459,6 +483,14 @@
         <div class="modal-content" onclick="event.stopPropagation()">
             <span class="close" onclick="closeSearchModal()">&times;</span>
             <div id="searchResults" class="search-results"></div>
+        </div>
+    </div>
+
+    <div id="playlistSelectionModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closePlaylistSelectionModal()">&times;</span>
+            <h2>Select a Playlist</h2>
+            <div id="playlistSelectionContent"></div>
         </div>
     </div>
 
@@ -528,58 +560,55 @@
             }
         }
 
-        let playlist = JSON.parse(localStorage.getItem('playlist')) || [];
-
         function addToPlaylist(podcastId, title, thumbnail, publisher) {
-            const existingPodcast = playlist.find(podcast => podcast.id === podcastId);
+            const playlistSelectionModal = document.getElementById('playlistSelectionModal');
+            const playlistSelectionContent = document.getElementById('playlistSelectionContent');
+            
+           
+            playlistSelectionContent.innerHTML = '';
 
-            if (existingPodcast) {
-                alert(`Podcast "${title}" is already in your playlist.`);
-                return;
+            
+            const playlists = JSON.parse(localStorage.getItem('playlists')) || [];
+
+            if (playlists.length === 0) {
+                playlistSelectionContent.innerHTML = '<p>You have no playlists. Create a playlist first.</p>';
+            } else {
+                playlists.forEach(playlist => {
+                    const playlistElement = document.createElement('div');
+                    playlistElement.classList.add('playlist-option');
+                    playlistElement.innerHTML = `
+                        <h3>${playlist.name}</h3>
+                        <button onclick="addPodcastToPlaylist('${playlist.id}', '${podcastId}', '${title}', '${thumbnail}', '${publisher}')">Add to this playlist</button>
+                    `;
+                    playlistSelectionContent.appendChild(playlistElement);
+                });
             }
 
-            const newPodcast = {
-                id: podcastId,
-                title: title,
-                thumbnail: thumbnail,
-                publisher: publisher
-            };
-
-            playlist.push(newPodcast);
-            localStorage.setItem('playlist', JSON.stringify(playlist));
-
-            alert(`Podcast "${title}" has been added to your playlist!`);
+            
+            playlistSelectionModal.style.display = 'block';
         }
 
-        function displayPlaylist() {
-            const playlistContainer = document.getElementById('playlistContainer');
-            playlistContainer.innerHTML = ''; 
+        function addPodcastToPlaylist(playlistId, podcastId, title, thumbnail, publisher) {
+            const playlists = JSON.parse(localStorage.getItem('playlists')) || [];
+            const playlist = playlists.find(p => p.id === playlistId);
 
-            if (playlist.length === 0) {
-                playlistContainer.innerHTML = '<p>Your playlist is empty.</p>';
-                return;
+            if (playlist) {
+                if (!playlist.podcasts.some(p => p.id === podcastId)) {
+                    playlist.podcasts.push({ id: podcastId, title, thumbnail, publisher });
+                    localStorage.setItem('playlists', JSON.stringify(playlists));
+                    alert(`"${title}" has been added to "${playlist.name}"`);
+                } else {
+                    alert(`"${title}" is already in "${playlist.name}"`);
+                }
+            } else {
+                alert('Playlist not found');
             }
 
-            playlist.forEach(podcast => {
-                const podcastElement = document.createElement('div');
-                podcastElement.innerHTML = `
-                    <img src="${podcast.thumbnail}" alt="${podcast.title}" style="width: 50px; height: 50px; vertical-align: middle;">
-                    <span>${podcast.title} - ${podcast.publisher}</span>
-                    <button onclick="removeFromPlaylist('${podcast.id}')">Remove</button>
-                `;
-                playlistContainer.appendChild(podcastElement);
-            });
+            closePlaylistSelectionModal();
         }
 
-        function removeFromPlaylist(podcastId) {
-            playlist = playlist.filter(podcast => podcast.id !== podcastId);
-            localStorage.setItem('playlist', JSON.stringify(playlist));
-            displayPlaylist();
-            alert('Podcast removed from your playlist.');
-        }
-
-        window.onload = function() {
-            displayPlaylist();
+        function closePlaylistSelectionModal() {
+            document.getElementById('playlistSelectionModal').style.display = 'none';
         }
 
         async function fetchPodcastDetails(podcastId) {
@@ -751,14 +780,21 @@
                 carousel.addEventListener('mouseover', stopScrolling);
                 carousel.addEventListener('mouseout', startScrolling);
 
-                startScrolling(); // Start scrolling initially
+                startScrolling(); 
             });
 
-            fetchPodcasts('best_podcasts?genre_id=68', 'featuredPodcasts');    // Featured
-            fetchPodcasts('best_podcasts?genre_id=93', 'trendingPodcasts');    // Trending
-            fetchPodcasts('best_podcasts?genre_id=71', 'sciencePodcasts');     // Science
-            fetchPodcasts('best_podcasts?genre_id=98', 'technologyPodcasts');  // Technology
+            fetchPodcasts('best_podcasts?genre_id=68', 'featuredPodcasts');    
+            fetchPodcasts('best_podcasts?genre_id=93', 'trendingPodcasts');    
+            fetchPodcasts('best_podcasts?genre_id=71', 'sciencePodcasts');     
+            fetchPodcasts('best_podcasts?genre_id=98', 'technologyPodcasts');  
         });
+
+       
+        window.onclick = function(event) {
+            if (event.target.classList.contains('modal')) {
+                event.target.style.display = 'none';
+            }
+        }
     </script>
 </body>
 </html>
