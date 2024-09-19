@@ -731,6 +731,111 @@ footer a:hover::after {
     }
 }
 
+.video-item {
+    width: 30%; /* Adjusts the width of each video item */
+    margin: 10px; /* Adds some space around each video item */
+    display: inline-block;
+    vertical-align: top;
+}
+
+.video-item video {
+    width: 100%; /* Makes the video take up the full width of the video item */
+    height: auto; /* Keeps the video aspect ratio intact */
+}
+
+.video-item h3, 
+.video-item p {
+    text-align: center; /* Centers the text below the video */
+    font-size: 0.9em; /* Adjusts the font size to match the smaller video */
+}
+
+
+
+
+
+
+
+.fixed-player {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background-color: #FFFFFF;
+            border-top: 1px solid #FF9494;
+            box-shadow: 0 -4px 8px rgba(0, 0, 0, 0.2);
+            display: none;
+            z-index: 1000;
+        }
+
+        .add-to-playlist-icon {
+            font-size: 24px;
+            cursor: pointer;
+            color: black;
+            transition: color 0.3s;
+            margin-left: 10px;
+        }
+
+        .dice-button {
+            display: inline-block;
+            font-size: 24px;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+            transform: rotate(0deg);
+        }
+
+        .dice-button:hover {
+            animation: rollDice 0.5s forwards;
+        }
+
+        @keyframes rollDice {
+            0% { transform: rotate(0deg); }
+            25% { transform: rotate(90deg); }
+            50% { transform: rotate(180deg); }
+            75% { transform: rotate(270deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .add-to-playlist-icon:hover {
+            color: #00BFFF; 
+        }
+
+        .playlist-option {
+            margin-bottom: 15px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .playlist-option h3 {
+            margin-top: 0;
+        }
+
+        .playlist-option button {
+            background-color: #FF9494;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            cursor: pointer;
+            border-radius: 3px;
+        }
+
+        .playlist-option button:hover {
+            background-color: #FF7070;
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     </style>
     <link rel="icon" type="image/png" href="Images+Videos/Website_Logo.png">
@@ -756,6 +861,12 @@ footer a:hover::after {
                 </button>
             </div>
         </div>
+
+        <div class="dice-button" onclick="playRandomEpisode()">
+            🎲
+        </div>
+
+
         <div class="profile-dropdown">
             <div class="profile-icon">
                 <img id="profileImage" src="./Images+Videos/DefaultProfile.png" alt="User Profile">
@@ -766,6 +877,9 @@ footer a:hover::after {
                 <a href="Auth/Login.html">Log Out</a>
             </div>
         </div>
+
+
+
         <select id="languageSelector" onchange="changeLanguage(this.value)">
             <option value="English">English</option>
             <option value="Spanish">Español</option>
@@ -780,6 +894,16 @@ footer a:hover::after {
     <div class="section">
         <h2>Trending Podcasts</h2>
         <div class="carousel" id="trendingPodcasts"></div>
+    </div>
+
+    <div class="section">
+        <h2>Health Podcasts</h2>
+        <div class="carousel" id="sciencePodcasts"></div>
+    </div>
+    
+    <div class="section">
+        <h2>Technology Podcasts</h2>
+        <div class="carousel" id="technologyPodcasts"></div>
     </div>
 
     <div class="section">
@@ -894,18 +1018,26 @@ footer a:hover::after {
             const podcast = await response.json();
             const modalContent = document.getElementById('modalContent');
             modalContent.innerHTML = `
-                <div class="modal-header">
+               <div class="modal-header">
                     <h2>${podcast.title}</h2>
                     <span class="heart-icon" onclick="toggleFavorite(this, '${podcast.id}', '${podcast.title}', '${podcast.thumbnail}', '${podcast.publisher}')">&#9825;</span>
+                    <span class="add-to-playlist-icon" onclick="addToPlaylist('${podcast.id}', '${podcast.title}', '${podcast.thumbnail}', '${podcast.publisher}')">+</span>
                 </div>
-                <img src="${podcast.thumbnail}" alt="${podcast.title}">
+                <div class="podcast-details">
+                    <img src="${podcast.thumbnail}" alt="${podcast.title}" class="podcast-thumbnail">
+                    <a href="https://www.listennotes.com/c/${podcast.id}/embed/" target="_blank" class="play-button-image">
+                        <img src="play_button.png" alt="Play Podcast" class="play-button">
+                    </a>
+                </div>
                 <p><strong>Publisher:</strong> ${podcast.publisher}</p>
                 <p><strong>Description:</strong> ${podcast.description}</p>
-                <iframe src="https://www.listennotes.com/c/${podcast.id}/embed/" height="200px" width="100%" style="width: 1px; min-width: 100%;" frameborder="0" scrolling="yes" loading="lazy"></iframe>
-            `;
-            document.getElementById('podcastModal').style.display = 'block';
+                <p>To get the transcripts of the podcast, go to share in the player, copy the link and please go to this link: 
+        <a href="https://www.listen411.com" target="_blank">Listen411</a>
+    </p> `;
+    document.getElementById('podcastModal').style.display = 'block';
 
-            activateAudioPlayer(podcast.id);
+document.getElementById('fixedPlayer').style.display = 'none';
+document.getElementById('fixedPlayerIframe').src = '';
         }
 
         function closeModal(event) {
@@ -955,55 +1087,66 @@ footer a:hover::after {
             }
         }
 
-        function togglePlayPause() {
-            const audio = document.getElementById('audioElement');
-            const playPauseBtn = document.getElementById('playPauseBtn');
+       
 
-            if (audio.paused || audio.ended) {
-                audio.play();
-                playPauseBtn.textContent = 'Pause';
-            } else {
-                audio.pause();
-                playPauseBtn.textContent = 'Play';
+
+
+        async  function fetchRandomPodcast() {
+            try {
+                const response = await fetch('https://listen-api.listennotes.com/api/v2/just_listen', {
+                    method: 'GET',
+                    headers: {
+                        'X-ListenAPI-Key': apiKey
+                    }
+                });
+
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+
+                const data = await response.json();
+                return data;
+            } catch (error) {
+                console.error('Error fetching random podcast:', error);
             }
         }
 
-        function skipForward() {
-            const audio = document.getElementById('audioElement');
-            audio.currentTime += 10;
+        async function playRandomEpisode() {
+            try {
+                const podcast = await fetchRandomPodcast();
+                if (!podcast) {
+                    console.log('No podcast found');
+                    return;
+                }
+
+                const fixedPlayer = document.getElementById('fixedPlayer');
+                const fixedPlayerIframe = document.getElementById('fixedPlayerIframe');
+                
+                fixedPlayerIframe.src = `https://www.listennotes.com/embedded/e/${podcast.id}`;
+                fixedPlayer.style.display = 'block';
+            } catch (error) {
+                console.error('Error playing random episode:', error);
+            }
         }
 
-        function adjustVolume() {
-            const audio = document.getElementById('audioElement');
-            const volume = document.getElementById('volumeSlider').value;
-            audio.volume = volume;
-        }
 
-        function closeAudioPlayer() {
-            const audioPlayer = document.getElementById('audioPlayer');
-            audioPlayer.style.display = 'none';
-            const audio = document.getElementById('audioElement');
-            audio.pause();
-            audio.currentTime = 0;
-            audio.volume = 1;
-        }
 
-        function activateAudioPlayer(podcastId) {
-            activePodcastId = podcastId;
-            const audioPlayer = document.getElementById('audioPlayer');
-            const audioElement = document.getElementById('audioElement');
-            const playPauseBtn = document.getElementById('playPauseBtn');
 
-            audioPlayer.style.display = 'block';
-            audioElement.src = `https://www.listennotes.com/c/${podcastId}/embed/`;
-            playPauseBtn.textContent = 'Play';
-        }
 
-        function deactivateAudioPlayer() {
-            activePodcastId = null;
-            const audioPlayer = document.getElementById('audioPlayer');
-            audioPlayer.style.display = 'none';
-        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
         async function toggleFavorite(element, podcastId, title, thumbnail, publisher) {
             element.classList.toggle('filled');
@@ -1022,6 +1165,19 @@ footer a:hover::after {
             }
         }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
         async function handleSavePodcast(podcastId, title, thumbnail, publisher) {
             const podcast = {
                 id: podcastId,
@@ -1039,8 +1195,39 @@ footer a:hover::after {
         }
 
         document.addEventListener('DOMContentLoaded', () => {
-            fetchPodcasts('best_podcasts?genre_id=68', 'featuredPodcasts');
-            fetchPodcasts('best_podcasts?genre_id=93', 'trendingPodcasts');
+            const carousels = document.querySelectorAll('.carousel');
+            carousels.forEach(carousel => {
+                let scrollAmount = 0;
+                const scrollStep = 1;
+                const scrollInterval = 30;
+                let scrollIntervalId;
+
+                function startScrolling() {
+                    scrollIntervalId = setInterval(() => {
+                        if (scrollAmount >= carousel.scrollWidth / 2) {
+                            scrollAmount = 0;
+                            carousel.scrollLeft = 0;
+                        } else {
+                            scrollAmount += scrollStep;
+                            carousel.scrollLeft = scrollAmount;
+                        }
+                    }, scrollInterval);
+                }
+
+                function stopScrolling() {
+                    clearInterval(scrollIntervalId);
+                }
+
+                carousel.addEventListener('mouseover', stopScrolling);
+                carousel.addEventListener('mouseout', startScrolling);
+
+                startScrolling(); 
+            });
+
+            fetchPodcasts('best_podcasts?genre_id=68', 'featuredPodcasts');    
+            fetchPodcasts('best_podcasts?genre_id=93', 'trendingPodcasts');    
+            fetchPodcasts('best_podcasts?genre_id=71', 'sciencePodcasts');     
+            fetchPodcasts('best_podcasts?genre_id=98', 'technologyPodcasts');  
         });
 
         window.closeModal = closeModal;
