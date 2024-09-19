@@ -859,14 +859,40 @@ footer a:hover::after {
 
 
 
-<script>
 
 
 
-    
-</script>
 
+<!-- Updated script to fetch and display videos -->
+    <script src="FirebaseConfig.js" type="module"></script>
+    <script type="module">
+        import { getFirestore, collection, getDocs, query, orderBy } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
+        const db = getFirestore();
+
+        async function fetchVideos() {
+            const videosRef = collection(db, 'videos');
+            const q = query(videosRef, orderBy('timestamp', 'desc')); // Fetch videos ordered by timestamp
+            const querySnapshot = await getDocs(q);
+
+            const videoContainer = document.getElementById('videoDisplay');
+            videoContainer.innerHTML = ''; // Clear the container
+
+            querySnapshot.forEach((doc) => {
+                const videoData = doc.data();
+                const videoElement = document.createElement('div');
+                videoElement.classList.add('video-item');
+                videoElement.innerHTML = `
+                    <video controls src="${videoData.videoURL}" width="100%" height="auto"></video>
+                    <h3>${videoData.publisher}</h3>
+                    <p>${videoData.description}</p>
+                `;
+                videoContainer.appendChild(videoElement);
+            });
+        }
+
+        document.addEventListener('DOMContentLoaded', fetchVideos);
+    </script>
 
 
 
