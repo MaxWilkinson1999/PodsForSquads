@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Community Page</title>
+    <style>
+           :root
+       {
+
+    --background-gradient: linear-gradient(to bottom right, rgb(221, 219, 219), #b7c9e2, rgb(221, 219, 219));
+    --text-color: #000000;
+    --header-background: #36454F;
+    --nav-hover-color: #b7c9e2;
+    --nav-underline-color: #b7c9e2;
+    --logo-color: whitesmoke;
+    --nav-link-color: whitesmoke;
+    --nav-text-color: black;
+    --model-background-color:whitesmoke;
+    /* --hover-color:#e1daae; Code for brown hover text */
+}
+
+body
+ {
+            font-family: 'proxima-nova', sans-serif;
+            margin: 0;
+            background-image: var(--background-gradient);
+            color: var(--text-color);
+            opacity: 1;
+            transition: opacity 0.5s ease-in-out;
+        }
+
+        body.fade-out
+         {
+            opacity: 0;
+        }
+
+
+
+
+        body.protan-mode{
+   
+    --background-gradient: linear-gradient(to bottom right, #a691ae, #e8f086,#a691ae);
+    --text-color: #235fa4;
+    --header-background:#6fde6e ;
+    --nav-hover-color: black;
+    --nav-underline-color: #b7c9e2;
+    --logo-color: whitesmoke;
+    --nav-link-color: whitesmoke;
+    --model-background-color:#6fde6e;
+
+}
+
+
+
+body.deuter-mode{
+   
+   --background-gradient: linear-gradient(to bottom right, #2d3043, #2f88dc,#2d3043);
+   --text-color: black;
+   --header-background:#e89f43 ;
+   --nav-hover-color: black;
+   --nav-underline-color: #b7c9e2;
+   --logo-color: whitesmoke;
+   --nav-link-color: whitesmoke;
+   --model-background-color:#e89f43;
+
+}
+
+body.dark-mode {
+   
+    --background-gradient: linear-gradient(to bottom right, rgb(105, 104, 104), black, rgb(105, 104, 104));
+    --text-color: #c5b358;
+    --header-background:#c5b358 ;
+    --nav-hover-color: whitesmoke;
+    --nav-underline-color: #b7c9e2;
+    --logo-color: black;
+    --nav-link-color: black;
+    --model-background-color:black;
+}
+
+
+
+
+header {
+    background-color: var(--header-background);
+    padding: 1em;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    animation: slideInFromLeft 1.0s ease-out;
+}
+
+
+nav {
+    display: flex;
+    gap: 1em;
+    animation: slideInFromLeft 1.0s ease-out;
+
+}
+
+nav a {
+    color: var(--nav-link-color);
+    text-decoration: none;
+    position: relative;
+    padding: 5px 15px;
+    font-size: 18px;
+    transition: color 0.3s ease;
+}
+
+nav a:hover {
+    color: var(--nav-hover-color);
+}
+
+nav a::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 0;
+    height: 2px;
+    background-color: var(--nav-underline-color);
+    transition: width 0.3s ease;
+}
+
+nav a:hover::after {
+    width: 100%;
+}
+
+.logo {
+    color: var(--logo-color);
+    text-decoration: none;
+    position: relative;
+    padding: 5px 15px;
+    font-size: 35px;
+    transition: color 0.3s ease;
+}
+
+footer {
+            background-color: var(--header-background);
+            padding: 1em;
+            text-align: center;
+            color: whitesmoke;
+            animation: slideInFromLeft 1.0s ease-out;
+        }
+
+
+        
+
+footer a {
+    color: var(--nav-link-color);
+    text-decoration: none;
+    position: relative;
+    padding: 5px 15px;
+    font-size: 18px;
+    transition: color 0.3s ease;
+}
+
+footer a:hover {
+    color: var(--nav-hover-color);
+}
+
+footer a::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 0;
+    height: 2px;
+    background-color: var(--nav-underline-color);
+    transition: width 0.3s ease;
+}
+
+footer a:hover::after {
+    width: 100%;
+}
+
+
+        .notification-badge {
+            position: absolute;
+            top: -10px;
+            right: -10px;
+            background-color: red;
+            color: white;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 12px;
+            font-weight: bold;
+            box-shadow: 0 0 3px rgba(0, 0, 0, 0.2);
+        }
+
+        .dropdown {
+            position: relative;
+            display: inline-block;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #ffffff;
+            min-width: 250px;
+            max-height: 300px;
+            overflow-y: auto;
+            box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+            padding: 10px;
+            border-radius: 8px;
+            z-index: 1;
+            font-size: 14px;
+            color: #333;
+            transition: opacity 0.3s ease;
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        .dropdown-content a {
+            color: #333;
+            padding: 10px;
+            text-decoration: none;
+            display: block;
+            border-radius: 4px;
+            transition: background-color 0.3s ease;
+        }
+
+        .dropdown-content a:hover {
+            background-color: #f1f1f1;
+        }
+
+        .dropdown:hover .dropdown-content {
+            display: block;
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 2em auto;
+            padding: 0 1em;
+        }
+
+        .section {
+            background-color: #fff;
+            padding: 2em;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            margin-bottom: 2em;
+        }
+
+        .comment-box {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1em;
+            padding: 1em;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .comment-box img {
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            object-fit: cover;
+            margin-right: 1em;
+        }
+
+        .comment-content {
+            flex: 1;
+        }
+
+        .comment-content h3 {
+            margin: 0;
+            font-size: 16px;
+        }
+
+        .comment-content p {
+            margin: 0.5em 0;
+        }
+
+        .reply-form {
+            display: flex;
+            align-items: center;
+            margin-top: 1em;
+        }
+
+        .reply-form input[type="text"] {
+            flex: 1;
+            padding: 0.5em;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            margin-right: 0.5em;
+        }
+
+        .reply-form button {
+            background-color: #36454F;
+            border: none;
+            color: #fff;
+            padding: 0.5em 1em;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .reply-form button:hover {
+            background-color: #2c3e50;
+        }
+
+        .replies-container {
+            margin-left: 3em;
+            padding: 1em;
+            border-top: 1px solid #eee;
+        }
+
+        .reply {
+            display: flex;
+            align-items: center;
+            margin-bottom: 0.5em;
+            padding: 0.5em;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .reply img {
+            width: 40px;
+            height: 40px;
+            margin-right: 0.5em;
+        }
+
+        .reply-content {
+            background-color: whitesmoke;
+            padding: 0.5em;
+            border-radius: 4px;
+        }
+
+        .reply-form-wrapper {
+            margin-top: 1em;
+        }
+
+        .polls {
+            display: flex;
+            flex-direction: column;
+            gap: 1em;
+        }
+
+        .poll {
+            background-color: #fff;
+            padding: 1em;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .poll h3 {
+            margin-top: 0;
+        }
+
+        .poll button {
+            background-color: #36454F;
+            border: none;
+            color: #fff;
+            padding: 0.5em 1em;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-right: 0.5em;
+        }
+
+        .poll button:hover {
+            background-color: #b7c9e2;
+            color: black;
+        }
+
+        .poll-results {
+            display: none;
+            margin-top: 1em;
+        }
+
+        .weekly-recommendation {
+            background-color: #fff;
+            padding: 2em;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            margin-bottom: 2em;
+            text-align: center;
+        }
+
+        .podcast-info {
+            margin-top: 1em;
+        }
+
+       
+    </style>
+</head>
+
+<script src="LightDarkMode.js"></script>
+
+
+<body>
+    <header>
+        <div class="logo dropdown" id="notificationCenter">PodsForSquads
+            <div class="notification-badge" id="notificationBadge">0</div>
+            <div class="dropdown-content" id="notificationDropdown"></div>
+        </div>
+        <nav class= "NavBar">
+            <a href="HomeScreen.html">Home</a>
+            <a href="Upload.html">Upload</a>
+            <a href="playlists.html">Playlists</a>
+            <a href="favorites.html">Favorites</a>
+            <a href="Settings.html">Settings</a>
+            <a href="Analytics.html">Stats</a>
+            <a href="Community.html">Community</a>
+        </nav>
+    </header>
+
+    <div class="container">
+        <div class="weekly-recommendation">
+            <h2>PodsForSquads Recommendation of the Week:</h2>
+            <h3>THE BASEMENT YARD</h3>
+            <a href="https://www.listennotes.com/podcasts/the-basement-yard-santagato-studios-kEL5WS8fuTI/" title="The Basement Yard | Listen Notes">
+                <img loading="lazy" src="https://cdn-images-2.listennotes.com/images/podcasts/kEL5WS8fuTI/badge/" alt="The Basement Yard | Listen Notes" style="width: 100%; max-width: 400px;" />
+            </a>
+            <div class="podcast-info">
+                <p>Listen to the funniest and most outrageous podcast on the internet, hosted by Joe Santagato. Click the image above to tune in.</p>
+            </div>
+        </div>
+        <div class="section">
+            <h2>Community Discussion</h2>
+            <div class="comment-box">
+                <img src="Jane_Doe.jpg" alt="Profile Picture">
+                <div class="comment-content">
+                    <h3>Jane Doe</h3>
+                    <p>This podcast is fantastic! It has great content and the hosts are hilarious.</p>
+                </div>
+            </div>
+            <div class="replies-container">
+                <div class="reply">
+                    <img src="John_Smith.jpg" alt="Profile Picture">
+                    <div class="reply-content">
+                        <p>Absolutely agree! I can't stop listening to it.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="reply-form-wrapper">
+                <form class="reply-form">
+                    <input type="text" placeholder="Write a reply...">
+                    <button type="submit">Reply</button>
+                </form>
+            </div>
+        </div>
+        <div class="section polls">
+            <div class="poll">
+                <h3>What's your favorite podcast genre?</h3>
+                <button>Comedy</button>
+                <button>True Crime</button>
+                <button>Science</button>
+                <button>History</button>
+            </div>
+            <div class="poll-results">
+                <p>Results will be displayed here.</p>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2024 PodsForSquads. All rights reserved.</p>
+    </footer>
+
+    <script>
+        document.getElementById('notificationCenter').addEventListener('click', function() {
+            const dropdown = document.getElementById('notificationDropdown');
+            dropdown.style.display = dropdown.style.display === 'block' ? 'none' : 'block';
+        });
+
+        function updateNotifications(notifications) {
+            const dropdown = document.getElementById('notificationDropdown');
+            const badge = document.getElementById('notificationBadge');
+            dropdown.innerHTML = ''; // Clear previous notifications
+            badge.style.display = notifications.length ? 'block' : 'none';
+            badge.textContent = notifications.length;
+            notifications.forEach(notification => {
+                const item = document.createElement('a');
+                item.href = notification.url;
+                item.textContent = notification.message;
+                dropdown.appendChild(item);
+            });
+        }
+
+        // Example notifications for testing
+        updateNotifications([
+            { message: 'New podcast added: The Basement Yard', url: 'https://www.listennotes.com/podcasts/the-basement-yard-santagato-studios-kEL5WS8fuTI/' },
+            { message: 'Podcast "Science Explained" has new episodes.', url: 'https://www.listennotes.com/c/3e98c4d435b94f28aa23c08a12c0b5f2/' }
+        ]);
+    </script>
+</body>
+
+</html>
