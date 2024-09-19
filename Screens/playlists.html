@@ -5,185 +5,30 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Playlists - Podcast Streaming Service</title>
     <style>
-            :root {
-    /* Light Mode */
-    --background-gradient: linear-gradient(to bottom right, rgb(221, 219, 219), #b7c9e2, rgb(221, 219, 219));
-    --text-color: #000000;
-    --header-background: #36454F;
-    --nav-hover-color: #b7c9e2;
-    --nav-underline-color: #b7c9e2;
-    --logo-color: whitesmoke;
-    --nav-link-color: whitesmoke;
-}
-html, body {
-            height: 100%;
+        body {
+            font-family: 'proxima-nova', sans-serif;
             margin: 0;
-            display: flex;
-            flex-direction: column;
+            background-color: #FFFFFF;
+            color: #000000;
         }
-
-body {
-    font-family: 'proxima-nova', sans-serif;
-    margin: 0;
-    background-image: var(--background-gradient);
-    color: var(--text-color);
-
-}
-body.protan-mode{
-   
-   --background-gradient: linear-gradient(to bottom right, #a691ae, #e8f086,#a691ae);
-   --text-color: #235fa4;
-   --header-background:#6fde6e ;
-   --nav-hover-color: black;
-   --nav-underline-color: #b7c9e2;
-   --logo-color: whitesmoke;
-   --nav-link-color: whitesmoke;
-
-}
-
-body.dark-mode {
-    --background-gradient: linear-gradient(to bottom right, rgb(105, 104, 104), black, rgb(105, 104, 104));
-    --text-color: #c5b358;
-    --header-background:#c5b358 ;
-    --nav-hover-color: black;
-    --nav-underline-color: #b7c9e2;
-    --logo-color: whitesmoke;
-    --nav-link-color: whitesmoke;
-}
-
-
-header {
-    background-color: var(--header-background);
-    padding: 1em;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    animation: slideInFromTop 1.0s ease-out;
-}
-
-
-nav {
-    display: flex;
-    gap: 1em;
-}
-
-nav a {
-    color: var(--nav-link-color);
-    text-decoration: none;
-    position: relative;
-    padding: 5px 15px;
-    font-size: 18px;
-    transition: color 0.3s ease;
-}
-
-nav a:hover {
-    color: var(--nav-hover-color);
-}
-
-nav a::after {
-    content: "";
-    position: absolute;
-    left: 0;
-    bottom: 0;
-    width: 0;
-    height: 2px;
-    background-color: var(--nav-underline-color);
-    transition: width 0.3s ease;
-}
-
-nav a:hover::after {
-    width: 100%;
-}
-
-.logo {
-    color: var(--logo-color);
-    text-decoration: none;
-    position: relative;
-    padding: 5px 15px;
-    font-size: 35px;
-    transition: color 0.3s ease;
-}
-
-footer {
-            background-color: var(--header-background);
+        header {
+            background-color: #FF9494;
             padding: 1em;
-            text-align: center;
-            color: whitesmoke;
-            animation: slideInFromLeft 1.0s ease-out;
-        }
-
-
-        
-
-footer a {
-    color: var(--nav-link-color);
-    text-decoration: none;
-    position: relative;
-    padding: 5px 15px;
-    font-size: 18px;
-    transition: color 0.3s ease;
-}
-
-footer a:hover {
-    color: var(--nav-hover-color);
-}
-
-footer a::after {
-    content: "";
-    position: absolute;
-    left: 0;
-    bottom: 0;
-    width: 0;
-    height: 2px;
-    background-color: var(--nav-underline-color);
-    transition: width 0.3s ease;
-}
-
-footer a:hover::after {
-    width: 100%;
-}
-
-
-        .footer-links,
-        .social-media {
             display: flex;
-            justify-content: center;
-            gap: 1em;
+            justify-content: space-between;
+            align-items: center;
         }
-
-        .footer-links a,
-        .social-media a {
-            color: var(--header-text-color);
+        nav a {
+            color: #000000;
+            margin: 0 1em;
             text-decoration: none;
         }
-
-        .social-media {
-            display: flex;
-            justify-content: center;
-            gap: 1em;
-        }
-
-        .social-media a {
-            display: block;
-            width: 32px;
-            height: 32px;
-        }
-
-        .social-media img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            border-radius: 50%;
-        }
-
         .playlists-container {
-            flex: 1; /* This makes the playlists container grow to fill the available space */
             padding: 2em 1em;
             display: flex;
-            flex-direction: row;
+            flex-direction: row-reverse;
             gap: 1em;
             overflow-x: auto; 
-            animation: slideInFromLeft 1.0s ease-out;
         }
         .new-playlist-box, .playlist-item {
             border: 1px solid #ccc;
@@ -217,14 +62,14 @@ footer a:hover::after {
             border-radius: 5px;
             color: #000;
         }
-       
+      
         .footer-links, .social-media {
             display: flex;
             justify-content: center;
             gap: 1em;
         }
         .footer-links a, .social-media a {
-            color: #fefefe;
+            color: #000000;
             text-decoration: none;
         }
         .modal {
@@ -273,108 +118,17 @@ footer a:hover::after {
             border: 1px solid #ccc;
             border-radius: 5px;
         }
-        .podcast-option {
-            display: flex;
-            align-items: center;
-            margin-bottom: 0.5em;
-        }
-        .podcast-option label {
-            margin-left: 0.5em;
-        }
-
-
-
-       
-.fade-out {
-    opacity: 0;
-    transition: opacity 0.5s ease-out;
-}
-
-.fade-in {
-    opacity: 1;
-    transition: opacity 0.5s ease-in;
-}
-
-
-/* Keyframes For Sliding Objects */
-@keyframes slideInFromLeft {
-    0% {
-        transform: translateX(-100%);
-        opacity: 0;
-    }
-    100% {
-        transform: translateX(0);
-        opacity: 1;
-    }
-}
-
-@keyframes slideInFromRight {
-    from {
-        transform: translateX(100%); /* Start off-screen to the right */
-    }
-    to {
-        transform: translateX(0); /* End at its original position */
-    }
-}
-
-
-
-@keyframes slideInFromTop {
-    from {
-        transform: translateY(-100%); /* Start off-screen above */
-    }
-    to {
-        transform: translateY(0); /* End at its original position */
-    }
-}
-
-@keyframes slideInFromBottom {
-    from {
-        transform: translateY(100%); /* Start off-screen below */
-    }
-    to {
-        transform: translateY(0); /* End at its original position */
-    }
-}
-
-
-
-
-
-
-
-
-
     </style>
-
-<script>
-    document.addEventListener("DOMContentLoaded", function () {
-        const links = document.querySelectorAll("nav a");
-
-        links.forEach(link => {
-            link.addEventListener("click", function (event) {
-                event.preventDefault();
-                const href = this.getAttribute("href");
-                document.body.classList.add("fade-out");
-
-                setTimeout(() => {
-                    window.location.href = href;
-                }, 500);
-            });
-        });
-    });
-</script>
 </head>
 <body>
     <header>
         <div class="logo">PodsForSquads</div>
         <nav>
             <a href="HomeScreen.html">Home</a>
-            <a href="Upload.html">Upload</a>
-            <a href="playlists.html">Playlists</a>
-            <a href="favorites.html">Favorites</a>
-            <a href="Settings.html">Settings</a>
-            <a href="Analytics.html">Stats</a>
+            <a href="browse.html">Browse</a>
+            <a href="categories.html">Categories</a>
+            <a href="Playlists.html">Playlists</a>
+            <a href="account.html">Account</a>
         </nav>
         <div class="profile-icon">
             <img src="profile-icon.png" alt="User Profile">
@@ -384,24 +138,25 @@ footer a:hover::after {
     <div class="playlists-container">
         <div class="new-playlist-box" onclick="openNewPlaylistModal()">+ Create New Playlist</div>
         <div id="playlists">
-            <!-- Existing playlists will be injected here -->
+            <!-- Playlists will be dynamically loaded here -->
         </div>
     </div>
 
     <footer>
         <div class="footer-links">
-            <a href="About_Us.html">About Us</a>
-            <a href="Contact.html">Contact</a>
-            <a href="ToS.html">Terms of Service</a>
-            <a href="PrivPol.html">Privacy Policy</a>
+            <a href="#">About Us</a>
+            <a href="#">Contact</a>
+            <a href="#">Terms of Service</a>
+            <a href="#">Privacy Policy</a>
         </div>
         <div class="social-media">
-            <a href="https://www.facebook.com/profile.php?id=61560365679571" target="_blank"><img src="../Screens/Images+Videos/Facebook_Logo.png" alt="Facebook"></a>
-            <a href="https://x.com/PodsForSquads" target="_blank"><img src="../Screens/Images+Videos/Twitter_Logo.png" alt="Twitter"></a>
-            <a href="https://www.instagram.com/podsforsquads/" target="_blank"><img src="../Screens/Images+Videos/Instagram_Logo.png" alt="Instagram"></a>
+            <a href="#"><img src="Images/Facebook_Logo_2023.png" alt="Facebook"></a>
+            <a href="#"><img src="Images/twitter-new-2023-x-logo-white-background-vector_1017-45422.avif" alt="Twitter"></a>
+            <a href="#"><img src="Images/Instagram_icon.png.webp" alt="Instagram"></a>
         </div>
     </footer>
 
+    <!-- Modal for creating a new playlist -->
     <div id="newPlaylistModal" class="modal">
         <div class="modal-content">
             <span class="close" onclick="closeNewPlaylistModal()">&times;</span>
@@ -411,54 +166,18 @@ footer a:hover::after {
                 <input type="text" id="playlistName" placeholder="Enter playlist name">
             </div>
             <div class="form-group">
-                <label>Select Podcasts:</label>
-                <div id="podcastOptions"></div>
+                <label for="podcasts">Select Podcasts:</label>
+                <select id="podcasts" multiple>
+                    <!-- Podcast options will be dynamically loaded here -->
+                </select>
             </div>
             <button onclick="createPlaylist()">Create Playlist</button>
         </div>
     </div>
 
-
-    <script src="LightDarkMode.js"></script>
-
-
-
     <script>
-        const apiKey = 'cb2038d4dbd841b39dec5309c31b2d6a';
-        const apiUrl = 'https://listen-api.listennotes.com/api/v2';
-        const options = {
-            headers: {
-                'X-ListenAPI-Key': apiKey
-            }
-        };
-
-        async function fetchPodcasts() {
-            try {
-                const response = await fetch(`${apiUrl}/best_podcasts?genre_id=68`, options);
-                const data = await response.json();
-                console.log(data); // Debugging: Log the data to see if the podcasts are fetched correctly
-                const podcasts = data.podcasts;
-
-                const podcastOptionsContainer = document.getElementById('podcastOptions');
-                podcastOptionsContainer.innerHTML = '';
-
-                podcasts.forEach(podcast => {
-                    const podcastOption = document.createElement('div');
-                    podcastOption.classList.add('podcast-option');
-                    podcastOption.innerHTML = `
-                        <input type="checkbox" id="podcast-${podcast.id}" value="${podcast.title}">
-                        <label for="podcast-${podcast.id}">${podcast.title}</label>
-                    `;
-                    podcastOptionsContainer.appendChild(podcastOption);
-                });
-            } catch (error) {
-                console.error('Error fetching podcasts:', error);
-            }
-        }
-
         function openNewPlaylistModal() {
             document.getElementById('newPlaylistModal').style.display = 'block';
-            fetchPodcasts();
         }
 
         function closeNewPlaylistModal() {
@@ -467,31 +186,38 @@ footer a:hover::after {
 
         function createPlaylist() {
             const playlistName = document.getElementById('playlistName').value;
-            const selectedPodcasts = Array.from(document.querySelectorAll('#podcastOptions input[type="checkbox"]:checked')).map(checkbox => ({
-                id: checkbox.id.split('-')[1],
-                title: checkbox.value
-            }));
+            const selectedPodcasts = Array.from(document.getElementById('podcasts').selectedOptions).map(option => option.value);
 
+            // Create playlist HTML
             const playlistElement = document.createElement('div');
             playlistElement.classList.add('playlist-item');
             playlistElement.innerHTML = `
                 <h3>${playlistName}</h3>
                 <ul>
-                    ${selectedPodcasts.map(podcast => `<li>${podcast.title}</li>`).join('')}
+                    ${selectedPodcasts.map(podcast => `<li>${podcast}</li>`).join('')}
                 </ul>
-                <button onclick="deletePlaylist(this)">Delete Playlist</button>
+                <button>Delete Playlist</button>
             `;
 
+            // Insert new playlist to the right of the "Create New Playlist" box
             const playlistsContainer = document.getElementById('playlists');
-            playlistsContainer.appendChild(playlistElement);
+            playlistsContainer.insertBefore(playlistElement, playlistsContainer.children[1]); // Insert at index 1
 
+            // Close the modal
             closeNewPlaylistModal();
         }
 
-        function deletePlaylist(button) {
-            const playlistItem = button.parentElement;
-            playlistItem.remove();
-        }
+        // Fetch podcasts and populate the select dropdown
+        // Sample data, replace with actual data fetched from API
+        const podcasts = ['Podcast 1', 'Podcast 2', 'Podcast 3', 'Podcast 4', 'Podcast 5'];
+
+        const podcastsSelect = document.getElementById('podcasts');
+        podcasts.forEach(podcast => {
+            const option = document.createElement('option');
+            option.value = podcast;
+            option.textContent = podcast;
+            podcastsSelect.appendChild(option);
+        });
     </script>
 </body>
 </html>
