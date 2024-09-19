@@ -1,223 +1,980 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Playlists - Podcast Streaming Service</title>
-    <style>
-        body {
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Playlist Page</title>
+  <style>
+   html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.main-content {
+  flex: 1; /* Ensures that the main content takes up the remaining space */
+}
+    :root
+       {
+
+    --background-gradient: linear-gradient(to bottom right, rgb(221, 219, 219), #b7c9e2, rgb(221, 219, 219));
+    --text-color: #000000;
+    --header-background: #36454F;
+    --nav-hover-color: #b7c9e2;
+    --nav-underline-color: #b7c9e2;
+    --logo-color: whitesmoke;
+    --nav-link-color: whitesmoke;
+    --nav-text-color: black;
+    --model-background-color:whitesmoke;
+    /* --hover-color:#e1daae; Code for brown hover text */
+}
+
+body
+ {
             font-family: 'proxima-nova', sans-serif;
             margin: 0;
-            background-color: #FFFFFF;
-            color: #000000;
+            background-image: var(--background-gradient);
+            color: var(--text-color);
+            opacity: 1;
+            transition: opacity 0.5s ease-in-out;
         }
-        header {
-            background-color: #FF9494;
-            padding: 1em;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+
+        body.fade-out
+         {
+            opacity: 0;
         }
-        nav a {
-            color: #000000;
-            margin: 0 1em;
-            text-decoration: none;
+
+
+
+
+        body.protan-mode{
+   
+    --background-gradient: linear-gradient(to bottom right, #a691ae, #e8f086,#a691ae);
+    --text-color: #235fa4;
+    --header-background:#6fde6e ;
+    --nav-hover-color: black;
+    --nav-underline-color: #b7c9e2;
+    --logo-color: whitesmoke;
+    --nav-link-color: whitesmoke;
+    --model-background-color:#6fde6e;
+
+}
+
+
+
+body.deuter-mode{
+   
+   --background-gradient: linear-gradient(to bottom right, #2d3043, #2f88dc,#2d3043);
+   --text-color: black;
+   --header-background:#e89f43 ;
+   --nav-hover-color: black;
+   --nav-underline-color: #b7c9e2;
+   --logo-color: whitesmoke;
+   --nav-link-color: whitesmoke;
+   --model-background-color:#e89f43;
+
+}
+
+body.dark-mode {
+   
+    --background-gradient: linear-gradient(to bottom right, rgb(105, 104, 104), black, rgb(105, 104, 104));
+    --text-color: #c5b358;
+    --header-background:#c5b358 ;
+    --nav-hover-color: whitesmoke;
+    --nav-underline-color: #b7c9e2;
+    --logo-color: black;
+    --nav-link-color: black;
+    --model-background-color:black;
+}
+
+
+
+
+header {
+    background-color: var(--header-background);
+    padding: 1em;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    animation: slideInFromLeft 1.0s ease-out;
+}
+
+
+nav {
+    display: flex;
+    gap: 1em;
+    animation: slideInFromLeft 1.0s ease-out;
+
+}
+
+nav a {
+    color: var(--nav-link-color);
+    text-decoration: none;
+    position: relative;
+    padding: 5px 15px;
+    font-size: 18px;
+    transition: color 0.3s ease;
+}
+
+nav a:hover {
+    color: var(--nav-hover-color);
+}
+
+nav a::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 0;
+    height: 2px;
+    background-color: var(--nav-underline-color);
+    transition: width 0.3s ease;
+}
+
+nav a:hover::after {
+    width: 100%;
+}
+
+.logo {
+    color: var(--logo-color);
+    text-decoration: none;
+    position: relative;
+    padding: 5px 15px;
+    font-size: 35px;
+    transition: color 0.3s ease;
+}
+
+footer {
+    background-color: var(--header-background);
+    padding: 1em;
+    text-align: center;
+    color: whitesmoke;
+    animation: slideInFromLeft 1.0s ease-out;
         }
-        .playlists-container {
-            padding: 2em 1em;
-            display: flex;
-            flex-direction: row-reverse;
-            gap: 1em;
-            overflow-x: auto; 
-        }
-        .new-playlist-box, .playlist-item {
-            border: 1px solid #ccc;
-            border-radius: 10px;
-            padding: 1em;
-            width: 200px;
-            height: 200px;
-            text-align: center;
-            box-sizing: border-box;
-            flex: 0 0 auto; 
-        }
-        .new-playlist-box {
-            border: 2px dashed #ccc;
+
+
+        
+
+footer a {
+    color: var(--nav-link-color);
+    text-decoration: none;
+    position: relative;
+    padding: 5px 15px;
+    font-size: 18px;
+    transition: color 0.3s ease;
+}
+
+footer a:hover {
+    color: var(--nav-hover-color);
+}
+
+footer a::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 0;
+    height: 2px;
+    background-color: var(--nav-underline-color);
+    transition: width 0.3s ease;
+}
+
+footer a:hover::after {
+    width: 100%;
+}
+
+
+  
+    .heart-icon {
+            font-size: 24px;
             cursor: pointer;
-            color: #777;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        .playlist-item h3 {
-            margin: 0 0 0.5em 0;
-        }
-        .playlist-item p {
-            margin: 0.5em 0;
-        }
-        .playlist-item button {
-            background-color: #FF9494;
-            border: none;
-            padding: 0.5em 1em;
-            cursor: pointer;
-            border-radius: 5px;
-            color: #000;
-        }
-      
-        .footer-links, .social-media {
-            display: flex;
-            justify-content: center;
-            gap: 1em;
-        }
-        .footer-links a, .social-media a {
-            color: #000000;
-            text-decoration: none;
-        }
-        .modal {
-            display: none; 
-            position: fixed; 
-            z-index: 1; 
-            left: 0;
-            top: 0;
-            width: 100%; 
-            height: 100%; 
-            overflow: auto; 
-            background-color: rgba(0, 0, 0, 0.4); 
-        }
-        .modal-content {
-            background-color: #fefefe;
-            margin: 10% auto; 
-            padding: 20px;
-            border: 1px solid #888;
-            width: 50%;
-            max-width: 600px;
-            border-radius: 10px;
-            position: relative;
-        }
-        .close {
-            color: #aaa;
-            float: right;
-            font-size: 28px;
-            font-weight: bold;
-        }
-        .close:hover,
-        .close:focus {
             color: black;
-            text-decoration: none;
-            cursor: pointer;
+            transition: color 0.3s;
+            margin-left: 10px;
+            fill: none;
         }
-        .form-group {
-            margin-bottom: 1em;
+
+        .heart-icon.filled {
+            color: #FF0000;
+            fill: currentColor;
         }
-        .form-group label {
-            display: block;
-            margin-bottom: 0.5em;
+
+        .heart-icon:hover{
+            color: #FF0000;
         }
-        .form-group input {
-            width: 100%;
-            padding: 0.5em;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-        }
-    </style>
+
+    nav a::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      width: 0;
+      height: 2px;
+      background-color: #b7c9e2;
+      transition: width 0.3s ease;
+    }
+
+    nav a:hover::after {
+      width: 100%;
+    }
+
+    .logo {
+      color: whitesmoke;
+      text-decoration: none;
+      position: relative;
+      padding: 5px 15px;
+      font-size: 35px;
+      transition: color 0.3s ease;
+    }
+
+    .main-content {
+      flex: 1 0 auto;
+    }
+
+    .playlists-container {
+      padding: 2em 1em;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1em;
+      justify-content: flex-start;
+    }
+
+    .new-playlist-box, .playlist-item {
+      flex: 0 0 calc(20% - 1em);
+      max-width: calc(20% - 1em);
+      height: 250px;
+      border-radius: 10px;
+      padding: 1em;
+      box-sizing: border-box;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: space-between;
+      text-align: center;
+      transition: transform 0.3s ease;
+    }
+
+    .new-playlist-box {
+      border: 2px dashed #000;
+      cursor: pointer;
+      color: #000;
+      justify-content: center;
+    }
+
+    .playlist-item {
+      border: 2px solid #000;
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .playlist-item:hover {
+      transform: scale(1.05);
+    }
+
+    .playlist-item img {
+      width: 100%;
+      height: 150px;
+      object-fit: cover;
+      border-radius: 8px;
+      margin-bottom: 10px;
+    }
+
+    .playlist-item h3 {
+      margin: 0;
+      font-size: 16px;
+      line-height: 1.2;
+      max-height: 2.4em;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+    }
+
+    .playlist-item p {
+      margin: 5px 0 0;
+      font-size: 14px;
+      color: #666;
+    }
+
+    .delete-playlist {
+      position: absolute;
+      top: 5px;
+      right: 5px;
+      background-color: rgba(255, 0, 0, 0.7);
+      color: white;
+      border: none;
+      border-radius: 50%;
+      width: 25px;
+      height: 25px;
+      font-size: 16px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .playlist-item:hover .delete-playlist {
+      opacity: 1;
+    }
+
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 1;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      overflow: auto;
+      background-color: rgba(0, 0, 0, 0.4);
+    }
+
+    .modal-content {
+      background-color: #fefefe;
+      margin: 10% auto;
+      padding: 20px;
+      border: 1px solid #888;
+      width: 80%;
+      max-width: 600px;
+      border-radius: 10px;
+      position: relative;
+    }
+
+    .close {
+      color: #aaa;
+      float: right;
+      font-size: 28px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .close:hover,
+    .close:focus {
+      color: black;
+      text-decoration: none;
+    }
+
+    .form-group {
+      margin-bottom: 15px;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 0.5em;
+    }
+
+    .form-group input[type="text"] {
+      width: 100%;
+      padding: 0.5em;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+
+    #playlist-color {
+      width: 50px;
+      height: 30px;
+      padding: 0;
+      border: none;
+    }
+
+    .podcast-option {
+      display: flex;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+
+    .podcast-option label {
+      display: flex;
+      align-items: center;
+      cursor: pointer;
+    }
+
+    .podcast-option input[type="checkbox"] {
+      margin-right: 10px;
+    }
+
+    #search-results {
+      max-height: 300px;
+      overflow-y: auto;
+      margin-bottom: 15px;
+    }
+
+    .podcast-item {
+      display: flex;
+      align-items: center;
+      margin-bottom: 10px;
+      cursor: pointer;
+    }
+
+    .podcast-item img {
+      width: 50px;
+      height: 50px;
+      margin-right: 10px;
+      border-radius: 5px;
+    }
+
+    .podcast-item button {
+      margin-left: auto;
+    }
+
+    .modal-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 15px;
+    }
+
+    
+    .footer-links,
+    .social-media {
+      display: flex;
+      justify-content: center;
+      gap: 1em;
+    }
+
+    .footer-links a,
+    .social-media a {
+      color: whitesmoke;
+      text-decoration: none;
+    }
+
+    .social-media a {
+      display: block;
+      width: 32px;
+      height: 32px;
+    }
+
+    .social-media img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 50%;
+    }
+
+    .heart-icon, .add-to-playlist-icon {
+      font-size: 24px;
+      cursor: pointer;
+      margin-left: 10px;
+    }
+
+    .podcast-details {
+      display: flex;
+      align-items: center;
+      margin-bottom: 15px;
+    }
+
+    .podcast-thumbnail {
+      width: 100px;
+      height: 100px;
+      object-fit: cover;
+      margin-right: 15px;
+    }
+
+    .play-button {
+      width: 50px;
+      height: 50px;
+    }
+
+
+
+
+
+
+
+
+
+
+    @keyframes moveText {
+  0% {
+    transform: translateX(100%); /* Start just outside the right edge */
+  }
+  2% {
+    transform: translateX(95%); /* Bring it into view almost immediately */
+  }
+  100% {
+    transform: translateX(-100%); /* Move to outside the left edge */
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* Keyframes for sliding the navbar in from the left */
+@keyframes slideInFromLeft {
+    0% {
+        transform: translateX(-100%);
+        opacity: 0;
+    }
+    100% {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+@keyframes slideInFromRight {
+    from {
+        transform: translateX(100%); /* Start off-screen to the right */
+    }
+    to {
+        transform: translateX(0); /* End at its original position */
+    }
+}
+
+/* Apply the animation to the navbar */
+
+
+
+
+@keyframes slideInFromTop {
+    from {
+        transform: translateY(-100%); /* Start off-screen above */
+    }
+    to {
+        transform: translateY(0); /* End at its original position */
+    }
+}
+
+@keyframes slideInFromBottom {
+    from {
+        transform: translateY(100%); /* Start off-screen below */
+    }
+    to {
+        transform: translateY(0); /* End at its original position */
+    }
+}
+
+
+
+
+    @media (max-width: 1200px) {
+      .new-playlist-box, .playlist-item {
+        flex: 0 0 calc(25% - 1em);
+        max-width: calc(25% - 1em);
+      }
+    }
+
+    @media (max-width: 900px) {
+      .new-playlist-box, .playlist-item {
+        flex: 0 0 calc(33.333% - 1em);
+        max-width: calc(33.333% - 1em);
+      }
+    }
+
+    @media (max-width: 600px) {
+      .new-playlist-box, .playlist-item {
+        flex: 0 0 calc(50% - 1em);
+        max-width: calc(50% - 1em);
+      }
+
+
+
+
+      
+    }
+  </style>
 </head>
 <body>
-    <header>
-        <div class="logo">PodsForSquads</div>
-        <nav>
-            <a href="HomeScreen.html">Home</a>
-            <a href="browse.html">Browse</a>
-            <a href="categories.html">Categories</a>
-            <a href="Playlists.html">Playlists</a>
-            <a href="account.html">Account</a>
-        </nav>
-        <div class="profile-icon">
-            <img src="profile-icon.png" alt="User Profile">
-        </div>
-    </header>
+  
+    <script src="LightDarkMode.js"></script>
 
-    <div class="playlists-container">
-        <div class="new-playlist-box" onclick="openNewPlaylistModal()">+ Create New Playlist</div>
-        <div id="playlists">
-            <!-- Playlists will be dynamically loaded here -->
+
+  <header>
+    <a href="#" class="logo">PodsForSquads</a>
+    <nav class= "NavBar">
+        <a href="HomeScreen.html">Home</a>
+        <a href="Upload.html">Upload</a>
+        <a href="playlists.html">Playlists</a>
+        <a href="favorites.html">Favorites</a>
+        <a href="Settings.html">Settings</a>
+        <a href="Analytics.html">Stats</a>
+        <a href="Community.html">Community</a>
+    </nav>
+  </header>
+
+  <div class="main-content">
+  
+    <div class="playlists-container" id="playlists-container"></div>
+
+    
+    <div id="create-playlist-modal" class="modal">
+      <div class="modal-content">
+        <span class="close">&times;</span>
+        <h2>Create New Playlist</h2>
+        <div class="form-group">
+          <input type="text" id="playlist-name" placeholder="Enter playlist name">
         </div>
+        <div class="form-group">
+          <label for="playlist-color">Choose playlist color:</label>
+          <input type="color" id="playlist-color" value="#FF9494">
+        </div>
+        <div class="form-group">
+          <input type="text" id="search-input" placeholder="Search for podcasts...">
+        </div>
+        <div id="search-results"></div>
+        <button id="create-playlist">Create Playlist</button>
+      </div>
     </div>
 
-    <footer>
-        <div class="footer-links">
-            <a href="#">About Us</a>
-            <a href="#">Contact</a>
-            <a href="#">Terms of Service</a>
-            <a href="#">Privacy Policy</a>
-        </div>
-        <div class="social-media">
-            <a href="#"><img src="Images/Facebook_Logo_2023.png" alt="Facebook"></a>
-            <a href="#"><img src="Images/twitter-new-2023-x-logo-white-background-vector_1017-45422.avif" alt="Twitter"></a>
-            <a href="#"><img src="Images/Instagram_icon.png.webp" alt="Instagram"></a>
-        </div>
-    </footer>
 
-    <!-- Modal for creating a new playlist -->
-    <div id="newPlaylistModal" class="modal">
-        <div class="modal-content">
-            <span class="close" onclick="closeNewPlaylistModal()">&times;</span>
-            <h2>Create New Playlist</h2>
-            <div class="form-group">
-                <label for="playlistName">Playlist Name:</label>
-                <input type="text" id="playlistName" placeholder="Enter playlist name">
-            </div>
-            <div class="form-group">
-                <label for="podcasts">Select Podcasts:</label>
-                <select id="podcasts" multiple>
-                    <!-- Podcast options will be dynamically loaded here -->
-                </select>
-            </div>
-            <button onclick="createPlaylist()">Create Playlist</button>
-        </div>
+    <div id="view-playlist-modal" class="modal">
+      <div class="modal-content">
+        <span class="close">&times;</span>
+        <h2 id="playlist-title"></h2>
+        <button id="delete-all-podcasts">Delete All Podcasts</button>
+        <div id="playlist-podcasts"></div>
+      </div>
     </div>
 
-    <script>
-        function openNewPlaylistModal() {
-            document.getElementById('newPlaylistModal').style.display = 'block';
+    
+    <div id="podcast-details-modal" class="modal">
+      <div class="modal-content">
+        <span class="close">&times;</span>
+        <div id="podcast-details-content"></div>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <div class="footer-links">
+      <a href="#">About Us</a>
+      <a href="#">Contact</a>
+      <a href="#">Terms of Service</a>
+      <a href="#">Privacy Policy</a>
+    </div>
+    <div class="social-media">
+      <a href="https://www.facebook.com/profile.php?id=61560365679571" target="_blank"><img src="Facebook_Logo_2023.png" alt="Facebook"></a>
+      <a href="https://x.com/PodsForSquads" target="_blank"><img src="twitter-new-2023-x-logo-white-background-vector_1017-45422.avif" alt="Twitter"></a>
+      <a href="https://www.instagram.com/podsforsquads/" target="_blank"><img src="Instagram_icon.png.webp" alt="Instagram"></a>
+    </div>
+  </footer>
+
+  <script>
+    
+    const API_KEY = 'cb2038d4dbd841b39dec5309c31b2d6a';
+    const BASE_URL = 'https://listen-api.listennotes.com/api/v2';
+
+    
+    const playlistsContainer = document.getElementById('playlists-container');
+    const createPlaylistModal = document.getElementById('create-playlist-modal');
+    const viewPlaylistModal = document.getElementById('view-playlist-modal');
+    const podcastDetailsModal = document.getElementById('podcast-details-modal');
+    const closeButtons = document.querySelectorAll('.close');
+    const searchInput = document.getElementById('search-input');
+    const searchResults = document.getElementById('search-results');
+    const createPlaylistButton = document.getElementById('create-playlist');
+    const playlistNameInput = document.getElementById('playlist-name');
+    const playlistColorInput = document.getElementById('playlist-color');
+    const playlistTitle = document.getElementById('playlist-title');
+    const playlistPodcasts = document.getElementById('playlist-podcasts');
+    const podcastDetailsContent = document.getElementById('podcast-details-content');
+    const deleteAllPodcastsButton = document.getElementById('delete-all-podcasts');
+
+    let selectedPodcasts = [];
+    let playlists = JSON.parse(localStorage.getItem('playlists')) || [];
+
+    
+    closeButtons.forEach(button => {
+      button.addEventListener('click', () => {
+        button.closest('.modal').style.display = 'none';
+      });
+    });
+
+    
+    searchInput.addEventListener('input', debounce(handleSearch, 300));
+
+    async function handleSearch() {
+      const query = searchInput.value.trim();
+      if (query) {
+        try {
+          const response = await fetch(`${BASE_URL}/search?q=${query}&type=podcast`, {
+            headers: {
+              'X-ListenAPI-Key': API_KEY
+            }
+          });
+          if (!response.ok) throw new Error('Search failed');
+          const data = await response.json();
+          displaySearchResults(data.results);
+        } catch (error) {
+          console.error('Error searching podcasts:', error);
+          searchResults.innerHTML = '<p>An error occurred while searching. Please try again.</p>';
         }
+      } else {
+        searchResults.innerHTML = '';
+      }
+    }
 
-        function closeNewPlaylistModal() {
-            document.getElementById('newPlaylistModal').style.display = 'none';
-        }
+    function displaySearchResults(results) {
+      searchResults.innerHTML = '';
+      results.forEach(podcast => {
+        const podcastItem = document.createElement('div');
+        podcastItem.classList.add('podcast-option');
+        podcastItem.innerHTML = `
+          <input type="checkbox" id="${podcast.id}" value="${podcast.id}">
+          <label for="${podcast.id}">
+            <img src="${podcast.thumbnail}" alt="${podcast.title_original}" style="width: 50px; height: 50px; margin-right: 10px;">
+            ${podcast.title_original}
+          </label>
+        `;
+        searchResults.appendChild(podcastItem);
+      });
 
-        function createPlaylist() {
-            const playlistName = document.getElementById('playlistName').value;
-            const selectedPodcasts = Array.from(document.getElementById('podcasts').selectedOptions).map(option => option.value);
-
-            // Create playlist HTML
-            const playlistElement = document.createElement('div');
-            playlistElement.classList.add('playlist-item');
-            playlistElement.innerHTML = `
-                <h3>${playlistName}</h3>
-                <ul>
-                    ${selectedPodcasts.map(podcast => `<li>${podcast}</li>`).join('')}
-                </ul>
-                <button>Delete Playlist</button>
-            `;
-
-            // Insert new playlist to the right of the "Create New Playlist" box
-            const playlistsContainer = document.getElementById('playlists');
-            playlistsContainer.insertBefore(playlistElement, playlistsContainer.children[1]); // Insert at index 1
-
-            // Close the modal
-            closeNewPlaylistModal();
-        }
-
-        // Fetch podcasts and populate the select dropdown
-        // Sample data, replace with actual data fetched from API
-        const podcasts = ['Podcast 1', 'Podcast 2', 'Podcast 3', 'Podcast 4', 'Podcast 5'];
-
-        const podcastsSelect = document.getElementById('podcasts');
-        podcasts.forEach(podcast => {
-            const option = document.createElement('option');
-            option.value = podcast;
-            option.textContent = podcast;
-            podcastsSelect.appendChild(option);
+      document.querySelectorAll('.podcast-option input[type="checkbox"]').forEach(checkbox => {
+        checkbox.addEventListener('change', (event) => {
+          const podcastId = event.target.value;
+          if (event.target.checked) {
+            if (!selectedPodcasts.includes(podcastId)) {
+              selectedPodcasts.push(podcastId);
+            }
+          } else {
+            selectedPodcasts = selectedPodcasts.filter(id => id !== podcastId);
+          }
         });
-    </script>
+      });
+    }
+
+    createPlaylistButton.addEventListener('click', () => {
+      const playlistName = playlistNameInput.value.trim();
+      const playlistColor = playlistColorInput.value;
+      
+      if (playlistName === '') {
+        alert('Please enter a playlist name.');
+        return;
+      }
+      
+      if (selectedPodcasts.length === 0) {
+        alert('Please select at least one podcast.');
+        return;
+      }
+
+      const newPlaylist = {
+        id: Date.now(),
+        name: playlistName,
+        color: playlistColor,
+        podcasts: selectedPodcasts,
+        coverImage: selectedPodcasts[0]
+      };
+
+      playlists.push(newPlaylist);
+      localStorage.setItem('playlists', JSON.stringify(playlists));
+
+      displayPlaylists();
+      createPlaylistModal.style.display = 'none';
+      searchResults.innerHTML = '';
+      selectedPodcasts = [];
+      playlistNameInput.value = '';
+      playlistColorInput.value = '#FF9494';
+    });
+
+    async function displayPlaylists() {
+      playlistsContainer.innerHTML = '';
+      const createPlaylistBox = document.createElement('div');
+      createPlaylistBox.id = 'create-playlist-button';
+      createPlaylistBox.classList.add('new-playlist-box');
+      createPlaylistBox.textContent = 'Create New Playlist';
+      createPlaylistBox.addEventListener('click', () => {
+        createPlaylistModal.style.display = 'block';
+      });
+      playlistsContainer.appendChild(createPlaylistBox);
+
+      for (const playlist of playlists) {
+        const playlistItem = document.createElement('div');
+        playlistItem.classList.add('playlist-item');
+        playlistItem.style.backgroundColor = playlist.color;
+        
+        let thumbnailSrc = 'default-playlist-image.jpg'; 
+        let podcastCount = playlist.podcasts.length;
+
+        if (playlist.podcasts.length > 0) {
+          try {
+            const response = await fetch(`${BASE_URL}/podcasts/${playlist.coverImage}`, {
+              headers: {
+                'X-ListenAPI-Key': API_KEY
+              }
+            });
+            const data = await response.json();
+            thumbnailSrc = data.thumbnail;
+          } catch (error) {
+            console.error('Error fetching podcast details:', error);
+          }
+        }
+
+        playlistItem.innerHTML = `
+          <img src="${thumbnailSrc}" alt="${playlist.name}">
+          <h3>${playlist.name}</h3>
+          <p>${podcastCount} podcast${podcastCount !== 1 ? 's' : ''}</p>
+          <button class="delete-playlist" onclick="deletePlaylist(event, ${playlist.id})">×</button>
+        `;
+        
+        playlistItem.addEventListener('click', () => viewPlaylist(playlist.id));
+        playlistsContainer.appendChild(playlistItem);
+      }
+    }
+
+    async function viewPlaylist(playlistId) {
+      const playlist = playlists.find(p => p.id === playlistId);
+      if (playlist) {
+        playlistTitle.textContent = playlist.name;
+        playlistPodcasts.innerHTML = '';
+        
+        deleteAllPodcastsButton.onclick = () => deleteAllPodcasts(playlistId);
+        
+        for (const podcastId of playlist.podcasts) {
+          try {
+            const response = await fetch(`${BASE_URL}/podcasts/${podcastId}`, {
+              headers: {
+                'X-ListenAPI-Key': API_KEY
+              }
+            });
+            const podcast = await response.json();
+            const podcastElement = document.createElement('div');
+            podcastElement.classList.add('podcast-item');
+            podcastElement.innerHTML = `
+              <img src="${podcast.thumbnail}" alt="${podcast.title}" style="width: 50px; height: 50px;">
+              <span>${podcast.title}</span>
+              <button onclick="removePodcastFromPlaylist(${playlistId}, '${podcastId}')">Remove</button>
+            `;
+            podcastElement.addEventListener('click', (e) => {
+              if (e.target.tagName !== 'BUTTON') {
+                viewPodcastDetails(podcastId);
+              }
+            });
+            playlistPodcasts.appendChild(podcastElement);
+          } catch (error) {
+            console.error('Error fetching podcast details:', error);
+          }
+        }
+        
+        viewPlaylistModal.style.display = 'block';
+      }
+    }
+
+    function toggleFavorite(element, podcastId, title, thumbnail, publisher) {
+            element.classList.toggle('filled');
+            const favorites = JSON.parse(localStorage.getItem('favorites')) || [];
+            const isFavorite = favorites.some(fav => fav.id === podcastId);
+
+            if (isFavorite) {
+                const updatedFavorites = favorites.filter(fav => fav.id !== podcastId);
+                localStorage.setItem('favorites', JSON.stringify(updatedFavorites));
+            } else {
+                const newFavorite = { id: podcastId, title: title, thumbnail: thumbnail, publisher: publisher };
+                favorites.push(newFavorite);
+                localStorage.setItem('favorites', JSON.stringify(favorites));
+            }
+        }
+
+    function deletePlaylist(event, playlistId) {
+      event.stopPropagation();
+      if (confirm('Are you sure you want to delete this playlist?')) {
+        playlists = playlists.filter(playlist => playlist.id !== playlistId);
+        localStorage.setItem('playlists', JSON.stringify(playlists));
+        displayPlaylists();
+      }
+    }
+
+    function removePodcastFromPlaylist(playlistId, podcastId) {
+      const playlist = playlists.find(p => p.id === playlistId);
+      if (playlist) {
+        playlist.podcasts = playlist.podcasts.filter(id => id !== podcastId);
+        if (playlist.coverImage === podcastId && playlist.podcasts.length > 0) {
+          playlist.coverImage = playlist.podcasts[0];
+        }
+        localStorage.setItem('playlists', JSON.stringify(playlists));
+        viewPlaylist(playlistId);
+        displayPlaylists();
+      }
+    }
+
+    function deleteAllPodcasts(playlistId) {
+      if (confirm('Are you sure you want to delete all podcasts from this playlist?')) {
+        const playlist = playlists.find(p => p.id === playlistId);
+        if (playlist) {
+          playlist.podcasts = [];
+          playlist.coverImage = null;
+          localStorage.setItem('playlists', JSON.stringify(playlists));
+          viewPlaylist(playlistId);
+          displayPlaylists();
+        }
+      }
+    }
+
+    async function viewPodcastDetails(podcastId) {
+      try {
+        const response = await fetch(`${BASE_URL}/podcasts/${podcastId}`, {
+          headers: {
+            'X-ListenAPI-Key': API_KEY
+          }
+        });
+        const podcast = await response.json();
+        podcastDetailsContent.innerHTML = `
+          <div class="modal-header">
+            <h2>${podcast.title}</h2>
+            <span class="heart-icon" onclick="toggleFavorite(this, '${podcast.id}', '${podcast.title}', '${podcast.thumbnail}', '${podcast.publisher}')">&#9825;</span>
+          </div>
+          <div class="podcast-details">
+            <img src="${podcast.thumbnail}" alt="${podcast.title}" class="podcast-thumbnail">
+            <a href="https://www.listennotes.com/c/${podcast.id}/embed/" target="_blank" class="play-button-image">
+              <img src="play_button.png" alt="Play Podcast" class="play-button">
+            </a>
+          </div>
+          <p><strong>Publisher:</strong> ${podcast.publisher}</p>
+          <p><strong>Description:</strong> ${podcast.description}</p>
+        `;
+        podcastDetailsModal.style.display = 'block';
+
+        const fixedPlayer = document.getElementById('fixedPlayer');
+        const fixedPlayerIframe = document.getElementById('fixedPlayerIframe');
+        if (fixedPlayer && fixedPlayerIframe) {
+          fixedPlayer.style.display = 'none';
+          fixedPlayerIframe.src = '';
+        }
+      } catch (error) {
+        console.error('Error fetching podcast details:', error);
+      }
+    }
+
+    function toggleFavorite(element, podcastId, title, thumbnail, publisher) {
+      
+      console.log('Toggle favorite:', podcastId, title);
+    }
+
+    function addToPlaylist(podcastId, title, thumbnail, publisher) {
+      
+      console.log('Add to playlist:', podcastId, title);
+    }
+
+    function debounce(func, delay) {
+      let timeoutId;
+      return function (...args) {
+        clearTimeout(timeoutId);
+        timeoutId = setTimeout(() => func.apply(this, args), delay);
+      };
+    }
+
+    
+    document.addEventListener('DOMContentLoaded', displayPlaylists);
+
+    
+    window.onclick = function(event) {
+      if (event.target.classList.contains('modal')) {
+        event.target.style.display = 'none';
+      }
+    }
+  </script>
 </body>
 </html>
