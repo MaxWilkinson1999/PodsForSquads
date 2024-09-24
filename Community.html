@@ -358,7 +358,7 @@
         function updateNotifications(notifications) {
             const dropdown = document.getElementById('notificationDropdown');
             const badge = document.getElementById('notificationBadge');
-            dropdown.innerHTML = ''; // Clear previous notifications
+            dropdown.innerHTML = ''; 
             badge.style.display = notifications.length ? 'block' : 'none';
             badge.textContent = notifications.length;
             notifications.forEach(notification => {
@@ -369,7 +369,7 @@
             });
         }
 
-        // Example notifications for testing
+        
         updateNotifications([
             { message: 'New podcast added: The Basement Yard', url: 'https://www.listennotes.com/podcasts/the-basement-yard-santagato-studios-kEL5WS8fuTI/' },
             { message: 'Podcast "Science Explained" has new episodes.', url: 'https://www.listennotes.com/c/3e98c4d435b94f28aa23c08a12c0b5f2/' }

@@ -413,8 +413,8 @@
         }
 
         .playlist-option button {
-            background-color: #FF9494;
-            color: white;
+            background-color: #b7c9e2;
+            color: black;
             border: none;
             padding: 5px 10px;
             cursor: pointer;
@@ -422,7 +422,8 @@
         }
 
         .playlist-option button:hover {
-            background-color: #FF7070;
+            background-color: grey;
+            color: whitesmoke;
         }
     </style>
 </head>
@@ -560,53 +561,58 @@
             }
         }
 
-        function addToPlaylist(podcastId, title, thumbnail, publisher) {
-            const playlistSelectionModal = document.getElementById('playlistSelectionModal');
-            const playlistSelectionContent = document.getElementById('playlistSelectionContent');
-            
-           
-            playlistSelectionContent.innerHTML = '';
+        async function addToPlaylist(podcastId, title, thumbnail, publisher) {
+    const playlistSelectionModal = document.getElementById('playlistSelectionModal');
+    const playlistSelectionContent = document.getElementById('playlistSelectionContent');
+    
+    playlistSelectionContent.innerHTML = '';
 
-            
-            const playlists = JSON.parse(localStorage.getItem('playlists')) || [];
+    const playlists = JSON.parse(localStorage.getItem('playlists')) || [];
 
-            if (playlists.length === 0) {
-                playlistSelectionContent.innerHTML = '<p>You have no playlists. Create a playlist first.</p>';
-            } else {
-                playlists.forEach(playlist => {
-                    const playlistElement = document.createElement('div');
-                    playlistElement.classList.add('playlist-option');
-                    playlistElement.innerHTML = `
-                        <h3>${playlist.name}</h3>
-                        <button onclick="addPodcastToPlaylist('${playlist.id}', '${podcastId}', '${title}', '${thumbnail}', '${publisher}')">Add to this playlist</button>
-                    `;
-                    playlistSelectionContent.appendChild(playlistElement);
-                });
+    if (playlists.length === 0) {
+        playlistSelectionContent.innerHTML = '<p>You have no playlists. Create a playlist first.</p>';
+    } else {
+        playlists.forEach(playlist => {
+            const playlistElement = document.createElement('div');
+            playlistElement.classList.add('playlist-option');
+            playlistElement.innerHTML = `
+                <h3>${playlist.name}</h3>
+                <button onclick="addPodcastToPlaylist(${playlist.id}, '${podcastId}', '${title.replace(/'/g, "\\'")}', '${thumbnail}', '${publisher.replace(/'/g, "\\'")}')">Add to this playlist</button>
+            `;
+            playlistSelectionContent.appendChild(playlistElement);
+        });
+    }
+
+    playlistSelectionModal.style.display = 'block';
+}
+
+async function addPodcastToPlaylist(playlistId, podcastId, title, thumbnail, publisher) {
+    const playlists = JSON.parse(localStorage.getItem('playlists')) || [];
+    const playlist = playlists.find(p => p.id === parseInt(playlistId));
+
+    if (playlist) {
+        if (!playlist.podcasts.some(p => p.id === podcastId)) {
+            const newPodcast = {
+                id: podcastId,
+                title: title,
+                thumbnail: thumbnail,
+                publisher: publisher
+            };
+            playlist.podcasts.push(newPodcast);
+            if (!playlist.coverImage || playlist.coverImage === 'default-playlist-image.jpg') {
+                playlist.coverImage = thumbnail;
             }
-
-            
-            playlistSelectionModal.style.display = 'block';
+            localStorage.setItem('playlists', JSON.stringify(playlists));
+            alert(`"${title}" has been added to "${playlist.name}"`);
+        } else {
+            alert(`"${title}" is already in "${playlist.name}"`);
         }
+    } else {
+        alert('Playlist not found');
+    }
 
-        function addPodcastToPlaylist(playlistId, podcastId, title, thumbnail, publisher) {
-            const playlists = JSON.parse(localStorage.getItem('playlists')) || [];
-            const playlist = playlists.find(p => p.id === playlistId);
-
-            if (playlist) {
-                if (!playlist.podcasts.some(p => p.id === podcastId)) {
-                    playlist.podcasts.push({ id: podcastId, title, thumbnail, publisher });
-                    localStorage.setItem('playlists', JSON.stringify(playlists));
-                    alert(`"${title}" has been added to "${playlist.name}"`);
-                } else {
-                    alert(`"${title}" is already in "${playlist.name}"`);
-                }
-            } else {
-                alert('Playlist not found');
-            }
-
-            closePlaylistSelectionModal();
-        }
-
+    closePlaylistSelectionModal();
+}
         function closePlaylistSelectionModal() {
             document.getElementById('playlistSelectionModal').style.display = 'none';
         }

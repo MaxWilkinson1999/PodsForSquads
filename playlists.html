@@ -163,7 +163,7 @@
       position: absolute;
       top: 5px;
       right: 5px;
-      background-color: rgba(255, 0, 0, 0.7);
+      background-color: grey;
       color: white;
       border: none;
       border-radius: 50%;
@@ -521,121 +521,123 @@
       });
     }
 
-    createPlaylistButton.addEventListener('click', () => {
-      const playlistName = playlistNameInput.value.trim();
-      const playlistColor = playlistColorInput.value;
-      
-      if (playlistName === '') {
-        alert('Please enter a playlist name.');
-        return;
-      }
-      
-      if (selectedPodcasts.length === 0) {
-        alert('Please select at least one podcast.');
-        return;
-      }
+    createPlaylistButton.addEventListener('click', async () => {
+  const playlistName = playlistNameInput.value.trim();
+  const playlistColor = playlistColorInput.value;
+  
+  if (playlistName === '') {
+    alert('Please enter a playlist name.');
+    return;
+  }
+  
+  if (selectedPodcasts.length === 0) {
+    alert('Please select at least one podcast.');
+    return;
+  }
 
-      const newPlaylist = {
-        id: Date.now(),
-        name: playlistName,
-        color: playlistColor,
-        podcasts: selectedPodcasts,
-        coverImage: selectedPodcasts[0]
-      };
-
-      playlists.push(newPlaylist);
-      localStorage.setItem('playlists', JSON.stringify(playlists));
-
-      displayPlaylists();
-      createPlaylistModal.style.display = 'none';
-      searchResults.innerHTML = '';
-      selectedPodcasts = [];
-      playlistNameInput.value = '';
-      playlistColorInput.value = '#FF9494';
-    });
-
-    async function displayPlaylists() {
-      playlistsContainer.innerHTML = '';
-      const createPlaylistBox = document.createElement('div');
-      createPlaylistBox.id = 'create-playlist-button';
-      createPlaylistBox.classList.add('new-playlist-box');
-      createPlaylistBox.textContent = 'Create New Playlist';
-      createPlaylistBox.addEventListener('click', () => {
-        createPlaylistModal.style.display = 'block';
-      });
-      playlistsContainer.appendChild(createPlaylistBox);
-
-      for (const playlist of playlists) {
-        const playlistItem = document.createElement('div');
-        playlistItem.classList.add('playlist-item');
-        playlistItem.style.backgroundColor = playlist.color;
-        
-        let thumbnailSrc = 'default-playlist-image.jpg'; 
-        let podcastCount = playlist.podcasts.length;
-
-        if (playlist.podcasts.length > 0) {
-          try {
-            const response = await fetch(`${BASE_URL}/podcasts/${playlist.coverImage}`, {
-              headers: {
-                'X-ListenAPI-Key': API_KEY
-              }
-            });
-            const data = await response.json();
-            thumbnailSrc = data.thumbnail;
-          } catch (error) {
-            console.error('Error fetching podcast details:', error);
-          }
+  const podcastDetails = await Promise.all(selectedPodcasts.map(async (podcastId) => {
+    try {
+      const response = await fetch(`${BASE_URL}/podcasts/${podcastId}`, {
+        headers: {
+          'X-ListenAPI-Key': API_KEY
         }
-
-        playlistItem.innerHTML = `
-          <img src="${thumbnailSrc}" alt="${playlist.name}">
-          <h3>${playlist.name}</h3>
-          <p>${podcastCount} podcast${podcastCount !== 1 ? 's' : ''}</p>
-          <button class="delete-playlist" onclick="deletePlaylist(event, ${playlist.id})">×</button>
-        `;
-        
-        playlistItem.addEventListener('click', () => viewPlaylist(playlist.id));
-        playlistsContainer.appendChild(playlistItem);
-      }
+      });
+      const data = await response.json();
+      return {
+        id: data.id,
+        title: data.title,
+        thumbnail: data.thumbnail,
+        publisher: data.publisher
+      };
+    } catch (error) {
+      console.error('Error fetching podcast details:', error);
+      return null;
     }
+  }));
+
+  const validPodcasts = podcastDetails.filter(podcast => podcast !== null);
+
+  const newPlaylist = {
+    id: Date.now(),
+    name: playlistName,
+    color: playlistColor,
+    podcasts: validPodcasts,
+    coverImage: validPodcasts[0]?.thumbnail || 'default-playlist-image.jpg'
+  };
+
+  playlists.push(newPlaylist);
+  localStorage.setItem('playlists', JSON.stringify(playlists));
+
+  displayPlaylists();
+  createPlaylistModal.style.display = 'none';
+  searchResults.innerHTML = '';
+  selectedPodcasts = [];
+  playlistNameInput.value = '';
+  playlistColorInput.value = '#FF9494';
+});
+
+async function displayPlaylists() {
+  playlistsContainer.innerHTML = '';
+  const createPlaylistBox = document.createElement('div');
+  createPlaylistBox.id = 'create-playlist-button';
+  createPlaylistBox.classList.add('new-playlist-box');
+  createPlaylistBox.textContent = 'Create New Playlist';
+  createPlaylistBox.addEventListener('click', () => {
+    createPlaylistModal.style.display = 'block';
+  });
+  playlistsContainer.appendChild(createPlaylistBox);
+
+  for (const playlist of playlists) {
+    const playlistItem = document.createElement('div');
+    playlistItem.classList.add('playlist-item');
+    playlistItem.style.backgroundColor = playlist.color;
+    
+    let thumbnailSrc = 'default-playlist-image.jpg'; 
+    let podcastCount = playlist.podcasts.length;
+
+    if (playlist.podcasts.length > 0) {
+      thumbnailSrc = playlist.podcasts[0].thumbnail || playlist.coverImage;
+    }
+
+    playlistItem.innerHTML = `
+      <img src="${thumbnailSrc}" alt="${playlist.name}">
+      <h3>${playlist.name}</h3>
+      <p>${podcastCount} podcast${podcastCount !== 1 ? 's' : ''}</p>
+      <button class="delete-playlist" onclick="deletePlaylist(event, ${playlist.id})">×</button>
+    `;
+    
+    playlistItem.addEventListener('click', () => viewPlaylist(playlist.id));
+    playlistsContainer.appendChild(playlistItem);
+  }
+}
 
     async function viewPlaylist(playlistId) {
-      const playlist = playlists.find(p => p.id === playlistId);
-      if (playlist) {
-        playlistTitle.textContent = playlist.name;
-        playlistPodcasts.innerHTML = '';
-        
-        deleteAllPodcastsButton.onclick = () => deleteAllPodcasts(playlistId);
-        
-        for (const podcastId of playlist.podcasts) {
-          try {
-            const response = await fetch(`${BASE_URL}/podcasts/${podcastId}`, {
-              headers: {
-                'X-ListenAPI-Key': API_KEY
-              }
-            });
-            const podcast = await response.json();
-            const podcastElement = document.createElement('div');
-            podcastElement.classList.add('podcast-item');
-            podcastElement.innerHTML = `
-              <img src="${podcast.thumbnail}" alt="${podcast.title}" style="width: 50px; height: 50px;">
-              <span>${podcast.title}</span>
-              <button onclick="removePodcastFromPlaylist(${playlistId}, '${podcastId}')">Remove</button>
-            `;
-            podcastElement.addEventListener('click', (e) => {
-              if (e.target.tagName !== 'BUTTON') {
-                viewPodcastDetails(podcastId);
-              }
-            });
-            playlistPodcasts.appendChild(podcastElement);
-          } catch (error) {
-            console.error('Error fetching podcast details:', error);
-          }
+  const playlist = playlists.find(p => p.id === playlistId);
+  if (playlist) {
+    playlistTitle.textContent = playlist.name;
+    playlistPodcasts.innerHTML = '';
+    
+    deleteAllPodcastsButton.onclick = () => deleteAllPodcasts(playlistId);
+    
+    for (const podcast of playlist.podcasts) {
+      const podcastElement = document.createElement('div');
+      podcastElement.classList.add('podcast-item');
+      podcastElement.innerHTML = `
+        <img src="${podcast.thumbnail}" alt="${podcast.title}" style="width: 50px; height: 50px;">
+        <span>${podcast.title}</span>
+        <button onclick="removePodcastFromPlaylist(${playlistId}, '${podcast.id}')">Remove</button>
+      `;
+      podcastElement.addEventListener('click', (e) => {
+        if (e.target.tagName !== 'BUTTON') {
+          viewPodcastDetails(podcast.id);
         }
-        
-        viewPlaylistModal.style.display = 'block';
-      }
+      });
+      playlistPodcasts.appendChild(podcastElement);
     }
+    
+    viewPlaylistModal.style.display = 'block';
+  }
+}
 
     function toggleFavorite(element, podcastId, title, thumbnail, publisher) {
             element.classList.toggle('filled');
@@ -688,39 +690,44 @@
     }
 
     async function viewPodcastDetails(podcastId) {
-      try {
-        const response = await fetch(`${BASE_URL}/podcasts/${podcastId}`, {
-          headers: {
-            'X-ListenAPI-Key': API_KEY
-          }
-        });
-        const podcast = await response.json();
-        podcastDetailsContent.innerHTML = `
-          <div class="modal-header">
-            <h2>${podcast.title}</h2>
-            <span class="heart-icon" onclick="toggleFavorite(this, '${podcast.id}', '${podcast.title}', '${podcast.thumbnail}', '${podcast.publisher}')">&#9825;</span>
-          </div>
-          <div class="podcast-details">
-            <img src="${podcast.thumbnail}" alt="${podcast.title}" class="podcast-thumbnail">
-            <a href="https://www.listennotes.com/c/${podcast.id}/embed/" target="_blank" class="play-button-image">
-              <img src="play_button.png" alt="Play Podcast" class="play-button">
-            </a>
-          </div>
-          <p><strong>Publisher:</strong> ${podcast.publisher}</p>
-          <p><strong>Description:</strong> ${podcast.description}</p>
-        `;
-        podcastDetailsModal.style.display = 'block';
-
-        const fixedPlayer = document.getElementById('fixedPlayer');
-        const fixedPlayerIframe = document.getElementById('fixedPlayerIframe');
-        if (fixedPlayer && fixedPlayerIframe) {
-          fixedPlayer.style.display = 'none';
-          fixedPlayerIframe.src = '';
-        }
-      } catch (error) {
-        console.error('Error fetching podcast details:', error);
-      }
+  try {
+    let podcast;
+    // First, check if the podcast is in any of our playlists
+    for (const playlist of playlists) {
+      podcast = playlist.podcasts.find(p => p.id === podcastId);
+      if (podcast) break;
     }
+
+    // If not found in playlists, fetch from API
+    if (!podcast) {
+      const response = await fetch(`${BASE_URL}/podcasts/${podcastId}`, {
+        headers: {
+          'X-ListenAPI-Key': API_KEY
+        }
+      });
+      podcast = await response.json();
+    }
+
+    podcastDetailsContent.innerHTML = `
+      <div class="modal-header">
+        <h2>${podcast.title}</h2>
+        <span class="heart-icon" onclick="toggleFavorite(this, '${podcast.id}', '${podcast.title}', '${podcast.thumbnail}', '${podcast.publisher}')">&#9825;</span>
+      </div>
+      <div class="podcast-details">
+        <img src="${podcast.thumbnail}" alt="${podcast.title}" class="podcast-thumbnail">
+        <a href="https://www.listennotes.com/c/${podcast.id}/embed/" target="_blank" class="play-button-image">
+          <img src="play_button.png" alt="Play Podcast" class="play-button">
+        </a>
+      </div>
+      <p><strong>Publisher:</strong> ${podcast.publisher}</p>
+      <p><strong>Description:</strong> ${podcast.description || 'No description available.'}</p>
+    `;
+    podcastDetailsModal.style.display = 'block';
+  } catch (error) {
+    console.error('Error fetching podcast details:', error);
+    alert('Error fetching podcast details. Please try again.');
+  }
+}
 
     function toggleFavorite(element, podcastId, title, thumbnail, publisher) {
       
