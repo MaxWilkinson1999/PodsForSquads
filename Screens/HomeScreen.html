@@ -23,11 +23,15 @@
         </nav>
         <div class="search-bar">
             <div class="search-wrapper">
-                <input type="text" placeholder="Search podcasts" id="searchInput" onkeypress="handleKeyPress(event)">
+                <input type="text" placeholder="Search podcasts" id="searchInput" oninput="debouncedSearch()">
                 <button onclick="searchPodcasts()">
                     <img src="Images+Videos/search-red.png" alt="Search">
                 </button>
             </div>
+            <div id="liveSearchResults" class="search-results-dropdown"></div>
+        </div>
+        <div class="dice-button" onclick="playRandomEpisode()">
+            🎲
         </div>
         <div class="profile-dropdown">
             <div class="profile-icon">
@@ -56,7 +60,7 @@
     </div>
 
     <div class="section">
-        <h4>Uploaded Videos</h4>
+        <h4>My Videos</h4>
         <div id="videoDisplay" class="video-list">
             <!-- Videos will be dynamically populated here -->
         </div>
@@ -74,6 +78,19 @@
             <span class="close" onclick="closeSearchModal(event)">&times;</span>
             <div id="searchResults" class="search-results"></div>
         </div>
+    </div>
+
+    <div id="playlistSelectionModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closePlaylistSelectionModal()">&times;</span>
+            <h2>Select a Playlist</h2>
+            <div id="playlistSelectionContent"></div>
+        </div>
+    </div>
+
+    <div id="fixedPlayer" class="fixed-player">
+        <iframe id="fixedPlayerIframe" src="" height="80px" width="100%" frameborder="0" scrolling="no"
+            loading="lazy"></iframe>
     </div>
 
     <footer>
@@ -346,6 +363,7 @@
 
     <script src="LightDarkMode.js"></script>
     <script src="Language.js"></script>
+    <script src="Search.js"></script>
 
 </body>
 

@@ -189,6 +189,37 @@ h4 {
     unicode-bidi: isolate;
 }
 
+.search-results-dropdown {
+    display: none;
+    position: absolute;
+    background-color: white;
+    border: 1px solid #ccc;
+    max-height: 300px;
+    overflow-y: auto;
+    width: 400px;
+    z-index: 1000;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.search-result-item {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    cursor: pointer;
+    border-bottom: 1px solid #eee;
+}
+
+.search-result-item:hover {
+    background-color: #f1f1f1;
+}
+
+.search-result-img {
+    width: 45px;
+    height: 45px;
+    object-fit: cover;
+    margin-right: 10px;
+}
+
 footer a:hover::after {
     width: 100%;
 }
