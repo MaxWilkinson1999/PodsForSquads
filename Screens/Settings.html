@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Settings - PodsForSquads</title>
     <link rel="stylesheet" href="../Screens/Styles/SettingsStyle.css">
+    <link rel="icon" type="image/png" href="Images+Videos/Website_Logo.png">
 </head>
 
 <body>
@@ -15,14 +16,15 @@
             <a href="#profile" onclick="openTab('profile')" class="active">My Profile</a>
             <a href="#notifications" onclick="openTab('notifications')">Notifications</a>
             <a href="#appearance" onclick="openTab('appearance')">Appearance</a>
-            <a href="./Auth/Login.html" class="logout">Log out</a>
             <a href="HomeScreen.html">Return to Home</a>
+            <a href="./Auth/Login.html" class="logout">Log out</a>
         </div>
         <div class="content">
             <div id="profile" class="tab-content active">
                 <h2>My Profile</h2>
                 <div class="profile-image-container">
-                    <img src="default-profile.png" alt="Profile Image" id="profileImage" class="profile-image">
+                    <img src="Images+Videos/DefaultProfile.png" alt="Profile Image" id="profileImage"
+                        class="profile-image">
                     <input type="file" id="profileImageInput" style="display: none;"
                         onchange="changeProfileImage(event)">
                 </div>
@@ -72,12 +74,12 @@
                     <label for="deuterModeSwitch">Deuteropia Mode</label>
                     <input type="checkbox" id="deuterModeSwitch">
                 </div>
-                
+
             </div>
         </div>
     </div>
 
-    <script src="LightDarkMode.js"></script>
+
 
     <script>
         function openTab(tabId) {
@@ -270,7 +272,7 @@
         });
     </script>
 
-
+    <script src="LightDarkMode.js"></script>
 
 </body>
 

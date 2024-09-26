@@ -3,374 +3,21 @@
 
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Contact Me!</title>
+    <title>Contact Us - PodsForSquads</title>
     <link rel="stylesheet" href="style.css">
-    <style>
-        * {
-            margin: 0;
-            box-sizing: border-box;
-            font-family: 'Poppins', sans-serif;
-        }
+    <link rel="icon" type="image/png" href="Images+Videos/Website_Logo.png">
+    <link rel="stylesheet" href="Styles/ContactStyle.css">
 
-        :root {
-                /* Light Mode */
-    --background-gradient: linear-gradient(to bottom right, rgb(221, 219, 219), #b7c9e2, rgb(221, 219, 219));
-    --text-color: #000000;
-    --header-background: #36454F;
-    --nav-hover-color: #b7c9e2;
-    --nav-underline-color: #b7c9e2;
-    --logo-color: whitesmoke;
-    --nav-link-color: whitesmoke;
-    --footer-color: #36454F;
-        }
-
-        body.dark-mode {
-            --background-gradient: linear-gradient(to bottom right, rgb(105, 104, 104), black, rgb(105, 104, 104));
-    --text-color: #c5b358;
-    --header-background:#c5b358 ;
-    --nav-hover-color: black;
-    --header-background:#c5b358 ;
-    --footer-color:#c5b358;
-    --nav-underline-color: #b7c9e2;
-    --logo-color: whitesmoke;
-    --nav-link-color: whitesmoke;
-        }
-
-
-        body.protan-mode{
-   
-   --background-gradient: linear-gradient(to bottom right, #a691ae, #e8f086,#a691ae);
-   --text-color: #235fa4;
-   --header-background:#6fde6e ;
-   --nav-hover-color: black;
-   --nav-underline-color: #b7c9e2;
-   --logo-color: whitesmoke;
-   --nav-link-color: whitesmoke;
-
-}
-        body {
-         
-            font-family: 'proxima-nova', sans-serif;
-            margin: 0;
-            background-image: var(--background-gradient);
-            color: var(--text-color);
-            opacity: 1;
-            transition: opacity 0.5s ease-in-out;
-           
-        }
-
-        body.fade-out {
-            opacity: 0;
-        }
-
-        header {
-           
-            background-color: var(--header-background);
-    padding: 1em;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    animation: slideInFromLeft 1.0s ease-out;
-        }
-
-        nav {
-    display: flex;
-    gap: 1em;
-    animation: slideInFromLeft 1.0s ease-out;
-
-}
-
-nav a {
-    color: var(--nav-link-color);
-    text-decoration: none;
-    position: relative;
-    padding: 5px 15px;
-    font-size: 18px;
-    transition: color 0.3s ease;
-}
-
-nav a:hover {
-    color: var(--nav-hover-color);
-}
-
-nav a::after {
-    content: "";
-    position: absolute;
-    left: 0;
-    bottom: 0;
-    width: 0;
-    height: 2px;
-    background-color: var(--nav-underline-color);
-    transition: width 0.3s ease;
-}
-
-nav a:hover::after {
-    width: 100%;
-}
-
-.logo {
-    color: var(--logo-color);
-    text-decoration: none;
-    position: relative;
-    padding: 5px 15px;
-    font-size: 35px;
-    transition: color 0.3s ease;
-}
-
-        .hero {
-            text-align: center;
-            padding: 2em 1em;
-        }
-
-        main {
-            flex: 1;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        button {
-            color: white;
-            background-color: grey;
-            padding: 30px 100px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            margin-left: 10px;
-            margin-bottom: 10px;
-        }
-
-        form {
-            background: var(--header-background-color);
-            display: flex;
-            flex-direction: column;
-            padding: 2vw 4vw;
-            width: 600px;
-            border-radius: 25px;
-            align-content: center;
-        }
-
-        form h3 {
-            color: var(--text-color);
-            font-weight: 800;
-            margin-bottom: 20px;
-        }
-
-        form input,
-        form textarea {
-            border: 0;
-            margin: 10px 0;
-            padding: 20px;
-            outline: none;
-            background-color: white;
-            font-size: 16px;
-        }
-
-        form button {
-            padding: 15px;
-            background-color: var(--footer-color);
-            color: antiquewhite;
-            font-size: 16px;
-            border: 0;
-            outline: none;
-            cursor: pointer;
-            width: 150px;
-            margin: 20px auto 0;
-            border-radius: 30px;
-            
-        }
-
-        #Submit {
-            align-content: center;
-
-        }
-
-        footer {
-            background-color: var(--header-background);
-            padding: 1em;
-            text-align: center;
-            color: whitesmoke;
-            animation: slideInFromLeft 1.0s ease-out;
-        }
-
-
-        
-
-footer a {
-    color: var(--nav-link-color);
-    text-decoration: none;
-    position: relative;
-    padding: 5px 15px;
-    font-size: 18px;
-    transition: color 0.3s ease;
-}
-
-footer a:hover {
-    color: var(--nav-hover-color);
-}
-
-footer a::after {
-    content: "";
-    position: absolute;
-    left: 0;
-    bottom: 0;
-    width: 0;
-    height: 2px;
-    background-color: var(--nav-underline-color);
-    transition: width 0.3s ease;
-}
-
-footer a:hover::after {
-    width: 100%;
-}
-
-.footer-links,
-        .social-media {
-            display: flex;
-            justify-content: center;
-            gap: 1em;
-        }
-
-        .footer-links a,
-        .social-media a {
-            color: var(--header-text-color);
-            text-decoration: none;
-        }
-
-        .social-media {
-            display: flex;
-            justify-content: center;
-            gap: 1em;
-        }
-
-        .social-media a {
-            display: block;
-            width: 32px;
-            height: 32px;
-        }
-
-        .social-media img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            border-radius: 50%;
-        }
-
-
-          /* Add this to both HTML files */
-.fade-out {
-    opacity: 0;
-    transition: opacity 0.5s ease-out;
-}
-
-.fade-in {
-    opacity: 1;
-    transition: opacity 0.5s ease-in;
-}
-
-
-
-/* Keyframes for sliding the navbar in from the left */
-@keyframes slideInFromLeft {
-    0% {
-        transform: translateX(-100%);
-        opacity: 0;
-    }
-    100% {
-        transform: translateX(0);
-        opacity: 1;
-    }
-}
-
-@keyframes slideInFromRight {
-    from {
-        transform: translateX(100%); /* Start off-screen to the right */
-    }
-    to {
-        transform: translateX(0); /* End at its original position */
-    }
-
-
-    
-}
-
-
-
-
-
-.profile-icon {
-            width: 75px;
-            height: 75px;
-        }
-
-        .profile-icon img {
-            width: 100%;
-            height: 100%;
-            object-fit: contain;
-        }
-
-        /* Profile icon hover effect */
-.profile-icon {
-    cursor: pointer; /* Makes the cursor a pointer to indicate it's clickable */
-}
-
-.profile-icon img {
-    transition: transform 0.3s ease, box-shadow 0.3s ease; /* Smooth transition for the hover effects */
-}
-
-.profile-icon:hover img {
-    transform: scale(1.1); /* Slightly enlarges the profile image */
-    box-shadow: 0px 4px 10px rgba(125, 149, 151, 0.288); /* Adds a shadow effect */
-}
-
-.profile-dropdown {
-    position: relative;
-    display: inline-block;
-    cursor: pointer;
-}
-
-.dropdown-content {
-    display: none;
-    position: absolute;
-    background-color: #333;
-    min-width: 160px;
-    top: 75px; 
-    right: 0;
-    border-radius: 8px;
-    box-shadow: 0px 8px 16px rgba(0,0,0,0.2);
-    z-index: 1;
-}
-
-.dropdown-content a {
-    color: white;
-    padding: 12px 16px;
-    text-decoration: none;
-    display: block;
-}
-
-.dropdown-content a:hover {
-    background-color: #575757;
-}
-
-/* Show dropdown on hover */
-.profile-dropdown:hover .dropdown-content {
-    display: block;
-}
-
-
-
-
-    </style>
     <script>
         document.addEventListener("DOMContentLoaded", function () {
             const links = document.querySelectorAll("nav a");
-    
+
             links.forEach(link => {
                 link.addEventListener("click", function (event) {
                     event.preventDefault();
                     const href = this.getAttribute("href");
                     document.body.classList.add("fade-out");
-    
+
                     setTimeout(() => {
                         window.location.href = href;
                     }, 500);
@@ -378,6 +25,7 @@ footer a:hover::after {
             });
         });
     </script>
+
 </head>
 
 <body>
@@ -411,8 +59,9 @@ footer a:hover::after {
             <form id="contactForm" action="https://formspree.io/f/mzzpbnov" method="POST">
                 <h3>GET IN TOUCH</h3>
                 <input type="text" id="name" name="name" placeholder="Your Name" required>
-                <input type="email" id="email"  placeholder="Please enter Companies Email" required>
-                <small>Please enter the company's email as follows to ensure you're not a bot: PodsForSquads@gmail.com</small>
+                <input type="email" id="email" placeholder="Please enter Companies Email" required>
+                <small>Please enter the company's email as follows to ensure you're not a bot:
+                    PodsForSquads@gmail.com</small>
                 <input type="text" id="phone" name="phone" placeholder="Phone #" required>
                 <input type="email" id="senderEmail" name="senderEmail" placeholder="Your email">
                 <textarea id="message" name="message" rows="4" placeholder="How can I help you?" required></textarea>
@@ -434,14 +83,17 @@ footer a:hover::after {
             </div>
         </div>
         <div class="social-media">
-            <a href="https://www.facebook.com/profile.php?id=61560365679571"><img src="../Screens/Images+Videos/Facebook_Logo.png" alt="Facebook"></a>
-            <a href="https://x.com/PodsForSquads" ><img src="../Screens/Images+Videos/Twitter_Logo.png" alt="Twitter"></a>
-            <a href="https://www.instagram.com/podsforsquads/" ><img src="../Screens/Images+Videos/Instagram_Logo.png" alt="Instagram"></a>
+            <a href="https://www.facebook.com/profile.php?id=61560365679571"><img
+                    src="../Screens/Images+Videos/Facebook_Logo.png" alt="Facebook"></a>
+            <a href="https://x.com/PodsForSquads"><img src="../Screens/Images+Videos/Twitter_Logo.png"
+                    alt="Twitter"></a>
+            <a href="https://www.instagram.com/podsforsquads/"><img src="../Screens/Images+Videos/Instagram_Logo.png"
+                    alt="Instagram"></a>
         </div>
     </footer>
 
     <script>
-        document.getElementById('contactForm').addEventListener('submit', function(event) {
+        document.getElementById('contactForm').addEventListener('submit', function (event) {
             event.preventDefault();
 
             const form = event.target;
@@ -472,4 +124,5 @@ footer a:hover::after {
         }
     </script>
 </body>
+
 </html>

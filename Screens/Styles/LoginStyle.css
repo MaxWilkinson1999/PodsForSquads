@@ -182,3 +182,25 @@ p {
     cursor: pointer;
     margin-top: 20px;
 }
+.error {
+            color: red;
+            margin-top: 5px;
+        }
+
+        .password-container {
+            position: relative;
+        }
+
+        .password-container input[type="password"],
+        .password-container input[type="text"] {
+            width: 92.5%;
+            padding-right: 10px;
+        }
+
+        .password-container .toggle-password {
+            position: absolute;
+            top: 35%;
+            right: 20px;
+            transform: translateY(-50%);
+            cursor: pointer;
+        }

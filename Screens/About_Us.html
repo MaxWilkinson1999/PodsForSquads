@@ -1,342 +1,73 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Podcast Streaming Service</title>
-    <style>
-        :root {
-            /* Light Mode */
-            --background-gradient: linear-gradient(to bottom right, rgb(221, 219, 219), #b7c9e2, rgb(221, 219, 219));
-            --text-color: #000000;
-            --header-background: #36454F;
-            --nav-hover-color: #b7c9e2;
-            --nav-underline-color: #b7c9e2;
-            --logo-color: whitesmoke;
-            --nav-link-color: whitesmoke;
-            --footer-color: #36454F;
-        }
+    <title>About Us - PodsForSquads</title>
+    <link rel="icon" type="image/png" href="Images+Videos/Website_Logo.png">
+    <link rel="stylesheet" href="Styles/AboutUsStyle.css">
 
-        html, body {
-            height: 100%;
-            margin: 0;
-            display: flex;
-            flex-direction: column;
-        }
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const links = document.querySelectorAll("nav a");
 
-        body {
-            font-family: 'proxima-nova', sans-serif;
-            background-image: var(--background-gradient);
-            color: var(--text-color);
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-        }
+            links.forEach(link => {
+                link.addEventListener("click", function (event) {
+                    event.preventDefault();
+                    const href = this.getAttribute("href");
+                    document.body.classList.add("fade-out");
 
-        body.fade-out {
-            opacity: 0;
-        }
-
-        body.protan-mode {
-            --background-gradient: linear-gradient(to bottom right, #a691ae, #e8f086,#a691ae);
-            --text-color: #235fa4;
-            --header-background:#6fde6e ;
-            --nav-hover-color: black;
-            --nav-underline-color: #b7c9e2;
-            --logo-color: whitesmoke;
-            --nav-link-color: whitesmoke;
-        }
-
-        body.dark-mode {
-            --background-gradient: linear-gradient(to bottom right, rgb(105, 104, 104), black, rgb(105, 104, 104));
-            --text-color: #c5b358;
-            --header-background:#c5b358 ;
-            --nav-hover-color: black;
-            --footer-color:#c5b358;
-            --nav-underline-color: #b7c9e2;
-            --logo-color: whitesmoke;
-            --nav-link-color: whitesmoke;
-        }
-
-        header {
-            background-color: var(--header-background);
-            padding: 1em;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            animation: slideInFromLeft 1.0s ease-out;
-            width: 100%;
-        }
-
-        nav {
-            display: flex;
-            gap: 1em;
-            animation: slideInFromLeft 1.0s ease-out;
-        }
-
-        nav a {
-            color: var(--nav-link-color);
-            text-decoration: none;
-            position: relative;
-            padding: 5px 15px;
-            font-size: 18px;
-            transition: color 0.3s ease;
-        }
-
-        nav a:hover {
-            color: var(--nav-hover-color);
-        }
-
-        nav a::after {
-            content: "";
-            position: absolute;
-            left: 0;
-            bottom: 0;
-            width: 0;
-            height: 2px;
-            background-color: var(--nav-underline-color);
-            transition: width 0.3s ease;
-        }
-
-        nav a:hover::after {
-            width: 100%;
-        }
-
-        .logo {
-            color: var(--logo-color);
-            text-decoration: none;
-            position: relative;
-            padding: 5px 15px;
-            font-size: 35px;
-            transition: color 0.3s ease;
-        }
-
-        main {
-            flex: 1;
-            padding: 2em;
-        }
-
-        #AboutUsBox {
-            font-size: 40px;
-            animation: slideInFromLeft 1.0s ease-out;
-        }
-
-        footer {
-            background-color: var(--header-background);
-            padding: 1em;
-            text-align: center;
-            color: whitesmoke;
-            animation: slideInFromLeft 1.0s ease-out;
-            width: 100%;
-        }
-
-        footer a {
-            color: var(--nav-link-color);
-            text-decoration: none;
-            position: relative;
-            padding: 5px 15px;
-            font-size: 18px;
-            transition: color 0.3s ease;
-        }
-
-        footer a:hover {
-            color: var(--nav-hover-color);
-        }
-
-        footer a::after {
-            content: "";
-            position: absolute;
-            left: 0;
-            bottom: 0;
-            width: 0;
-            height: 2px;
-            background-color: var(--nav-underline-color);
-            transition: width 0.3s ease;
-        }
-
-        footer a:hover::after {
-            width: 100%;
-        }
-
-        .footer-links, .social-media {
-            display: flex;
-            justify-content: center;
-            gap: 1em;
-        }
-
-        .footer-links a, .social-media a {
-            color: var(--header-text-color);
-            text-decoration: none;
-        }
-
-        .social-media a {
-            display: block;
-            width: 32px;
-            height: 32px;
-        }
-
-        .social-media img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            border-radius: 50%;
-        }
-
-        #scrollToTopBtn {
-            display: none;
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            background-color: red;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            padding: 10px 15px;
-            cursor: pointer;
-        }
-
-        .fade-out {
-            opacity: 0;
-            transition: opacity 0.5s ease-out;
-        }
-
-        .fade-in {
-            opacity: 1;
-            transition: opacity 0.5s ease-in;
-        }
-
-        @keyframes slideInFromLeft {
-            0% {
-                transform: translateX(-100%);
-                opacity: 0;
-            }
-            100% {
-                transform: translateX(0);
-                opacity: 1;
-            }
-        }
-
-        @keyframes slideInFromRight {
-            from {
-                transform: translateX(100%);
-            }
-            to {
-                transform: translateX(0);
-            }
-        }
-
-
-        
-.profile-icon {
-            width: 75px;
-            height: 75px;
-        }
-
-        .profile-icon img {
-            width: 100%;
-            height: 100%;
-            object-fit: contain;
-        }
-
-        /* Profile icon hover effect */
-.profile-icon {
-    cursor: pointer; /* Makes the cursor a pointer to indicate it's clickable */
-}
-
-.profile-icon img {
-    transition: transform 0.3s ease, box-shadow 0.3s ease; /* Smooth transition for the hover effects */
-}
-
-.profile-icon:hover img {
-    transform: scale(1.1); /* Slightly enlarges the profile image */
-    box-shadow: 0px 4px 10px rgba(125, 149, 151, 0.288); /* Adds a shadow effect */
-}
-
-.profile-dropdown {
-    position: relative;
-    display: inline-block;
-    cursor: pointer;
-}
-
-.dropdown-content {
-    display: none;
-    position: absolute;
-    background-color: #333;
-    min-width: 160px;
-    top: 75px; 
-    right: 0;
-    border-radius: 8px;
-    box-shadow: 0px 8px 16px rgba(0,0,0,0.2);
-    z-index: 1;
-}
-
-.dropdown-content a {
-    color: white;
-    padding: 12px 16px;
-    text-decoration: none;
-    display: block;
-}
-
-.dropdown-content a:hover {
-    background-color: #575757;
-}
-
-/* Show dropdown on hover */
-.profile-dropdown:hover .dropdown-content {
-    display: block;
-}
-
-
-    </style>
-<script>
-    document.addEventListener("DOMContentLoaded", function () {
-        const links = document.querySelectorAll("nav a");
-
-        links.forEach(link => {
-            link.addEventListener("click", function (event) {
-                event.preventDefault();
-                const href = this.getAttribute("href");
-                document.body.classList.add("fade-out");
-
-                setTimeout(() => {
-                    window.location.href = href;
-                }, 500);
+                    setTimeout(() => {
+                        window.location.href = href;
+                    }, 500);
+                });
             });
         });
-    });
-</script>
+    </script>
 </head>
+
 <body>
     <header>
-        <div class="logo">PodsForSquads</div>
+        <!--- WEBSITE NAME AND TITLE -->
+        <div id="logo">PodsForSquads</div>
         <nav>
-            <a href="HomeScreen.html">Home</a>
-            <a href="Upload.html">Upload</a>
-            <a href="playlists.html">Playlists</a>
-            <a href="favorites.html">Favorites</a>
-            <a href="Settings.html">Settings</a>
+            <a id="Home" href="HomeScreen.html">Home</a>
+            <a id="Upload" href="Upload.html">Upload</a>
+            <a id="Playlists" href="Playlists.html">Playlists</a>
+            <a id="Favorites" href="Favorites.html">Favorites</a>
+            <a id="Community" href="Community.html">Community</a>
+            <a id="Analytics" href="Analytics.html">Stats</a>
+            <a id="Settings" href="Settings.html">Settings</a>
         </nav>
-        
+
+        <!--- PROFILE ICON -->
         <div class="profile-dropdown">
             <div class="profile-icon">
                 <img id="profileImage" src="./Images+Videos/DefaultProfile.png" alt="User Profile">
                 <i class="arrow down"></i>
             </div>
-
             <div class="dropdown-content">
                 <a href="Settings.html">View Profile</a>
                 <a href="Auth/Login.html">Log Out</a>
             </div>
         </div>
-        
 
-       
     </header>
 
     <main>
-       <text id="AboutUsBox">Hello my name is Nicholas, one of the devs that is currently working and developing the Website PodsForSquads! Im working with fellow developers and masterminds Max and Emmanuel on designing and making the best experience for all Podcast listeners and viewers no matter the age and viewpoints on life! </textarea>
+        <section class="about-us-section">
+            <h1>About Us</h1>
+            <div class="about-us-content">
+                <img src="Images+Videos/Website_Logo.png" alt="Team Photo">
+                <p>Hello, my name is <strong>Nicholas</strong>, one of the developers currently working on the website
+                    PodsForSquads! I'm collaborating with fellow developers and masterminds <strong>Max</strong> and
+                    <strong>Emmanuel</strong> to design and deliver the best experience for all podcast listeners and
+                    viewers, regardless of age or viewpoints on life!
+                </p>
+            </div>
+        </section>
     </main>
-   
 
     <footer>
         <div class="footer-links">
@@ -346,45 +77,38 @@
             <a href="PrivPol.html">Privacy Policy</a>
         </div>
         <div class="social-media">
-            <a href="https://www.facebook.com/profile.php?id=61560365679571" target="_blank"><img src="../Screens/Images+Videos/Facebook_Logo.png" alt="Facebook"></a>
-            <a href="https://x.com/PodsForSquads" target="_blank"><img src="../Screens/Images+Videos/Twitter_Logo.png" alt="Twitter"></a>
-            <a href="https://www.instagram.com/podsforsquads/" target="_blank"><img src="../Screens/Images+Videos/Instagram_Logo.png" alt="Instagram"></a>
+            <a href="https://www.facebook.com/profile.php?id=61560365679571" target="_blank"><img
+                    src="../Screens/Images+Videos/Facebook_Logo.png" alt="Facebook"></a>
+            <a href="https://x.com/PodsForSquads" target="_blank"><img src="Images+Videos/Twitter_Logo.png"
+                    alt="Twitter"></a>
+            <a href="https://www.instagram.com/podsforsquads/" target="_blank"><img
+                    src="../Screens/Images+Videos/Instagram_Logo.png" alt="Instagram"></a>
         </div>
     </footer>
 
+    <button id="scrollToTopBtn" onclick="scrollToTop()">Top Of Screen</button>
 
+    <script>
+        var mybutton = document.getElementById("scrollToTopBtn");
 
-    
+        window.onscroll = function () {
+            scrollFunction();
+        };
 
-<script src="LightDarkMode.js"></script>
+        function scrollFunction() {
+            if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+                mybutton.style.display = "block";
+            } else {
+                mybutton.style.display = "none";
+            }
+        }
 
-
-
-<button id="scrollToTopBtn" onclick="scrollToTop()">Top Of Screen</button>
-
-<script>
-  
-  var mybutton = document.getElementById("scrollToTopBtn");
-
-  window.onscroll = function() {
-    scrollFunction();
-  };
-
-  function scrollFunction() {
-    if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
-      mybutton.style.display = "block";
-    } else {
-      mybutton.style.display = "none";
-    }
-  }
-
-  
-  function scrollToTop() {
-    document.body.scrollTop = 0; // For Safari
-    document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
-  }
-</script>
-
-
+        function scrollToTop() {
+            document.body.scrollTop = 0; // For Safari
+            document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
+        }
+    </script>
+    <script src="LightDarkMode.js"></script>
 </body>
+
 </html>

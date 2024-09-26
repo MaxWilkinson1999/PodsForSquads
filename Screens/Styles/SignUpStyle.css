@@ -6,8 +6,12 @@ body {
     align-items: center;
     height: 100vh;
     margin: 0;
-    background-color: #ff9494;
+    background-color: #36454F;
 }
+.error {
+            color: red;
+            margin-top: 5px;
+        }
 
 .container {
     display: flex;
@@ -57,7 +61,7 @@ body {
 button {
     width: 100%;
     padding: 10px;
-    background-color: #ff6f61;
+    background-color: #36454F;
     border: none;
     border-radius: 5px;
     color: white;
@@ -66,7 +70,7 @@ button {
 }
 
 button:hover {
-    background-color: #ff4b3a;
+    background-color: #36454F;
 }
 
 .promo {

@@ -1,507 +1,34 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Podcast Streaming Service</title>
-    <style>
-:root {
-    /* Light Mode */
-    --background-gradient: linear-gradient(to bottom right, rgb(221, 219, 219), #b7c9e2, rgb(221, 219, 219));
-    --text-color: #000000;
-    --header-background: #36454F;
-    --nav-hover-color: #b7c9e2;
-    --nav-underline-color: #b7c9e2;
-    --logo-color: whitesmoke;
-    --nav-link-color: whitesmoke;
-    --footer-color: #36454F;
-    --answer-color: #36454f;
-    --bubble-background: purple;
-}
-
-body {
-    font-family: 'proxima-nova', sans-serif;
-    margin: 0;
-    background-image: var(--background-gradient);
-    color: var(--text-color);
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-}
-
-/* Ensures the main content fills the space between the header and footer */
-main {
-    flex: 1;
-
-}
-
-
-
-
-
-        body.fade-out {
-            
-            
-            opacity: 0;
-        }
-
-        body.deuter-mode{
-   
-   --background-gradient: linear-gradient(to bottom right, #2d3043, #2f88dc,#2d3043);
-   --text-color: #a15229;
-   --header-background:#e89f43 ;
-   --nav-hover-color: black;
-   --nav-underline-color: #b7c9e2;
-   --logo-color: whitesmoke;
-   --nav-link-color: whitesmoke;
-   --answer-color: whitesmoke;
-
-}
-
-
-
-        body.protan-mode {
-            --background-gradient: linear-gradient(to bottom right, #a691ae, #e8f086,#a691ae);
-    --text-color: #235fa4;
-    --header-background:#6fde6e ;
-    --nav-hover-color: black;
-    --nav-underline-color: #b7c9e2;
-    --logo-color: whitesmoke;
-    --nav-link-color: whitesmoke;
-    --answer-color: purple;
-
-}
-
-
-
-
-
-
-
-
-body.dark-mode {
-    --background-gradient: linear-gradient(to bottom right, rgb(105, 104, 104), black, rgb(105, 104, 104));
-    --text-color: #c5b358;
-    --header-background:#c5b358 ;
-    --nav-hover-color: black;
-    --header-background:#c5b358 ;
-    --footer-color:#c5b358;
-    --nav-underline-color: #b7c9e2;
-    --logo-color: whitesmoke;
-    --nav-link-color: whitesmoke;
-    --answer-color: whitesmoke;
-}
-
-
-header {
-    background-color: var(--header-background);
-    padding: 1em;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    animation: slideInFromRight 1.0s ease-out;
-}
-
-
-nav {
-    display: flex;
-    gap: 1em;
-}
-
-nav a {
-    color: var(--nav-link-color);
-    text-decoration: none;
-    position: relative;
-    padding: 5px 15px;
-    font-size: 18px;
-    transition: color 0.3s ease;
-}
-
-nav a:hover {
-    color: var(--nav-hover-color);
-}
-
-nav a::after {
-    content: "";
-    position: absolute;
-    left: 0;
-    bottom: 0;
-    width: 0;
-    height: 2px;
-    background-color: var(--nav-underline-color);
-    transition: width 0.3s ease;
-}
-
-nav a:hover::after {
-    width: 100%;
-}
-
-.logo {
-    color: var(--logo-color);
-    text-decoration: none;
-    position: relative;
-    padding: 5px 15px;
-    font-size: 35px;
-    transition: color 0.3s ease;
-}
-
-footer
- {
-    background-color: var(--header-background);
-    padding: 1em;
-    text-align: center;
-    color: whitesmoke;
-    animation: slideInFromLeft 1.0s ease-out;
-}
-
-
-        
-
-footer a {
-    color: var(--nav-link-color);
-    text-decoration: none;
-    position: relative;
-    padding: 5px 15px;
-    font-size: 18px;
-    transition: color 0.3s ease;
-}
-
-footer a:hover {
-    color: var(--nav-hover-color);
-}
-
-footer a::after {
-    content: "";
-    position: absolute;
-    left: 0;
-    bottom: 0;
-    width: 0;
-    height: 2px;
-    background-color: var(--nav-underline-color);
-    transition: width 0.3s ease;
-}
-
-footer a:hover::after {
-    width: 100%;
-}
-
-
-        .hero {
-            text-align: center;
-            padding: 2em 1em;
-        }
-
-        .carousel, .section {
-            margin: 2em 0;
-        }
-
-        .carousel, .section {
-            display: flex;
-            overflow-x: auto;
-            gap: 1em;
-            padding: 0 1em;
-        }
-
-        .carousel::-webkit-scrollbar, .section::-webkit-scrollbar {
-            display: none;
-        }
-
-        .podcast-item {
-            min-width: 200px;
-            cursor: pointer;
-        }
-
-        .podcast-item img {
-            width: 100%;
-            border-radius: 10px;
-        }
-
-
-        .footer-links, .social-media {
-            display: flex;
-            justify-content: center;
-            gap: 1em;
-        }
-
-        .footer-links a, .social-media a {
-            color: var(--header-text-color);
-            text-decoration: none;
-        }
-
-        .modal {
-            display: none;
-            position: fixed;
-            z-index: 1;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            overflow: auto;
-            background-color: rgba(0, 0, 0, 0.4);
-        }
-
-        .modal-content {
-            background-color: #fefefe;
-            margin: 10% auto;
-            padding: 20px;
-            border: 1px solid #888;
-            width: 50%;
-            max-width: 600px;
-            border-radius: 10px;
-            position: relative;
-            animation: slideInFromLeft 1.0s ease-out;
-        }
-
-        .close {
-            color: #aaa;
-            float: right;
-            font-size: 28px;
-            font-weight: bold;
-        }
-
-        .close:hover,
-        .close:focus {
-            color: black;
-            text-decoration: none;
-            cursor: pointer;
-        }
-
-        .show-more-btn {
-            background-color: white;
-            color: #000;
-            border: none;
-            padding: 10px 20px;
-            cursor: pointer;
-            margin: 20px auto;
-            display: block;
-        }
-
-        .social-media a {
-            display: block;
-            width: 32px;
-            height: 32px;
-        }
-
-        .social-media img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            border-radius: 50%;
-        }
-
-        #scrollToTopBtn {
-            display: none;
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            background-color: red;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            padding: 10px 15px;
-            cursor: pointer;
-        }
-
-        #Submit {
-            background-color: #FF9494;
-        }
-
-
-
-
-
-        /* Add this to both HTML files */
-.fade-out {
-    opacity: 0;
-    transition: opacity 0.5s ease-out;
-}
-
-.fade-in {
-    opacity: 1;
-    transition: opacity 0.5s ease-in;
-}
-
-
-
-/* Keyframes for sliding the navbar in from the left */
-@keyframes slideInFromLeft {
-    0% {
-        transform: translateX(-100%);
-        opacity: 0;
-    }
-    100% {
-        transform: translateX(0);
-        opacity: 1;
-    }
-}
-
-@keyframes slideInFromRight {
-    from {
-        transform: translateX(100%); /* Start off-screen to the right */
-    }
-    to {
-        transform: translateX(0); /* End at its original position */
-    }
-}
-
-
-
-
-@keyframes slideInFromTop {
-    from {
-        transform: translateY(-100%); /* Start off-screen above */
-    }
-    to {
-        transform: translateY(0); /* End at its original position */
-    }
-}
-
-@keyframes slideInFromBottom {
-    from {
-        transform: translateY(100%); /* Start off-screen below */
-    }
-    to {
-        transform: translateY(0); /* End at its original position */
-    }
-}
-
-
-
-summary {
-    padding: 0.5em 1.3rem;
-    list-style: none;
-    display: flex;
-    align-items: center;
-    justify-content: flex-start; /* Align items to the start */
-    font-size: 30px; /* Increases the size of questions */
-    cursor: pointer;
-    
-}
-
-summary::after {
-    content: "\002B";
-    font-size: 40px; /* Increase the size of the button */
-    margin-left: 20px; /* Space between the question and the button */
-    background-color: #ccc; /* Adds a background color to the button */
-    border-radius: 50%; /* Makes the button round */
-    width: 40px;
-    height: 40px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-details[open] summary::after {
-    content: "\00D7"; /* Change the icon when the details are open */
-}
-
-details[open] summary {
-    border-bottom: 1px solid  var(--bubble-background);
-    margin-bottom: 0.5em;
-    color: var(--bubble-background);
-}
-
-details[open] div {
-    padding: 0.5em 1em;
-    color: var( --answer-color);
-    font-size: 30px; /* Increases the size of answers */
-}
-
-
-.container h1{
-  color: var(--header-background);
-  text-align: center;
-
-}
-
-
-
-
-
-.profile-icon {
-            width: 75px;
-            height: 75px;
-        }
-
-        .profile-icon img {
-            width: 100%;
-            height: 100%;
-            object-fit: contain;
-        }
-
-        /* Profile icon hover effect */
-.profile-icon {
-    cursor: pointer; /* Makes the cursor a pointer to indicate it's clickable */
-}
-
-.profile-icon img {
-    transition: transform 0.3s ease, box-shadow 0.3s ease; /* Smooth transition for the hover effects */
-}
-
-.profile-icon:hover img {
-    transform: scale(1.1); /* Slightly enlarges the profile image */
-    box-shadow: 0px 4px 10px rgba(125, 149, 151, 0.288); /* Adds a shadow effect */
-}
-
-.profile-dropdown {
-    position: relative;
-    display: inline-block;
-    cursor: pointer;
-}
-
-.dropdown-content {
-    display: none;
-    position: absolute;
-    background-color: #333;
-    min-width: 160px;
-    top: 75px; 
-    right: 0;
-    border-radius: 8px;
-    box-shadow: 0px 8px 16px rgba(0,0,0,0.2);
-    z-index: 1;
-}
-
-.dropdown-content a {
-    color: white;
-    padding: 12px 16px;
-    text-decoration: none;
-    display: block;
-}
-
-.dropdown-content a:hover {
-    background-color: #575757;
-}
-
-/* Show dropdown on hover */
-.profile-dropdown:hover .dropdown-content {
-    display: block;
-}
-
-
-    </style>
-
-
-
-<script>
-    document.addEventListener("DOMContentLoaded", function () {
-        const links = document.querySelectorAll("nav a");
-
-        links.forEach(link => {
-            link.addEventListener("click", function (event) {
-                event.preventDefault();
-                const href = this.getAttribute("href");
-                document.body.classList.add("fade-out");
-
-                setTimeout(() => {
-                    window.location.href = href;
-                }, 500);
+    <link rel="stylesheet" href="Styles/FaqStyle.css">
+    <link rel="icon" type="image/png" href="Images+Videos/Website_Logo.png">
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const links = document.querySelectorAll("nav a");
+
+            links.forEach(link => {
+                link.addEventListener("click", function (event) {
+                    event.preventDefault();
+                    const href = this.getAttribute("href");
+                    document.body.classList.add("fade-out");
+
+                    setTimeout(() => {
+                        window.location.href = href;
+                    }, 500);
+                });
             });
         });
-    });
-</script>
+    </script>
 
 
 </head>
+
 <body>
     <header>
         <div class="logo">PodsForSquads</div>
@@ -513,7 +40,7 @@ details[open] div {
             <a href="Settings.html">Settings</a>
             <a href="Analytics.html">Stats</a>
         </nav>
-       
+
         <div class="profile-dropdown">
             <div class="profile-icon">
                 <img id="profileImage" src="./Images+Videos/DefaultProfile.png" alt="User Profile">
@@ -534,64 +61,80 @@ details[open] div {
 
 
             <details>
-            <summary>What is a podcast?</summary>
-            <div>
-          - A podcast is an audio (and sometimes video) medium for creative content. Podcast creators upload podcast episodes, which are downloaded by listeners and listened to on their mobile devices or computers.
-            </div>
-          </details>
+                <summary>What is a podcast?</summary>
+                <div>
+                    - A podcast is an audio (and sometimes video) medium for creative content. Podcast creators upload
+                    podcast episodes, which are downloaded by listeners and listened to on their mobile devices or
+                    computers.
+                </div>
+            </details>
 
 
-          <details>
-            <summary>Whats the point of this website?</summary>
-            <div>
-         -  PodsForSquads is your one stop shop for podcasts of all varieties! We welcome all people from all walks of life to come and enjoy the ever expanding catalog of podcasts. We are here to help create an awesome and welcoming experience for people looking to listen to some of their favorite people talking. 
-            </div>
-          </details>
+            <details>
+                <summary>Whats the point of this website?</summary>
+                <div>
+                    - PodsForSquads is your one stop shop for podcasts of all varieties! We welcome all people from all
+                    walks of life to come and enjoy the ever expanding catalog of podcasts. We are here to help create
+                    an awesome and welcoming experience for people looking to listen to some of their favorite people
+                    talking.
+                </div>
+            </details>
 
 
-         <details>
-            <summary>Where is this podcast hosted from?</summary>
-            <div>
-         -  PodsForSquads uses a wonderful API known as ListenNotes to offer our catalog of podcasts for users to listen to. So when scrolling through our website, and then proceed to find a podcast and you click to watch it and it brings you out into the new tab, that is ListenNotes player to offer you the ability to listen to the podcast all the while still giving you the ability to go through other pod casts and select others.
-            </div>
-          </details>
+            <details>
+                <summary>Where is this podcast hosted from?</summary>
+                <div>
+                    - PodsForSquads uses a wonderful API known as ListenNotes to offer our catalog of podcasts for users
+                    to listen to. So when scrolling through our website, and then proceed to find a podcast and you
+                    click to watch it and it brings you out into the new tab, that is ListenNotes player to offer you
+                    the ability to listen to the podcast all the while still giving you the ability to go through other
+                    pod casts and select others.
+                </div>
+            </details>
 
-          <details>
-          <summary>Why is there a heart button next to podcast titles?</summary>
-          <div>
-       -  The heart icon next to the podcast titles when you enter the model is used for the favorites option! With PodsForSquads, we allow our users to create a list on their respective accounts to keep all their favorites in one area to go back and resume listening to podcasts when they are coming back after closing out the website, and not have to navigate around to find the beloved listen. 
+            <details>
+                <summary>Why is there a heart button next to podcast titles?</summary>
+                <div>
+                    - The heart icon next to the podcast titles when you enter the model is used for the favorites
+                    option! With PodsForSquads, we allow our users to create a list on their respective accounts to keep
+                    all their favorites in one area to go back and resume listening to podcasts when they are coming
+                    back after closing out the website, and not have to navigate around to find the beloved listen.
+                </div>
+            </details>
+
+
+            <details>
+                <summary>What is the analytics page showing me?</summary>
+                <div>
+                    - The analytics page is here to give you a run down on your stats! We want reocurring and even newer
+                    customers to get an idea of what they are watching, for how long, and what category they seem to
+                    like most. This will allow you to get a better grasp on what you could like.
+                </div>
+            </details>
+
+
+
+
+
+            <details>
+                <summary>What is the point of making a playlist?</summary>
+                <div>
+                    - Making a playlist is a awesome and exciting way to enhance upon your favorites. Now you can put
+                    not only all yout favorites into one area, you can then organize and categorize them further however
+                    you see fit.
+                </div>
+            </details>
+
+            <details>
+                <summary>Is there any colorblind accessabilities to this website?</summary>
+                <div>
+                    - Absolutely!
+                </div>
+            </details>
+
+
+
         </div>
-        </details>
-
-
-        <details>
-            <summary>What is the analytics page showing me?</summary>
-            <div>
-         - The analytics page is here to give you a run down on your stats! We want reocurring and even newer customers to get an idea of what they are watching, for how long, and what category they seem to like most. This will allow you to get a better grasp on what you could like. 
-          </div>
-          </details>
-
-
-
-
-
-          <details>
-            <summary>What is the point of making a playlist?</summary>
-            <div>
-         - Making a playlist is a awesome and exciting way to enhance upon your favorites. Now you can put not only all yout favorites into one area, you can then organize and categorize them further however you see fit. 
-            </div>
-          </details>
-
-          <details>
-            <summary>Is there any colorblind accessabilities to this website?</summary>
-            <div>
-         - Absolutely! 
-             </div>
-          </details>
-
-
-
-          </div>
     </main>
 
     <footer>
@@ -602,9 +145,12 @@ details[open] div {
             <a href="PrivPol.html">Privacy Policy</a>
         </div>
         <div class="social-media">
-            <a href="https://www.facebook.com/profile.php?id=61560365679571" target="_blank"><img src="../Screens/Images+Videos/Facebook_Logo.png" alt="Facebook"></a>
-            <a href="https://x.com/PodsForSquads" target="_blank"><img src="../Screens/Images+Videos/Twitter_Logo.png" alt="Twitter"></a>
-            <a href="https://www.instagram.com/podsforsquads/" target="_blank"><img src="../Screens/Images+Videos/Instagram_Logo.png" alt="Instagram"></a>
+            <a href="https://www.facebook.com/profile.php?id=61560365679571" target="_blank"><img
+                    src="../Screens/Images+Videos/Facebook_Logo.png" alt="Facebook"></a>
+            <a href="https://x.com/PodsForSquads" target="_blank"><img src="../Screens/Images+Videos/Twitter_Logo.png"
+                    alt="Twitter"></a>
+            <a href="https://www.instagram.com/podsforsquads/" target="_blank"><img
+                    src="../Screens/Images+Videos/Instagram_Logo.png" alt="Instagram"></a>
         </div>
     </footer>
 
@@ -615,7 +161,7 @@ details[open] div {
 
 
 
-        
+
     <script>
         function scrollToTop() {
             document.body.scrollTop = 0;
@@ -623,4 +169,5 @@ details[open] div {
         }
     </script>
 </body>
+
 </html>

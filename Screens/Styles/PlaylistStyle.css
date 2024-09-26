@@ -1,0 +1,649 @@
+ html, body 
+   {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.main-content {
+  flex: 1; /* Ensures that the main content takes up the remaining space */
+}
+    :root
+       {
+
+    --background-gradient: linear-gradient(to bottom right, rgb(221, 219, 219), #b7c9e2, rgb(221, 219, 219));
+    --text-color: #000000;
+    --header-background: #36454F;
+    --nav-hover-color: #b7c9e2;
+    --nav-underline-color: #b7c9e2;
+    --logo-color: whitesmoke;
+    --nav-link-color: whitesmoke;
+    --nav-text-color: black;
+    --model-background-color:whitesmoke;
+    /* --hover-color:#e1daae; Code for brown hover text */
+}
+
+body
+ {
+            font-family: 'proxima-nova', sans-serif;
+            margin: 0;
+            background-image: var(--background-gradient);
+            color: var(--text-color);
+            opacity: 1;
+            transition: opacity 0.5s ease-in-out;
+        }
+
+        body.fade-out
+         {
+            opacity: 0;
+        }
+
+
+
+
+        body.protan-mode{
+   
+    --background-gradient: linear-gradient(to bottom right, #a691ae, #e8f086,#a691ae);
+    --text-color: #235fa4;
+    --header-background:#6fde6e ;
+    --nav-hover-color: black;
+    --nav-underline-color: #b7c9e2;
+    --logo-color: whitesmoke;
+    --nav-link-color: whitesmoke;
+    --model-background-color:#6fde6e;
+
+}
+
+
+
+body.deuter-mode{
+   
+   --background-gradient: linear-gradient(to bottom right, #2d3043, #2f88dc,#2d3043);
+   --text-color: black;
+   --header-background:#e89f43 ;
+   --nav-hover-color: black;
+   --nav-underline-color: #b7c9e2;
+   --logo-color: whitesmoke;
+   --nav-link-color: whitesmoke;
+   --model-background-color:#e89f43;
+
+}
+
+body.dark-mode {
+   
+    --background-gradient: linear-gradient(to bottom right, rgb(105, 104, 104), black, rgb(105, 104, 104));
+    --text-color: #c5b358;
+    --header-background:#c5b358 ;
+    --nav-hover-color: whitesmoke;
+    --nav-underline-color: #b7c9e2;
+    --logo-color: black;
+    --nav-link-color: black;
+    --model-background-color:black;
+}
+
+
+
+
+header {
+    background-color: var(--header-background);
+    padding: 1em;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    animation: slideInFromLeft 1.0s ease-out;
+}
+
+
+nav {
+    display: flex;
+    gap: 1em;
+    animation: slideInFromLeft 1.0s ease-out;
+
+}
+
+nav a {
+    color: var(--nav-link-color);
+    text-decoration: none;
+    position: relative;
+    padding: 5px 15px;
+    font-size: 18px;
+    transition: color 0.3s ease;
+}
+
+nav a:hover {
+    color: var(--nav-hover-color);
+}
+
+nav a::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 0;
+    height: 2px;
+    background-color: var(--nav-underline-color);
+    transition: width 0.3s ease;
+}
+
+nav a:hover::after {
+    width: 100%;
+}
+
+.logo {
+    color: var(--logo-color);
+    text-decoration: none;
+    position: relative;
+    padding: 5px 15px;
+    font-size: 35px;
+    transition: color 0.3s ease;
+}
+
+footer {
+    background-color: var(--header-background);
+    padding: 1em;
+    text-align: center;
+    color: whitesmoke;
+    animation: slideInFromLeft 1.0s ease-out;
+        }
+
+
+        
+
+footer a {
+    color: var(--nav-link-color);
+    text-decoration: none;
+    position: relative;
+    padding: 5px 15px;
+    font-size: 18px;
+    transition: color 0.3s ease;
+}
+
+footer a:hover {
+    color: var(--nav-hover-color);
+}
+
+footer a::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 0;
+    height: 2px;
+    background-color: var(--nav-underline-color);
+    transition: width 0.3s ease;
+}
+
+footer a:hover::after {
+    width: 100%;
+}
+
+
+  
+    .heart-icon {
+            font-size: 24px;
+            cursor: pointer;
+            color: black;
+            transition: color 0.3s;
+            margin-left: 10px;
+            fill: none;
+        }
+
+        .heart-icon.filled {
+            color: #FF0000;
+            fill: currentColor;
+        }
+
+        .heart-icon:hover{
+            color: #FF0000;
+        }
+
+    nav a::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      width: 0;
+      height: 2px;
+      background-color: #b7c9e2;
+      transition: width 0.3s ease;
+    }
+
+    nav a:hover::after {
+      width: 100%;
+    }
+
+    .logo {
+      color: whitesmoke;
+      text-decoration: none;
+      position: relative;
+      padding: 5px 15px;
+      font-size: 35px;
+      transition: color 0.3s ease;
+    }
+
+    .main-content {
+      flex: 1 0 auto;
+    }
+
+    .playlists-container {
+      padding: 2em 1em;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1em;
+      justify-content: flex-start;
+    }
+
+    .new-playlist-box, .playlist-item {
+      flex: 0 0 calc(20% - 1em);
+      max-width: calc(20% - 1em);
+      height: 250px;
+      border-radius: 10px;
+      padding: 1em;
+      box-sizing: border-box;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: space-between;
+      text-align: center;
+      transition: transform 0.3s ease;
+    }
+
+    .new-playlist-box {
+      border: 2px dashed #000;
+      cursor: pointer;
+      color: #000;
+      justify-content: center;
+    }
+
+    .playlist-item {
+      border: 2px solid #000;
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .playlist-item:hover {
+      transform: scale(1.05);
+    }
+
+    .playlist-item img {
+      width: 100%;
+      height: 150px;
+      object-fit: cover;
+      border-radius: 8px;
+      margin-bottom: 10px;
+    }
+
+    .playlist-item h3 {
+      margin: 0;
+      font-size: 16px;
+      line-height: 1.2;
+      max-height: 2.4em;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      display: -webkit-box;
+      -webkit-box-orient: vertical;
+    }
+
+    .playlist-item p {
+      margin: 5px 0 0;
+      font-size: 14px;
+      color: #666;
+    }
+
+    .delete-playlist {
+      position: absolute;
+      top: 5px;
+      right: 5px;
+      background-color: rgba(255, 0, 0, 0.7);
+      color: white;
+      border: none;
+      border-radius: 50%;
+      width: 25px;
+      height: 25px;
+      font-size: 16px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .playlist-item:hover .delete-playlist {
+      opacity: 1;
+    }
+
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 1;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      overflow: auto;
+      background-color: rgba(0, 0, 0, 0.4);
+    }
+
+    .modal-content {
+      background-color: #fefefe;
+      margin: 10% auto;
+      padding: 20px;
+      border: 1px solid #888;
+      width: 80%;
+      max-width: 600px;
+      border-radius: 10px;
+      position: relative;
+    }
+
+    .close {
+      color: #aaa;
+      float: right;
+      font-size: 28px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .close:hover,
+    .close:focus {
+      color: black;
+      text-decoration: none;
+    }
+
+    .form-group {
+      margin-bottom: 15px;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 0.5em;
+    }
+
+    .form-group input[type="text"] {
+      width: 100%;
+      padding: 0.5em;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+
+    #playlist-color {
+      width: 50px;
+      height: 30px;
+      padding: 0;
+      border: none;
+    }
+
+    .podcast-option {
+      display: flex;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+
+    .podcast-option label {
+      display: flex;
+      align-items: center;
+      cursor: pointer;
+    }
+
+    .podcast-option input[type="checkbox"] {
+      margin-right: 10px;
+    }
+
+    #search-results {
+      max-height: 300px;
+      overflow-y: auto;
+      margin-bottom: 15px;
+    }
+
+    .podcast-item {
+      display: flex;
+      align-items: center;
+      margin-bottom: 10px;
+      cursor: pointer;
+    }
+
+    .podcast-item img {
+      width: 50px;
+      height: 50px;
+      margin-right: 10px;
+      border-radius: 5px;
+    }
+
+    .podcast-item button {
+      margin-left: auto;
+    }
+
+    .modal-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 15px;
+    }
+
+    
+    .footer-links,
+    .social-media {
+      display: flex;
+      justify-content: center;
+      gap: 1em;
+    }
+
+    .footer-links a,
+    .social-media a {
+      color: whitesmoke;
+      text-decoration: none;
+    }
+
+    .social-media a {
+      display: block;
+      width: 32px;
+      height: 32px;
+    }
+
+    .social-media img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 50%;
+    }
+
+    .heart-icon, .add-to-playlist-icon {
+      font-size: 24px;
+      cursor: pointer;
+      margin-left: 10px;
+    }
+
+    .podcast-details {
+      display: flex;
+      align-items: center;
+      margin-bottom: 15px;
+    }
+
+    .podcast-thumbnail {
+      width: 100px;
+      height: 100px;
+      object-fit: cover;
+      margin-right: 15px;
+    }
+
+    .play-button {
+      width: 50px;
+      height: 50px;
+    }
+
+
+
+
+
+
+
+
+
+
+    @keyframes moveText {
+  0% {
+    transform: translateX(100%); /* Start just outside the right edge */
+  }
+  2% {
+    transform: translateX(95%); /* Bring it into view almost immediately */
+  }
+  100% {
+    transform: translateX(-100%); /* Move to outside the left edge */
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* Keyframes for sliding the navbar in from the left */
+@keyframes slideInFromLeft {
+    0% {
+        transform: translateX(-100%);
+        opacity: 0;
+    }
+    100% {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+@keyframes slideInFromRight {
+    from {
+        transform: translateX(100%); /* Start off-screen to the right */
+    }
+    to {
+        transform: translateX(0); /* End at its original position */
+    }
+}
+
+/* Apply the animation to the navbar */
+
+
+
+
+@keyframes slideInFromTop {
+    from {
+        transform: translateY(-100%); /* Start off-screen above */
+    }
+    to {
+        transform: translateY(0); /* End at its original position */
+    }
+}
+
+@keyframes slideInFromBottom {
+    from {
+        transform: translateY(100%); /* Start off-screen below */
+    }
+    to {
+        transform: translateY(0); /* End at its original position */
+    }
+}
+
+
+
+
+    @media (max-width: 1200px) {
+      .new-playlist-box, .playlist-item {
+        flex: 0 0 calc(25% - 1em);
+        max-width: calc(25% - 1em);
+      }
+    }
+
+    @media (max-width: 900px) {
+      .new-playlist-box, .playlist-item {
+        flex: 0 0 calc(33.333% - 1em);
+        max-width: calc(33.333% - 1em);
+      }
+    }
+
+    @media (max-width: 600px) {
+      .new-playlist-box, .playlist-item {
+        flex: 0 0 calc(50% - 1em);
+        max-width: calc(50% - 1em);
+      }
+
+
+
+
+      
+    }
+
+
+
+
+
+
+
+
+
+    
+.profile-icon {
+            width: 75px;
+            height: 75px;
+        }
+
+        .profile-icon img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        /* Profile icon hover effect */
+.profile-icon {
+    cursor: pointer; /* Makes the cursor a pointer to indicate it's clickable */
+}
+
+.profile-icon img {
+    transition: transform 0.3s ease, box-shadow 0.3s ease; /* Smooth transition for the hover effects */
+}
+
+.profile-icon:hover img {
+    transform: scale(1.1); /* Slightly enlarges the profile image */
+    box-shadow: 0px 4px 10px rgba(125, 149, 151, 0.288); /* Adds a shadow effect */
+}
+
+.profile-dropdown {
+    position: relative;
+    display: inline-block;
+    cursor: pointer;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #333;
+    min-width: 160px;
+    top: 75px; 
+    right: 0;
+    border-radius: 8px;
+    box-shadow: 0px 8px 16px rgba(0,0,0,0.2);
+    z-index: 1;
+}
+
+.dropdown-content a {
+    color: white;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+}
+
+.dropdown-content a:hover {
+    background-color: #575757;
+}
+
+/* Show dropdown on hover */
+.profile-dropdown:hover .dropdown-content {
+    display: block;
+}
