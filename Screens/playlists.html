@@ -236,7 +236,17 @@
         let podcastCount = playlist.podcasts.length;
 
         if (playlist.podcasts.length > 0) {
-          thumbnailSrc = playlist.podcasts[0].thumbnail || playlist.coverImage;
+          try {
+            const response = await fetch(`${BASE_URL}/podcasts/${playlist.coverImage}`, {
+              headers: {
+                'X-ListenAPI-Key': API_KEY
+              }
+            });
+            const data = await response.json();
+            thumbnailSrc = data.thumbnail;
+          } catch (error) {
+            console.error('Error fetching podcast details:', error);
+          }
         }
 
         playlistItem.innerHTML = `
@@ -314,16 +324,18 @@
     }
 
     function removePodcastFromPlaylist(playlistId, podcastId) {
-      if (confirm('Are you sure you want to remove this podcast from the playlist?')) {
-        const playlist = playlists.find(p => p.id === playlistId);
-        if (playlist) {
-          playlist.podcasts = playlist.podcasts.filter(podcast => podcast.id !== podcastId);
-          localStorage.setItem('playlists', JSON.stringify(playlists));
-          viewPlaylist(playlistId);  // Refresh view
-          displayPlaylists();
+      const playlist = playlists.find(p => p.id === playlistId);
+      if (playlist) {
+        playlist.podcasts = playlist.podcasts.filter(id => id !== podcastId);
+        if (playlist.coverImage === podcastId && playlist.podcasts.length > 0) {
+          playlist.coverImage = playlist.podcasts[0];
         }
+        localStorage.setItem('playlists', JSON.stringify(playlists));
+        viewPlaylist(playlistId);
+        displayPlaylists();
       }
     }
+
     function deleteAllPodcasts(playlistId) {
       if (confirm('Are you sure you want to delete all podcasts from this playlist?')) {
         const playlist = playlists.find(p => p.id === playlistId);
@@ -336,47 +348,41 @@
         }
       }
     }
+
     async function viewPodcastDetails(podcastId) {
       try {
-        let podcast;
-        // First, check if the podcast is in any of our playlists
-        for (const playlist of playlists) {
-          podcast = playlist.podcasts.find(p => p.id === podcastId);
-          if (podcast) break;
-        }
-        // If not found in playlists, fetch from API
-        if (!podcast) {
-          const response = await fetch(`${BASE_URL}/podcasts/${podcastId}`, {
-            headers: {
-              'X-ListenAPI-Key': API_KEY
-            }
-
-          });
-          podcast = await response.json();
-        }
-
+        const response = await fetch(`${BASE_URL}/podcasts/${podcastId}`, {
+          headers: {
+            'X-ListenAPI-Key': API_KEY
+          }
+        });
+        const podcast = await response.json();
         podcastDetailsContent.innerHTML = `
-      <div class="modal-header">
-        <h2>${podcast.title}</h2>
-        <span class="heart-icon" onclick="toggleFavorite(this, '${podcast.id}', '${podcast.title}', '${podcast.thumbnail}', '${podcast.publisher}')">&#9825;</span>
-      </div>
-      <div class="podcast-details">
-        <img src="${podcast.thumbnail}" alt="${podcast.title}" class="podcast-thumbnail">
-        <a href="https://www.listennotes.com/c/${podcast.id}/embed/" target="_blank" class="play-button-image">
-          <img src="play_button.png" alt="Play Podcast" class="play-button">
-        </a>
-      </div>
-      <p><strong>Publisher:</strong> ${podcast.publisher}</p>
-      <p><strong>Description:</strong> ${podcast.description || 'No description available.'}</p>
-    `;
+          <div class="modal-header">
+            <h2>${podcast.title}</h2>
+            <span class="heart-icon" onclick="toggleFavorite(this, '${podcast.id}', '${podcast.title}', '${podcast.thumbnail}', '${podcast.publisher}')">&#9825;</span>
+          </div>
+          <div class="podcast-details">
+            <img src="${podcast.thumbnail}" alt="${podcast.title}" class="podcast-thumbnail">
+            <a href="https://www.listennotes.com/c/${podcast.id}/embed/" target="_blank" class="play-button-image">
+              <img src="play_button.png" alt="Play Podcast" class="play-button">
+            </a>
+          </div>
+          <p><strong>Publisher:</strong> ${podcast.publisher}</p>
+          <p><strong>Description:</strong> ${podcast.description}</p>
+        `;
         podcastDetailsModal.style.display = 'block';
+
+        const fixedPlayer = document.getElementById('fixedPlayer');
+        const fixedPlayerIframe = document.getElementById('fixedPlayerIframe');
+        if (fixedPlayer && fixedPlayerIframe) {
+          fixedPlayer.style.display = 'none';
+          fixedPlayerIframe.src = '';
+        }
       } catch (error) {
         console.error('Error fetching podcast details:', error);
-        alert('Error fetching podcast details. Please try again.');
       }
     }
-
-
 
     function toggleFavorite(element, podcastId, title, thumbnail, publisher) {
 
