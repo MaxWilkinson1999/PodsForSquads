@@ -32,20 +32,25 @@
 
 <body>
     <header>
-        <div class="logo">PodsForSquads</div>
+        <div id="logo">PodsForSquads</div>
         <nav>
+            <a id="Home" href="HomeScreen.html">Home</a>
+            <a id="Upload" href="Upload.html">Upload</a>
+            <a id="Playlists" href="Playlists.html">Playlists</a>
+            <a id="Favorites" href="Favorites.html">Favorites</a>
+            <a id="Community" href="Community.html">Community</a>
+            <a id="Analytics" href="Analytics.html">Stats</a>
+            <a id="Settings" href="Settings.html">Settings</a>
+        </nav>
+        <div class="search-bar">
             <div class="search-wrapper">
-                <input type="text" placeholder="Search podcasts" id="searchInput" oninput="searchPodcasts()">
-                <button type="submit">
+                <input type="text" placeholder="Search podcasts" id="searchInput" oninput="debouncedSearch()">
+                <button onclick="searchPodcasts()">
                     <img src="Images+Videos/search_1.png" alt="Search">
                 </button>
             </div>
-            <a href="HomeScreen.html">Home</a>
-            <a href="Upload.html">Upload</a>
-            <a href="playlists.html">Playlists</a>
-            <a href="favorites.html">Favorites</a>
-            <a href="Settings.html">Settings</a>
-            <a href="Analytics.html">Stats</a>
+            <div id="liveSearchResults" class="search-results-dropdown"></div>
+        </div>
         </nav>
 
 
@@ -106,6 +111,7 @@
             <a href="Contact.html">Contact</a>
             <a href="ToS.html">Terms of Service</a>
             <a href="PrivPol.html">Privacy Policy</a>
+            <a href="faq.html">FAQ</a>
         </div>
         <div class="social-media">
             <a href="https://www.facebook.com/profile.php?id=61560365679571" target="_blank"><img

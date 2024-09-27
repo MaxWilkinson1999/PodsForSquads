@@ -646,7 +646,7 @@ footer a:hover::after {
         right: 20px;
         width: 50px; /* Adjust the size as needed */
         height: 50px; /* Adjust the size as needed */
-        background-image: url('Curved Top No BckGrnd.png'); /* Your image path */
+        background-image: url('../Images+Videos/Curved\ Top\ No\ BckGrnd.png'); /* Your image path */
         background-size: cover;
         background-position: center;
         border: none;
