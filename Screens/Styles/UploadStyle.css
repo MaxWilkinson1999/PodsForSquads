@@ -1,3 +1,17 @@
+html, body 
+{
+height: 100%;
+margin: 0;
+padding: 0;
+display: flex;
+flex-direction: column;
+}
+
+.main-content {
+flex: 1; /* Ensures that the main content takes up the remaining space */
+}
+
+
 :root {
     /* Light Mode */
     --background-gradient: linear-gradient(to bottom right, rgb(221, 219, 219), #b7c9e2, rgb(221, 219, 219));
@@ -130,14 +144,18 @@ nav a:focus {
             border-radius: 50%;
         }
 
+
+   
 footer {
     background-color: var(--footer-color);
     padding: 1em;
     text-align: center;
     color: whitesmoke;
     animation: slideInFromLeft 1.0s ease-out;
-    box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.2); /* Added shadow */
+    box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.2);
+    margin-top: auto; /* Ensures footer stays at the bottom of the flex container */
 }
+
 
 footer a {
     color: var(--nav-link-color);

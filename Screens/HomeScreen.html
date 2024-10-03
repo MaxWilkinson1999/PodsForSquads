@@ -5,7 +5,714 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Home - PodsForSquads</title>
-    <link rel="stylesheet" href="Styles/HomeStyle.css">
+    <style>
+        :root {
+            --background-gradient: linear-gradient(to bottom right, rgb(221, 219, 219), #b7c9e2, rgb(221, 219, 219));
+            --text-color: #000000;
+            --header-background: #36454F;
+            --nav-hover-color: #b7c9e2;
+            --nav-underline-color: #b7c9e2;
+            --logo-color: whitesmoke;
+            --nav-link-color: whitesmoke;
+            --nav-text-color: black;
+            --model-background-color: whitesmoke;
+            --Play-Op-color: Black;
+            --Heart-Icon-Color:black;
+        }
+
+        body {
+            font-family: 'proxima-nova', sans-serif;
+            margin: 0;
+            background-image: var(--background-gradient);
+            color: var(--text-color);
+            opacity: 1;
+            transition: opacity 0.5s ease-in-out;
+        }
+
+        body.fade-out {
+            opacity: 0;
+        }
+
+        body.protan-mode {
+            --background-gradient: linear-gradient(to bottom right, #a691ae, #e8f086,#a691ae);
+            --text-color: #235fa4;
+            --header-background: #6fde6e;
+            --nav-hover-color: black;
+            --nav-underline-color: #b7c9e2;
+            --logo-color: whitesmoke;
+            --nav-link-color: whitesmoke;
+            --model-background-color: #6fde6e;
+        }
+
+        body.deuter-mode {
+            --background-gradient: linear-gradient(to bottom right, #2d3043, #2f88dc,#2d3043);
+            --text-color: black;
+            --header-background: #e89f43;
+            --nav-hover-color: black;
+            --nav-underline-color: #b7c9e2;
+            --logo-color: whitesmoke;
+            --nav-link-color: whitesmoke;
+            --model-background-color: #e89f43;
+        }
+
+        body.dark-mode {
+            --background-gradient: linear-gradient(to bottom right, rgb(105, 104, 104), black, rgb(105, 104, 104));
+            --text-color: #c5b358;
+            --header-background: #c5b358;
+            --nav-hover-color: whitesmoke;
+            --nav-underline-color: #b7c9e2;
+            --logo-color: black;
+            --nav-link-color: black;
+            --model-background-color: black;
+            --Play-Op-color: white;
+            --Heart-Icon-Color:whitesmoke;
+        }
+
+        header {
+            background-color: var(--header-background);
+            padding: 1em;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            animation: slideInFromLeft 1.0s ease-out;
+        }
+
+        nav {
+            display: flex;
+            gap: 1em;
+            animation: slideInFromLeft 1.0s ease-out;
+        }
+
+        nav a {
+            color: var(--nav-link-color);
+            text-decoration: none;
+            position: relative;
+            padding: 5px 15px;
+            font-size: 18px;
+            transition: color 0.3s ease;
+        }
+
+        nav a:hover {
+            color: var(--nav-hover-color);
+        }
+
+        nav a::after {
+            content: "";
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 0;
+            height: 2px;
+            background-color: var(--nav-underline-color);
+            transition: width 0.3s ease;
+        }
+
+        nav a:hover::after {
+            width: 100%;
+        }
+
+        .logo {
+            color: var(--logo-color);
+            text-decoration: none;
+            position: relative;
+            padding: 5px 15px;
+            font-size: 35px;
+            transition: color 0.3s ease;
+        }
+
+        footer {
+            background-color: var(--header-background);
+            padding: 1em;
+            text-align: center;
+            color: whitesmoke;
+            animation: slideInFromLeft 1.0s ease-out;
+        }
+
+        footer a {
+            color: var(--nav-link-color);
+            text-decoration: none;
+            position: relative;
+            padding: 5px 15px;
+            font-size: 18px;
+            transition: color 0.3s ease;
+        }
+
+        footer a:hover {
+            color: var(--nav-hover-color);
+        }
+
+        footer a::after {
+            content: "";
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 0;
+            height: 2px;
+            background-color: var(--nav-underline-color);
+            transition: width 0.3s ease;
+        }
+
+        footer a:hover::after {
+            width: 100%;
+        }
+
+        .hero {
+            text-align: center;
+            padding: 2em 1em;
+        }
+
+        .carousel,
+        .section {
+            margin: 2em 0;
+        }
+
+        .carousel {
+            display: flex;
+            overflow-x: auto;
+            gap: 1em;
+            padding: 1em 2em;
+            max-width: 100%;
+        }
+
+        .carousel::-webkit-scrollbar,
+        .section::-webkit-scrollbar {
+            display: none;
+        }
+
+        .podcast-item {
+            min-width: 200px;
+            cursor: pointer;
+            text-align: center;
+            padding: 0.5em;
+            margin: 0.5em 1.5em;
+            position: relative;
+            transition: transform 0.3s ease;
+        }
+
+        .podcast-item:hover {
+            transform: scale(1.05);
+            z-index: 5;
+        }
+
+        .podcast-item img {
+            width: 100%;
+            border-radius: 10px;
+        }
+
+        .podcast-description {
+            display: none;
+            position: absolute;
+            top: 0;
+            left: 110%;
+            width: 250px;
+            max-height: 300px;
+            overflow-y: auto;
+            background-color: #36454F;
+            color: whitesmoke;
+            padding: 15px;
+            border-radius: 10px;
+            z-index: 10;
+            text-align: left;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            border: 1px solid #b7c9e2;
+            font-size: 0.9em;
+        }
+
+        .podcast-description h4 {
+            margin-top: 0;
+            color: #b7c9e2;
+            border-bottom: 1px solid #b7c9e2;
+            padding-bottom: 5px;
+            margin-bottom: 10px;
+        }
+
+        .podcast-description p {
+            margin: 0;
+            line-height: 1.4;
+        }
+
+        .podcast-description::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .podcast-description::-webkit-scrollbar-track {
+            background: #36454F;
+        }
+
+        .podcast-description::-webkit-scrollbar-thumb {
+            background-color: #b7c9e2;
+            border-radius: 4px;
+        }
+
+        @media (max-width: 1200px) {
+            .podcast-description {
+                left: auto;
+                right: 110%;
+            }
+        }
+
+        .podcast-item:hover .podcast-description {
+            display: block;
+        }
+
+        .footer-links,
+        .social-media {
+            display: flex;
+            justify-content: center;
+            gap: 1em;
+        }
+
+        .footer-links a,
+        .social-media a {
+            color: whitesmoke;
+            text-decoration: none;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.4);
+        }
+
+        .modal-content {
+            border-radius: 10px;
+            padding: 2em;
+            background: var(--model-background-color);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            position: relative;
+            margin: 10% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
+            max-width: 600px;
+            border-radius: 10px;
+            position: relative;
+            max-height: 70vh;
+            overflow-y: auto;
+        }
+
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .show-more-btn {
+            background-color: #FF9494;
+            color: #000;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+            margin: 20px auto;
+            display: block;
+        }
+
+        .social-media {
+            display: flex;
+            justify-content: center;
+            gap: 1em;
+        }
+
+        .social-media a {
+            display: block;
+            width: 32px;
+            height: 32px;
+        }
+
+        .social-media img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 50%;
+        }
+
+        .search-results {
+            max-height: 400px;
+            overflow-y: auto;
+            padding: 1em;
+        }
+
+        .play-button-image {
+            display: inline-block;
+            margin-left: 50px; 
+            margin-top: -20000px;
+        }
+
+        .play-button {
+            width: 200px; 
+            height: 200px; 
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        .play-button:hover {
+            transform: scale(1.1); 
+            color: #36454F;
+        }
+
+        .search-results .podcast-item {
+            display: flex;
+            gap: 1em;
+            padding: 1em 0;
+            border-bottom: 1px solid #ccc;
+        }
+
+        .search-results .podcast-item img {
+            width: 50px;
+            height: 50px;
+            object-fit: cover;
+            border-radius: 5px;
+        }
+
+        .search-wrapper {
+            display: flex;
+            align-items: center;
+            background-color: #fff;
+            border-radius: 20px;
+            padding: 5px;
+        }
+
+        .search-wrapper input {
+            border: none;
+            outline: none;
+            flex: 1;
+            padding: 10px;
+            border-radius: 20px;
+        }
+
+        .search-wrapper button {
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 5px;
+        }
+
+        .search-wrapper button img {
+            width: 30px;
+            height: 30px;
+        }
+
+        .heart-icon {
+            font-size: 24px;
+            cursor: pointer;
+            color: var(--Heart-Icon-Color);
+            transition: color 0.3s;
+            margin-left: 10px;
+            fill: none;
+        }
+
+        .heart-icon.filled {
+            color: #FF0000;
+            fill: currentColor;
+        }
+
+        .heart-icon:hover{
+            color: #FF0000;
+        }
+
+        .profile-icon {
+            width: 75px;
+            height: 75px;
+        }
+
+        .profile-icon img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        .modal-header {
+            display: flex;
+            align-items: center;
+        }
+
+        .modal-header h2 {
+            margin: 0;
+        }
+
+        .fixed-player {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background-color: #FFFFFF;
+            border-top: 1px solid #FF9494;
+            box-shadow: 0 -4px 8px rgba(0, 0, 0, 0.2);
+            display: none;
+            z-index: 1000;
+        }
+
+        .add-to-playlist-icon {
+            font-size: 24px;
+            cursor: pointer;
+            color: var(--Play-Op-color);
+            transition: color 0.3s;
+            margin-left: 10px;
+        }
+
+        .dice-button {
+            display: inline-block;
+            font-size: 24px;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+            transform: rotate(0deg);
+        }
+
+        .dice-button:hover {
+            animation: rollDice 0.5s forwards;
+        }
+
+        @keyframes rollDice {
+            0% { transform: rotate(0deg); }
+            25% { transform: rotate(90deg); }
+            50% { transform: rotate(180deg); }
+            75% { transform: rotate(270deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .add-to-playlist-icon:hover {
+            color: #00BFFF; 
+        }
+
+        .playlist-option {
+            margin-bottom: 15px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .playlist-option h3 {
+            margin-top: 0;
+        }
+
+        .playlist-option button {
+            background-color: #b7c9e2;
+            color: var(--PlayOp-Color);
+            border: none;
+            padding: 5px 10px;
+            cursor: pointer;
+            border-radius: 3px;
+        }
+
+
+
+ .playlist-option button:hover {
+            background-color: grey;
+            color: whitesmoke;
+        }
+
+
+        #scrollToTopBtn {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    width: 50px;
+    height: 50px;
+    background-image: url("Arrow Up.png");
+    background-size: cover;
+    background-position: center;
+    border: none;
+    display: none;
+    cursor: pointer;
+}
+
+        #scrollToTopBtn:hover {
+            opacity: 0.8;
+        }
+
+        .fade-out {
+            opacity: 0;
+            transition: opacity 0.5s ease-out;
+        }
+
+        .fade-in {
+            opacity: 1;
+            transition: opacity 0.5s ease-in;
+        }
+
+        .moving-container {
+            width: 100%;
+            overflow: hidden;
+            white-space: nowrap;
+        }
+
+        .moving-text {
+            display: inline-block;
+            animation: moveText 40s linear infinite;
+            white-space: nowrap;
+            max-width: 100%;
+            max-height: fit-content;
+            --text-color: black;
+        }
+
+        .text-bar {
+            size: 30px;
+        }
+
+        .profile-icon {
+            width: 75px;
+            height: 75px;
+            cursor: pointer;
+        }
+
+        .profile-icon img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .profile-icon:hover img {
+            transform: scale(1.1);
+            box-shadow: 0px 4px 10px rgba(125, 149, 151, 0.288);
+        }
+
+        .profile-dropdown {
+            position: relative;
+            display: inline-block;
+            cursor: pointer;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #333;
+            min-width: 160px;
+            top: 75px; 
+            right: 0;
+            border-radius: 8px;
+            box-shadow: 0px 8px 16px rgba(0,0,0,0.2);
+            z-index: 1;
+        }
+
+        .dropdown-content a {
+            color: white;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+        }
+
+        .dropdown-content a:hover {
+            background-color: #575757;
+        }
+
+        .profile-dropdown:hover .dropdown-content {
+            display: block;
+        }
+
+        @keyframes moveText {
+            0% {
+                transform: translateX(100%);
+            }
+            2% {
+                transform: translateX(95%);
+            }
+            100% {
+                transform: translateX(-100%);
+            }
+        }
+
+        @keyframes slideInFromLeft {
+            0% {
+                transform: translateX(-100%);
+                opacity: 0;
+            }
+            100% {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        @keyframes slideInFromRight {
+            from {
+                transform: translateX(100%);
+            }
+            to {
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes slideInFromTop {
+            from {
+                transform: translateY(-100%);
+            }
+            to {
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes slideInFromBottom {
+            from {
+                transform: translateY(100%);
+            }
+            to {
+                transform: translateY(0);
+            }
+        }
+
+        .video-item {
+            width: 30%;
+            margin: 10px;
+            display: inline-block;
+            vertical-align: top;
+        }
+
+        .video-item video {
+            width: 100%;
+            height: auto;
+        }
+
+        .video-item h3, 
+        .video-item p {
+            text-align: center;
+            font-size: 0.9em;
+        }
+
+        .fixed-player {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background-color: #FFFFFF;
+    border-top: 1px solid #FF9494;
+    box-shadow: 0 -4px 8px rgba(0, 0, 0, 0.2);
+    display: none;
+    z-index: 1000;
+}
+
+#fixedPlayer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background-color: #FFFFFF;
+    border-top: 1px solid #FF9494;
+    box-shadow: 0 -4px 8px rgba(0, 0, 0, 0.2);
+    display: none;
+    z-index: 1000;
+}
+
+#fixedPlayer iframe {
+    display: block;
+    width: 100%;
+    height: 100px;
+    border: none;
+}
+    </style>
     <link rel="icon" type="image/png" href="Images+Videos/Website_Logo.png">
 </head>
 
@@ -23,16 +730,17 @@
         </nav>
         <div class="search-bar">
             <div class="search-wrapper">
-                <input type="text" placeholder="Search podcasts" id="searchInput" oninput="debouncedSearch()">
+                <input type="text" id="searchInput" name="searchInput" placeholder="Search podcasts" onkeypress="handleKeyPress(event)">
                 <button onclick="searchPodcasts()">
-                    <img src="Images+Videos/search_1.png" alt="Search">
+                    <img src="Images+Videos/search-red.png" alt="Search">
                 </button>
             </div>
-            <div id="liveSearchResults" class="search-results-dropdown"></div>
         </div>
-        <div class="dice-button" onclick="playRandomEpisode()">
+
+        <div class="dice-button" id="diceButton">
             🎲
         </div>
+
         <div class="profile-dropdown">
             <div class="profile-icon">
                 <img id="profileImage" src="./Images+Videos/DefaultProfile.png" alt="User Profile">
@@ -43,20 +751,13 @@
                 <a href="Auth/Login.html">Log Out</a>
             </div>
         </div>
+
         <select id="languageSelector" onchange="changeLanguage(this.value)">
             <option value="English">English</option>
             <option value="Spanish">Español</option>
         </select>
     </header>
 
-    <div class="text-bar">
-        <h1 class="moving-text">Welcome to PodsForSquads, The home for all your podcasting needs! We will soon be
-            displaying
-            more info on this text bar, so stay tuned for further updates and see whats to come with us! If you have an
-            questions, please seek the contact form below by pressing the CONTACT button, and fill out the form and we
-            will
-            get back to you shortly!</span>
-    </div>
     <div class="hero">
         <h1>Featured Podcasts</h1>
         <div class="carousel" id="featuredPodcasts"></div>
@@ -71,7 +772,7 @@
         <h2>Health Podcasts</h2>
         <div class="carousel" id="sciencePodcasts"></div>
     </div>
-
+    
     <div class="section">
         <h2>Technology Podcasts</h2>
         <div class="carousel" id="technologyPodcasts"></div>
@@ -98,13 +799,25 @@
         </div>
     </div>
 
-    <div id="playlistSelectionModal" class="modal">
-        <div class="modal-content">
-            <span class="close" onclick="closePlaylistSelectionModal()">&times;</span>
-            <h2>Select a Playlist</h2>
-            <div id="playlistSelectionContent"></div>
+    
+
+    <footer>
+        <div class="footer-links">
+            <a href="About_Us.html">About Us</a>
+            <a href="Contact.html">Contact</a>
+            <a href="ToS.html">Terms of Service</a>
+            <a href="PrivPol.html">Privacy Policy</a>
         </div>
-    </div>
+        <div class="social-media">
+            <a href="https://www.facebook.com/profile.php?id=61560365679571" target="_blank"><img
+                    src="FB Icon.jpg" alt="Facebook"></a>
+            <a href="https://x.com/PodsForSquads" target="_blank"><img src="twitter icon.png"
+                    alt="Twitter"></a>
+            <a href="https://www.instagram.com/podsforsquads/" target="_blank"><img src="IG Icon.jpg"
+                    alt="Instagram"></a>
+        </div>
+    </footer>
+
 
     <button id="scrollToTopBtn" onclick="scrollToTop()" src="Arrow Up.png"></button>
 
@@ -114,38 +827,24 @@
 
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-    <footer>
-        <div class="footer-links">
-            <a href="About_Us.html">About Us</a>
-            <a href="Contact.html">Contact</a>
-            <a href="ToS.html">Terms of Service</a>
-            <a href="PrivPol.html">Privacy Policy</a>
-            <a href="faq.html">FAQ</a>
-        </div>
-        <div class="social-media">
-            <a href="https://www.facebook.com/profile.php?id=61560365679571" target="_blank"><img
-                    src="Images+Videos/FB Icon.jpg" alt="Facebook"></a>
-            <a href="https://x.com/PodsForSquads" target="_blank"><img src="Images+Videos/Twitter_Logo.png"
-                    alt="Twitter"></a>
-            <a href="https://www.instagram.com/podsforsquads/" target="_blank"><img src="Images+Videos/IG Icon.jpg"
-                    alt="Instagram"></a>
-        </div>
-    </footer>
 
-    <!-- Updated script to fetch and display videos -->
     <script src="FirebaseConfig.js" type="module"></script>
     <script type="module">
         import { getFirestore, collection, getDocs, query, orderBy } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+        import { savePodcastToFirestore, deletePodcastFromFirestore } from './FirebaseConfig.js';
 
         const db = getFirestore();
+        const apiKey = 'cb2038d4dbd841b39dec5309c31b2d6a';
+        const podcastLimit = 5;
+        let activePodcastId = null;
 
         async function fetchVideos() {
             const videosRef = collection(db, 'videos');
-            const q = query(videosRef, orderBy('timestamp', 'desc')); // Fetch videos ordered by timestamp
+            const q = query(videosRef, orderBy('timestamp', 'desc'));
             const querySnapshot = await getDocs(q);
 
             const videoContainer = document.getElementById('videoDisplay');
-            videoContainer.innerHTML = ''; // Clear the container
+            videoContainer.innerHTML = '';
 
             querySnapshot.forEach((doc) => {
                 const videoData = doc.data();
@@ -159,17 +858,6 @@
                 videoContainer.appendChild(videoElement);
             });
         }
-
-        document.addEventListener('DOMContentLoaded', fetchVideos);
-    </script>
-
-
-    <script type="module">
-        import { savePodcastToFirestore, deletePodcastFromFirestore } from './FirebaseConfig.js';
-
-        const apiKey = 'cb2038d4dbd841b39dec5309c31b2d6a';
-        const podcastLimit = 5;
-        let activePodcastId = null;
 
         async function fetchPodcasts(endpoint, elementId) {
             const response = await fetch(`https://listen-api.listennotes.com/api/v2/${endpoint}`, {
@@ -195,7 +883,8 @@
             });
         }
 
-        async function fetchPodcastDetails(podcastId) {
+        async function fetchPodcastDetails(podcastId) 
+        {
             const response = await fetch(`https://listen-api.listennotes.com/api/v2/podcasts/${podcastId}`, {
                 method: 'GET',
                 headers: {
@@ -214,7 +903,7 @@
                 <div class="podcast-details">
                     <img src="${podcast.thumbnail}" alt="${podcast.title}" class="podcast-thumbnail">
                     <a href="https://www.listennotes.com/c/${podcast.id}/embed/" target="_blank" class="play-button-image">
-                        <img src="Images+Videos/play_button.png" alt="Play Podcast" class="play-button">
+                        <img src="play_button.png" alt="Play Podcast" class="play-button">
                     </a>
                 </div>
                 <p><strong>Publisher:</strong> ${podcast.publisher}</p>
@@ -228,15 +917,18 @@
             document.getElementById('fixedPlayerIframe').src = '';
 
 
-            // Add event listener to the "+" button
-            document.getElementById('addToPlaylistBtn').addEventListener('click', () => {
-                addToPlaylist(podcast.id, podcast.title, podcast.thumbnail, podcast.publisher);
-            });
+             // Add event listener to the "+" button
+    document.getElementById('addToPlaylistBtn').addEventListener('click', () => {
+        addToPlaylist(podcast.id, podcast.title, podcast.thumbnail, podcast.publisher);
+    });
 
-            console.log("Add to playlist button set up");
-            document.getElementById('podcastModal').style.display = 'block';
+    console.log("Add to playlist button set up");
+    document.getElementById('podcastModal').style.display = 'block';
         }
 
+
+
+        
 
         function closeModal(event) {
             document.getElementById('podcastModal').style.display = 'none';
@@ -249,59 +941,34 @@
 
         async function searchPodcasts() {
             const query = document.getElementById('searchInput').value;
-            const resultsContainer = document.getElementById('liveSearchResults');
-            if (query.length === 0) {
-                resultsContainer.innerHTML = '';
-                resultsContainer.style.display = 'none'; // Hide if there's no query
-                return;
-            }
-
-            try {
+            if (query) {
                 const response = await fetch(`https://listen-api.listennotes.com/api/v2/search?q=${encodeURIComponent(query)}&type=podcast`, {
                     method: 'GET',
                     headers: {
-                        'X-ListenAPI-Key': 'cb2038d4dbd841b39dec5309c31b2d6a'
+                        'X-ListenAPI-Key': apiKey
                     }
                 });
 
-                if (response.ok) {
-                    const data = await response.json();
-                    const podcasts = data.results;
+                const data = await response.json();
+                const searchResults = document.getElementById('searchResults');
+                searchResults.innerHTML = '';
 
-                    resultsContainer.innerHTML = '';
-                    resultsContainer.style.display = 'block'; // Show results container
-
-                    if (podcasts.length > 0) {
-                        podcasts.forEach(podcast => {
-                            const podcastElement = document.createElement('div');
-                            podcastElement.classList.add('search-result-item');
-                            podcastElement.innerHTML = `
-                        <img src="${podcast.thumbnail}" alt="${podcast.title_original}" class="search-result-img">
+                data.results.forEach(podcast => {
+                    const podcastElement = document.createElement('div');
+                    podcastElement.classList.add('podcast-item');
+                    podcastElement.innerHTML = `
+                        <img src="${podcast.thumbnail}" alt="${podcast.title_original}">
                         <div>
                             <h3>${podcast.title_original}</h3>
                             <p>${podcast.publisher_original}</p>
                         </div>
                     `;
-                            podcastElement.addEventListener('click', () => {
-                                fetchPodcastDetails(podcast.id); // Fetch podcast details and open modal
-                                closeSearchResults(); // Close live search results after selection
-                            });
-                            resultsContainer.appendChild(podcastElement);
-                        });
-                    } else {
-                        resultsContainer.innerHTML = `<p>No results found.</p>`;
-                    }
-                }
-            } catch (error) {
-                console.error('Error fetching podcasts:', error);
-                resultsContainer.innerHTML = '<p>Error fetching search results. Please try again later.</p>';
-            }
-        }
+                    podcastElement.addEventListener('click', () => fetchPodcastDetails(podcast.id));
+                    searchResults.appendChild(podcastElement);
+                });
 
-        function closeSearchResults() {
-            const resultsContainer = document.getElementById('liveSearchResults');
-            resultsContainer.innerHTML = '';
-            resultsContainer.style.display = 'none';
+                document.getElementById('searchModal').style.display = 'block';
+            }
         }
 
         function handleKeyPress(event) {
@@ -338,7 +1005,7 @@
             try {
                 const podcast = await fetchRandomPodcast();
                 console.log('Fetched podcast:', podcast);
-
+                
                 if (!podcast) {
                     console.log('No podcast found');
                     return;
@@ -346,7 +1013,7 @@
 
                 const fixedPlayer = document.getElementById('fixedPlayer');
                 const fixedPlayerIframe = document.getElementById('fixedPlayerIframe');
-
+                
                 console.log('Fixed player element:', fixedPlayer);
                 console.log('Fixed player iframe element:', fixedPlayerIframe);
 
@@ -426,19 +1093,19 @@
                 carousel.addEventListener('mouseover', stopScrolling);
                 carousel.addEventListener('mouseout', startScrolling);
 
-                startScrolling();
+                startScrolling(); 
             });
 
-            fetchPodcasts('best_podcasts?genre_id=68', 'featuredPodcasts');
-            fetchPodcasts('best_podcasts?genre_id=93', 'trendingPodcasts');
-            fetchPodcasts('best_podcasts?genre_id=71', 'sciencePodcasts');
-            fetchPodcasts('best_podcasts?genre_id=98', 'technologyPodcasts');
+            fetchPodcasts('best_podcasts?genre_id=68', 'featuredPodcasts');    
+            fetchPodcasts('best_podcasts?genre_id=93', 'trendingPodcasts');    
+            fetchPodcasts('best_podcasts?genre_id=71', 'sciencePodcasts');     
+            fetchPodcasts('best_podcasts?genre_id=98', 'technologyPodcasts');  
 
             fetchVideos();
 
             const diceButton = document.getElementById('diceButton');
             console.log('Dice button element:', diceButton);
-
+            
             if (diceButton) {
                 console.log('Adding click event listener to dice button');
                 diceButton.addEventListener('click', () => {
@@ -469,74 +1136,82 @@
 
 
         async function addToPlaylist(podcastId, title, thumbnail, publisher) {
-            const playlists = JSON.parse(localStorage.getItem('playlists')) || [];
+    const playlists = JSON.parse(localStorage.getItem('playlists')) || [];
+    
+    if (playlists.length === 0) {
+        alert('You have no playlists. Please create a playlist first.');
+        return;
+    }
 
-            if (playlists.length === 0) {
-                alert('You have no playlists. Please create a playlist first.');
-                return;
-            }
+    const playlistSelect = document.createElement('select');
+    playlists.forEach(playlist => {
+        const option = document.createElement('option');
+        option.value = playlist.id;
+        option.textContent = playlist.name;
+        playlistSelect.appendChild(option);
+    });
 
-            const playlistSelect = document.createElement('select');
-            playlists.forEach(playlist => {
-                const option = document.createElement('option');
-                option.value = playlist.id;
-                option.textContent = playlist.name;
-                playlistSelect.appendChild(option);
-            });
+    const result = await Swal.fire({
+        title: 'Add to Playlist',
+        html: playlistSelect,
+        showCancelButton: true,
+        confirmButtonText: 'Add',
+        cancelButtonText: 'Cancel'
+    });
 
-            const result = await Swal.fire({
-                title: 'Add to Playlist',
-                html: playlistSelect,
-                showCancelButton: true,
-                confirmButtonText: 'Add',
-                cancelButtonText: 'Cancel'
-            });
-
-            if (result.isConfirmed) {
-                const selectedPlaylistId = playlistSelect.value;
-                const selectedPlaylist = playlists.find(p => p.id == selectedPlaylistId);
-
-                if (selectedPlaylist) {
-                    const newPodcast = { id: podcastId, title, thumbnail, publisher };
-                    selectedPlaylist.podcasts.push(newPodcast);
-                    localStorage.setItem('playlists', JSON.stringify(playlists));
-                    Swal.fire('Success', 'Podcast added to playlist', 'success');
-                }
-            }
+    if (result.isConfirmed) {
+        const selectedPlaylistId = playlistSelect.value;
+        const selectedPlaylist = playlists.find(p => p.id == selectedPlaylistId);
+        
+        if (selectedPlaylist) {
+            const newPodcast = { id: podcastId, title, thumbnail, publisher };
+            selectedPlaylist.podcasts.push(newPodcast);
+            localStorage.setItem('playlists', JSON.stringify(playlists));
+            Swal.fire('Success', 'Podcast added to playlist', 'success');
         }
+    }
+}
 
-        // Make the function globally accessible
-        window.addToPlaylist = addToPlaylist;
+// Make the function globally accessible
+window.addToPlaylist = addToPlaylist;
 
-        async function addPodcastToPlaylist(playlistId, podcastId, title, thumbnail, publisher) {
-            const playlists = JSON.parse(localStorage.getItem('playlists')) || [];
-            const playlist = playlists.find(p => p.id === parseInt(playlistId));
-            if (playlist) {
-                if (!playlist.podcasts.some(p => p.id === podcastId)) {
-                    const newPodcast = {
-                        id: podcastId,
-                        title: title,
-                        thumbnail: thumbnail,
-                        publisher: publisher
-                    };
-                    playlist.podcasts.push(newPodcast);
-                    if (!playlist.coverImage || playlist.coverImage === 'default-playlist-image.jpg') {
-                        playlist.coverImage = thumbnail;
-                    }
-                    localStorage.setItem('playlists', JSON.stringify(playlists));
-                    alert(`"${title}" has been added to "${playlist.name}"`);
-                } else {
-                    alert(`"${title}" is already in "${playlist.name}"`);
-                }
-            } else {
-                alert('Playlist not found');
+async function addPodcastToPlaylist(playlistId, podcastId, title, thumbnail, publisher) {
+    const playlists = JSON.parse(localStorage.getItem('playlists')) || [];
+    const playlist = playlists.find(p => p.id === parseInt(playlistId));
+    if (playlist) {
+        if (!playlist.podcasts.some(p => p.id === podcastId)) {
+            const newPodcast = {
+                id: podcastId,
+                title: title,
+                thumbnail: thumbnail,
+                publisher: publisher
+            };
+            playlist.podcasts.push(newPodcast);
+            if (!playlist.coverImage || playlist.coverImage === 'default-playlist-image.jpg') {
+                playlist.coverImage = thumbnail;
             }
-
-            closePlaylistSelectionModal();
+            localStorage.setItem('playlists', JSON.stringify(playlists));
+            alert(`"${title}" has been added to "${playlist.name}"`);
+        } else {
+            alert(`"${title}" is already in "${playlist.name}"`);
         }
+    } else {
+        alert('Playlist not found');
+    }
+
+    closePlaylistSelectionModal();
+}
         function closePlaylistSelectionModal() {
             document.getElementById('playlistSelectionModal').style.display = 'none';
         }
+
+
+
+
+
+
+
+
 
         function scrollFunction() {
             if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
@@ -554,11 +1229,13 @@
 
     <script src="LightDarkMode.js"></script>
     <script src="Language.js"></script>
-    <script src="Search.js"></script>
+
+
+
+
 
     <script>
         console.log("addToPlaylist function is globally accessible:", typeof window.addToPlaylist === 'function');
     </script>
 </body>
-
 </html>
