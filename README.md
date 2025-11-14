@@ -1,27 +1,56 @@
-Welcome to PodsForSquads!
+# PodsForSquads <img align="left" width="60" alt="PodsForSquads Logo" src="https://github.com/user-attachments/assets/c6aba8a3-a186-4d5b-8a9b-36ab111b1c19" />
 
-Intro:
-Hello and welcome to pods for squads! We are a web app that is a resource to find and create a playlist and conspire with other playlists based on podcasts. Our goal is to make a welcoming environment for new users and people new to the podcast realm. We want everyone to find and enjoy these beloved videos people make, and sometimes that can be hard considering how much this has blown up in the last few years. Now there is no need to worry.  
+#### A Collaborative Podcast Playlist and Discovery Platform
 
-Features:
-In our website, users will be able to sign up and make an account and customize their profile. From there, the home menu will be set up in a catalog format and the users will be able to select from the offers provided there, or use the search bar if they have a name of a podcast they are interested in. From there, users will be able to preview and get a brief description of the podcast and the episode to see if it interests them. Then, the user will be able to create a playlist and share those with other users on the platform.  
+PodsForSquads is designed to solve the discovery problem in the podcast world, providing a centralized web application where users can easily find, curate, and share audio playlists. Our goal is to create a welcoming environment that simplifies podcast discovery for new users and people new to the podcast realm.
 
-Tech:
-In website development, we used VSC (Visual Studio COde) as the IDE to code and build our website in, and for the APIs, we are using ListenNotes and we are using Google Firebase to control and manage data collection. 
+## ✨ Core Features
 
-Installation:
-	To test and work on our website, you will need to download this zip file from github. From there, open it up and fire it up on your computer. This should be a PC only website. 
+* **User Management:** Secure sign-up/login with personalized user profiles and customization options.
+* **Intelligent Discovery:** Navigate a centralized content catalog or use the search bar to find specific podcasts and episodes.
+* **Preview & Engagement:** Users can instantly preview podcast episodes and read brief descriptions to determine interest before saving.
+* **Collaborative Playlists:** Users can easily **create, curate, and share** custom audio playlists with other users on the platform.
 
-Dev Setup:
-	For initial start up on the website, you only need an IDE that can use HTML, Javascript, and CSS which we recommend you use VSC and just install all the add ons in the extension part of the IDE. This will work on your localhost and Wifi or internet in general should not be required, the only time it would be required is fi you need to update or download an IDE to use the actual code on. 
+---
 
-License:
-Unlicensed
+## 🖼️ Application Screenshots
 
-Status:
-Early Development
+### 1. Core Interface & User Flow
 
-Devs:
-●	Max Wilkinson
-●	Emmanuel Estrella
-●	Nicholas Vignogna
+| Element | Preview |
+| :--- | :--- |
+| **Homepage & Search** | <img width="49%" alt="Home screen showing podcast catalog" src="https://github.com/user-attachments/assets/140c8bc8-8161-4038-8c82-ff8ca8789e1c" /> <img width="49%" alt="Search bar interface" src="https://github.com/user-attachments/assets/a61f5563-8283-4a47-9bc5-b1d21a5f9d9b" /> |
+| **Authentication & Profile** | <img width="49%" alt="Sign in and registration page" src="https://github.com/user-attachments/assets/ba4a2dd4-0064-4480-9245-53dc1d3f49b8" /> <img width="49%" alt="Settings and user profile customization screen" src="https://github.com/user-attachments/assets/792020f6-999a-4b1e-9fa5-001b73d74443" /> |
+
+### 2. Feature Walkthrough
+
+| Feature | Preview |
+| :--- | :--- |
+| **Playlist Creation** | <img width="100%" alt="Interface for creating new playlists" src="https://github.com/user-attachments/assets/222af1cb-71ba-4697-bba5-107225116d25" /> |
+| **Community Sharing** | <img width="100%" alt="Community page for sharing playlists" src="https://github.com/user-attachments/assets/0272019f-ccff-45e3-9004-25bf08c14830" /> |
+| **Upload Functionality** | <img width="100%" alt="Interface for uploading new podcast content" src="https://github.com/user-attachments/assets/cdd94316-43d9-49bf-8504-171dd96637fa" /> |
+| **Analytics Dashboard** | <img width="100%" alt="User analytics and statistics page" src="https://github.com/user-attachments/assets/f0adaabe-7027-45d3-95ad-22541c46e1be" /> |
+
+---
+
+## ⚙️ Technology Stack
+
+| Category | Technology | Role |
+| :--- | :--- | :--- |
+| **Frontend** | HTML, CSS, JavaScript | Standard web application development. |
+| **Backend / Database** | **Google Firebase** | Used for secure user authentication, data management, and real-time operations. |
+| **External API** | ListenNotes API | Used for comprehensive podcast data aggregation and search functionality. |
+| **IDE** | Visual Studio Code (VSC) | Primary integrated development environment used for building the website. |
+
+## 🤝 Contributors & Status
+
+| Category | Details |
+| :--- | :--- |
+| **Project Status** | Early Development |
+| **License** | Unlicensed (Currently) |
+
+### 👨‍💻 Development Team
+
+* Max Wilkinson
+* Emmanuel Estrella
+* Nicholas Vignogna
