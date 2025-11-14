@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Provacy Policy - PodsForSquads</title>
+    <link rel="icon" type="image/png" href="Images+Videos/Website_Logo.png">
+    <link rel="stylesheet" href="Styles/PrivPolStyle.css">
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const links = document.querySelectorAll("nav a");
+
+            links.forEach(link => {
+                link.addEventListener("click", function (event) {
+                    event.preventDefault();
+                    const href = this.getAttribute("href");
+                    document.body.classList.add("fade-out");
+
+                    setTimeout(() => {
+                        window.location.href = href;
+                    }, 500);
+                });
+            });
+        });
+    </script>
+
+</head>
+
+<body>
+    <header>
+        <div id="logo">PodsForSquads</div>
+        <nav>
+            <a id="Home" href="HomeScreen.html">Home</a>
+            <a id="Upload" href="Upload.html">Upload</a>
+            <a id="Playlists" href="Playlists.html">Playlists</a>
+            <a id="Favorites" href="Favorites.html">Favorites</a>
+            <a id="Community" href="Community.html">Community</a>
+            <a id="Analytics" href="Analytics.html">Stats</a>
+            <a id="Settings" href="Settings.html">Settings</a>
+        </nav>
+
+        <div class="profile-dropdown">
+            <div class="profile-icon">
+                <img id="profileImage" src="./Images+Videos/DefaultProfile.png" alt="User Profile">
+                <i class="arrow down"></i>
+            </div>
+            <div class="dropdown-content">
+                <a href="Settings.html">View Profile</a>
+                <a href="Auth/Login.html">Log Out</a>
+            </div>
+        </div>
+        <div class="Upload"></div>
+    </header>
+
+    <main>
+        <iframe src="document.pdf"></iframe>
+    </main>
+
+    <footer>
+        <div class="footer-links">
+            <a href="About_Us.html">About Us</a>
+            <a href="Contact.html">Contact</a>
+            <a href="ToS.html">Terms of Service</a>
+            <a href="PrivPol.html">Privacy Policy</a>
+            <a href="faq.html">FAQ</a>
+        </div>
+        <div class="social-media">
+            <a href="https://www.facebook.com/profile.php?id=61560365679571" target="_blank"><img
+                    src="../Screens/Images+Videos/Facebook_Logo.png" alt="Facebook"></a>
+            <a href="https://x.com/PodsForSquads" target="_blank"><img src="../Screens/Images+Videos/Twitter_Logo.png"
+                    alt="Twitter"></a>
+            <a href="https://www.instagram.com/podsforsquads/" target="_blank"><img
+                    src="../Screens/Images+Videos/Instagram_Logo.png" alt="Instagram"></a>
+        </div>
+    </footer>
+
+    <script src="LightDarkMode.js"></script>
+
+    <button id="scrollToTopBtn" onclick="scrollToTop()">Top Of Screen</button>
+
+    <script>
+        var mybutton = document.getElementById("scrollToTopBtn");
+
+        window.onscroll = function () {
+            scrollFunction();
+        };
+
+        function scrollFunction() {
+            if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+                mybutton.style.display = "block";
+            } else {
+                mybutton.style.display = "none";
+            }
+        }
+
+        function scrollToTop() {
+            document.body.scrollTop = 0;
+            document.documentElement.scrollTop = 0;
+        }
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us - PodsForSquads</title>
+    <link rel="icon" type="image/png" href="Images+Videos/Website_Logo.png">
+    <link rel="stylesheet" href="Styles/AboutUsStyle.css">
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const links = document.querySelectorAll("nav a");
+
+            links.forEach(link => {
+                link.addEventListener("click", function (event) {
+                    event.preventDefault();
+                    const href = this.getAttribute("href");
+                    document.body.classList.add("fade-out");
+
+                    setTimeout(() => {
+                        window.location.href = href;
+                    }, 500);
+                });
+            });
+        });
+    </script>
+</head>
+
+<body>
+    <header>
+        <!--- WEBSITE NAME AND TITLE -->
+        <div id="logo">PodsForSquads</div>
+        <nav>
+            <a id="Home" href="HomeScreen.html">Home</a>
+            <a id="Upload" href="Upload.html">Upload</a>
+            <a id="Playlists" href="Playlists.html">Playlists</a>
+            <a id="Favorites" href="Favorites.html">Favorites</a>
+            <a id="Community" href="Community.html">Community</a>
+            <a id="Analytics" href="Analytics.html">Stats</a>
+            <a id="Settings" href="Settings.html">Settings</a>
+        </nav>
+
+        <!--- PROFILE ICON -->
+        <div class="profile-dropdown">
+            <div class="profile-icon">
+                <img id="profileImage" src="./Images+Videos/DefaultProfile.png" alt="User Profile">
+                <i class="arrow down"></i>
+            </div>
+            <div class="dropdown-content">
+                <a href="Settings.html">View Profile</a>
+                <a href="Auth/Login.html">Log Out</a>
+            </div>
+        </div>
+
+    </header>
+
+    <main>
+        <section class="about-us-section">
+            <h1>About Us</h1>
+            <div class="about-us-content">
+                <img src="Images+Videos/Website_Logo.png" alt="Team Photo">
+                <p>Hello, my name is <strong>Nicholas</strong>, one of the developers currently working on the website
+                    PodsForSquads! I'm collaborating with fellow developers and masterminds <strong>Max</strong> and
+                    <strong>Emmanuel</strong> to design and deliver the best experience for all podcast listeners and
+                    viewers, regardless of age or viewpoints on life!
+                </p>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="footer-links">
+            <a href="About_Us.html">About Us</a>
+            <a href="Contact.html">Contact</a>
+            <a href="ToS.html">Terms of Service</a>
+            <a href="PrivPol.html">Privacy Policy</a>
+            <a href="faq.html">FAQ</a>
+        </div>
+        <div class="social-media">
+            <a href="https://www.facebook.com/profile.php?id=61560365679571" target="_blank"><img
+                    src="../Screens/Images+Videos/Facebook_Logo.png" alt="Facebook"></a>
+            <a href="https://x.com/PodsForSquads" target="_blank"><img src="Images+Videos/Twitter_Logo.png"
+                    alt="Twitter"></a>
+            <a href="https://www.instagram.com/podsforsquads/" target="_blank"><img
+                    src="../Screens/Images+Videos/Instagram_Logo.png" alt="Instagram"></a>
+        </div>
+    </footer>
+
+    <button id="scrollToTopBtn" onclick="scrollToTop()">Top Of Screen</button>
+
+    <script>
+        var mybutton = document.getElementById("scrollToTopBtn");
+
+        window.onscroll = function () {
+            scrollFunction();
+        };
+
+        function scrollFunction() {
+            if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+                mybutton.style.display = "block";
+            } else {
+                mybutton.style.display = "none";
+            }
+        }
+
+        function scrollToTop() {
+            document.body.scrollTop = 0; // For Safari
+            document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
+        }
+    </script>
+    <script src="LightDarkMode.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upload - PodsForSquads</title>
+    <link rel="stylesheet" href="Styles/UploadStyle.css">
+    <link rel="icon" type="image/png" href="Images+Videos/Website_Logo.png">
+</head>
+
+<body>
+    <header>
+        <div id="logo">PodsForSquads</div>
+        <nav>
+            <a id="Home" href="HomeScreen.html">Home</a>
+            <a id="Upload" href="Upload.html">Upload</a>
+            <a id="Playlists" href="Playlists.html">Playlists</a>
+            <a id="Favorites" href="Favorites.html">Favorites</a>
+            <a id="Community" href="Community.html">Community</a>
+            <a id="Analytics" href="Analytics.html">Stats</a>
+            <a id="Settings" href="Settings.html">Settings</a>
+        </nav>
+        <div class="profile-dropdown">
+            <div class="profile-icon">
+                <img id="profileImage" src="./Images+Videos/DefaultProfile.png" alt="User Profile">
+                <i class="arrow down"></i>
+            </div>
+            <div class="dropdown-content">
+                <a href="Settings.html">View Profile</a>
+                <a href="Auth/Login.html">Log Out</a>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <section class="upload-section">
+            <h2>Submit Your Video</h2>
+            <form id="videoForm">
+                <label for="videoUpload">Upload Video:</label>
+                <input type="file" id="videoUpload" accept="video/*" required><br><br>
+
+                <label for="publisher">Publisher:</label>
+                <input type="text" id="publisher" required><br><br>
+
+                <label for="description">Description:</label><br>
+                <textarea id="description" rows="4" required></textarea><br><br>
+
+                <button type="submit">Submit</button>
+            </form>
+        </section>
+    </main>
+
+    <footer>
+        <div class="footer-links">
+            <a href="About_Us.html">About Us</a>
+            <a href="Contact.html">Contact</a>
+            <a href="ToS.html">Terms of Service</a>
+            <a href="PrivPol.html">Privacy Policy</a>
+            <a href="faq.html">FAQ</a>
+        </div>
+        <div class="social-media">
+            <a href="https://www.facebook.com/profile.php?id=61560365679571" target="_blank"><img
+                    src="Images+Videos/FB Icon.jpg" alt="Facebook"></a>
+            <a href="https://x.com/PodsForSquads" target="_blank"><img src="Images+Videos/Twitter_Logo.png"
+                    alt="Twitter"></a>
+            <a href="https://www.instagram.com/podsforsquads/" target="_blank"><img src="Images+Videos/IG Icon.jpg"
+                    alt="Instagram"></a>
+        </div>
+    </footer>
+
+    <!-- Include the Firebase and Upload scripts -->
+    <script src="FirebaseConfig.js" type="module"></script>
+    <script src="Upload.js" type="module"></script>
+    <script src="LightDarkMode.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Favorites - PodsForSquads</title>
+    <link rel="stylesheet" href="Styles/FavoritesStyle.css">
+    <link rel="icon" type="image/png" href="Images+Videos/Website_Logo.png">
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const links = document.querySelectorAll("nav a");
+
+            links.forEach(link => {
+                link.addEventListener("click", function (event) {
+                    event.preventDefault();
+                    const href = this.getAttribute("href");
+                    document.body.classList.add("fade-out");
+
+                    setTimeout(() => {
+                        window.location.href = href;
+                    }, 500);
+                });
+            });
+        });
+    </script>
+
+</head>
+
+<body>
+    <header>
+        <div id="logo">PodsForSquads</div>
+        <nav>
+            <a id="Home" href="HomeScreen.html">Home</a>
+            <a id="Upload" href="Upload.html">Upload</a>
+            <a id="Playlists" href="Playlists.html">Playlists</a>
+            <a id="Favorites" href="Favorites.html">Favorites</a>
+            <a id="Community" href="Community.html">Community</a>
+            <a id="Analytics" href="Analytics.html">Stats</a>
+            <a id="Settings" href="Settings.html">Settings</a>
+        </nav>
+        <div class="search-bar">
+            <div class="search-wrapper">
+                <input type="text" placeholder="Search podcasts" id="searchInput" oninput="debouncedSearch()">
+                <button onclick="searchPodcasts()">
+                    <img src="Images+Videos/search_1.png" alt="Search">
+                </button>
+            </div>
+            <div id="liveSearchResults" class="search-results-dropdown"></div>
+        </div>
+
+        <div class="profile-dropdown">
+            <div class="profile-icon">
+                <img id="profileImage" src="./Images+Videos/DefaultProfile.png" alt="User Profile">
+                <i class="arrow down"></i>
+            </div>
+
+            <div class="dropdown-content">
+                <a href="Settings.html">View Profile</a>
+                <a href="Auth/Login.html">Log Out</a>
+            </div>
+        </div>
+    </header>
+
+    <div class="favorites-container" id="favoritesContainer">
+        <h1>Your Favorite Podcasts</h1>
+    </div>
+
+    <div id="podcastModal" class="modal" onclick="closeModal(event)">
+        <div class="modal-content" onclick="event.stopPropagation()">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <div id="modalContent">
+            </div>
+            <button id="removeFromFavoritesButton" onclick="removeFromFavorites()">
+                <img src="c:/Users/maxwi/Downloads/icons8-trash-can-64.png" alt="Remove from Favorites">
+            </button>
+        </div>
+    </div>
+
+
+    <footer>
+        <div class="footer-links">
+            <a href="About_Us.html">About Us</a>
+            <a href="Contact.html">Contact</a>
+            <a href="ToS.html">Terms of Service</a>
+            <a href="PrivPol.html">Privacy Policy</a>
+            <a href="faq.html">FAQ</a>
+        </div>
+        <div class="social-media">
+            <a href="https://www.facebook.com/profile.php?id=61560365679571" target="_blank"><img
+                    src="Images+Videos/FB Icon.jpg" alt="Facebook"></a>
+            <a href="https://x.com/PodsForSquads" target="_blank"><img src="Images+Videos/Twitter_Logo.png"
+                    alt="Twitter"></a>
+            <a href="https://www.instagram.com/podsforsquads/" target="_blank"><img src="Images+Videos/IG Icon.jpg"
+                    alt="Instagram"></a>
+        </div>
+    </footer>
+
+    <script src="LightDarkMode.js"></script>
+
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            renderFavorites();
+        });
+
+        function renderFavorites() {
+            const favorites = JSON.parse(localStorage.getItem('favorites')) || [];
+            const container = document.getElementById('favoritesContainer');
+
+            if (favorites.length === 0) {
+                container.innerHTML += '<p>You have no favorite podcasts.</p>';
+                return;
+            }
+
+            const favoritesList = document.createElement('div');
+            favoritesList.id = 'favoritesList';
+            container.appendChild(favoritesList);
+
+            favorites.forEach(podcast => {
+                const podcastElement = document.createElement('div');
+                podcastElement.classList.add('podcast-item');
+                podcastElement.innerHTML = `
+                    <img src="${podcast.thumbnail}" alt="${podcast.title}">
+                    <div>
+                        <h3>${podcast.title}</h3>
+                        <p>${podcast.publisher}</p>
+                    </div>
+                `;
+                podcastElement.addEventListener('click', () => openPodcastDetails(podcast));
+                favoritesList.appendChild(podcastElement);
+            });
+        }
+
+        function openPodcastDetails(podcast) {
+            const modalContent = document.createElement('div');
+            modalContent.innerHTML = `
+                <h2>${podcast.title}</h2>
+                <img src="${podcast.thumbnail}" alt="${podcast.title}" style="width:200px;">
+                <p><strong>Publisher:</strong> ${podcast.publisher}</p>
+                <p>Description: ${podcast.description}</p>
+            `;
+
+            const modal = document.getElementById('podcastModal');
+            modal.style.display = 'block';
+            modal.querySelector('#modalContent').innerHTML = '';
+            modal.querySelector('#modalContent').appendChild(modalContent);
+        }
+
+        function closeModal() {
+            document.getElementById('podcastModal').style.display = 'none';
+        }
+
+        function removeFromFavorites() {
+            const favorites = JSON.parse(localStorage.getItem('favorites')) || [];
+            const modal = document.getElementById('podcastModal');
+            const modalContent = modal.querySelector('#modalContent');
+
+
+            const podcastTitle = modalContent.querySelector('h2').textContent.trim();
+
+
+            const updatedFavorites = favorites.filter(podcast => podcast.title !== podcastTitle);
+            localStorage.setItem('favorites', JSON.stringify(updatedFavorites));
+
+
+            const container = document.getElementById('favoritesContainer');
+            container.innerHTML = '<h1>Your Favorite Podcasts</h1>';
+            renderFavorites();
+
+            closeModal();
+        }
+
+        function searchPodcasts() {
+            const query = document.getElementById('searchInput').value.toLowerCase();
+            const favorites = JSON.parse(localStorage.getItem('favorites')) || [];
+            const container = document.getElementById('favoritesContainer');
+            const favoritesList = document.getElementById('favoritesList');
+
+            favoritesList.innerHTML = '';
+
+            const filteredFavorites = favorites.filter(podcast =>
+                podcast.title.toLowerCase().includes(query) ||
+                podcast.publisher.toLowerCase().includes(query)
+            );
+
+            if (filteredFavorites.length === 0) {
+                container.innerHTML += '';
+                return;
+            }
+
+            filteredFavorites.forEach(podcast => {
+                const podcastElement = document.createElement('div');
+                podcastElement.classList.add('podcast-item');
+                podcastElement.innerHTML = `
+                    <img src="${podcast.thumbnail}" alt="${podcast.title}">
+                    <div>
+                        <h3>${podcast.title}</h3>
+                        <p>${podcast.publisher}</p>
+                    </div>
+                `;
+                podcastElement.addEventListener('click', () => openPodcastDetails(podcast));
+                favoritesList.appendChild(podcastElement);
+            });
+        }
+    </script>
+</body>
+
+</html>

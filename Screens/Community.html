@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Community - PodsForSquads</title>
+    <link rel="icon" type="image/png" href="Images+Videos/Website_Logo.png">
+    <link rel="stylesheet" href="Styles/CommunityStyle.css">
+</head>
+
+<script src="LightDarkMode.js"></script>
+
+
+<body>
+    <header>
+        <div class="logo dropdown" id="notificationCenter">PodsForSquads
+            <div class="notification-badge" id="notificationBadge">0</div>
+            <div class="dropdown-content" id="notificationDropdown"></div>
+        </div>
+        <nav class="NavBar">
+            <a href="HomeScreen.html">Home</a>
+            <a href="Upload.html">Upload</a>
+            <a href="playlists.html">Playlists</a>
+            <a href="favorites.html">Favorites</a>
+            <a href="Settings.html">Settings</a>
+            <a href="Analytics.html">Stats</a>
+            <a href="Community.html">Community</a>
+        </nav>
+
+        <div class="profile-dropdown">
+            <div class="profile-icon">
+                <img id="profileImage" src="./Images+Videos/DefaultProfile.png" alt="User Profile">
+                <i class="arrow down"></i>
+            </div>
+
+            <div class="dropdown-content">
+                <a href="Settings.html">View Profile</a>
+                <a href="Auth/Login.html">Log Out</a>
+            </div>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="weekly-recommendation">
+            <h2>PodsForSquads Recommendation of the Week:</h2>
+            <h3>THE BASEMENT YARD</h3>
+            <a href="https://www.listennotes.com/podcasts/the-basement-yard-santagato-studios-kEL5WS8fuTI/"
+                title="The Basement Yard | Listen Notes">
+                <img loading="lazy" src="https://cdn-images-2.listennotes.com/images/podcasts/kEL5WS8fuTI/badge/"
+                    alt="The Basement Yard | Listen Notes" style="width: 100%; max-width: 400px;" />
+            </a>
+            <div class="podcast-info">
+                <p>Listen to the funniest and most outrageous podcast on the internet, hosted by Joe Santagato. Click
+                    the image above to tune in.</p>
+            </div>
+        </div>
+        <div class="section">
+            <h2>Community Discussion</h2>
+            <div class="comment-box">
+                <img src="Jane_Doe.jpg" alt="Profile Picture">
+                <div class="comment-content">
+                    <h3>Jane Doe</h3>
+                    <p>This podcast is fantastic! It has great content and the hosts are hilarious.</p>
+                </div>
+            </div>
+            <div class="replies-container">
+                <div class="reply">
+                    <img src="John_Smith.jpg" alt="Profile Picture">
+                    <div class="reply-content">
+                        <p>Absolutely agree! I can't stop listening to it.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="reply-form-wrapper">
+                <form class="reply-form">
+                    <input type="text" placeholder="Write a reply...">
+                    <button type="submit">Reply</button>
+                </form>
+            </div>
+        </div>
+        <div class="section polls">
+            <div class="poll">
+                <h3>What's your favorite podcast genre?</h3>
+                <button>Comedy</button>
+                <button>True Crime</button>
+                <button>Science</button>
+                <button>History</button>
+            </div>
+            <div class="poll-results">
+                <p>Results will be displayed here.</p>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2024 PodsForSquads. All rights reserved.</p>
+    </footer>
+
+    <script>
+        document.getElementById('notificationCenter').addEventListener('click', function () {
+            const dropdown = document.getElementById('notificationDropdown');
+            dropdown.style.display = dropdown.style.display === 'block' ? 'none' : 'block';
+        });
+
+        function updateNotifications(notifications) {
+            const dropdown = document.getElementById('notificationDropdown');
+            const badge = document.getElementById('notificationBadge');
+            dropdown.innerHTML = ''; // Clear previous notifications
+            badge.style.display = notifications.length ? 'block' : 'none';
+            badge.textContent = notifications.length;
+            notifications.forEach(notification => {
+                const item = document.createElement('a');
+                item.href = notification.url;
+                item.textContent = notification.message;
+                dropdown.appendChild(item);
+            });
+        }
+
+        // Example notifications for testing
+        updateNotifications([
+            { message: 'New podcast added: The Basement Yard', url: 'https://www.listennotes.com/podcasts/the-basement-yard-santagato-studios-kEL5WS8fuTI/' },
+            { message: 'Podcast "Science Explained" has new episodes.', url: 'https://www.listennotes.com/c/3e98c4d435b94f28aa23c08a12c0b5f2/' }
+        ]);
+    </script>
+</body>
+
+</html>
